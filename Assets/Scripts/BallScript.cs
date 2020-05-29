@@ -44,10 +44,11 @@ public class BallScript : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.0f), SpeedY);
     }
 
-    public void StopBall()
+    /*public void StopBall()
     {
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
+    */
 
 
 }

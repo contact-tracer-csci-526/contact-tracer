@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
             statusText.text = "Lost a life. Tap to continue";
             CurrentGameState = GameState.LostALife;
         }
-        Ball.StopBall();
+        //Ball.StopBall();
     }
 
     public static int Lives = 3;
