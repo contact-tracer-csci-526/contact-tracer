@@ -3,22 +3,26 @@ using System.Collections;
 
 public class BallScript : MonoBehaviour
 {
-
+    public const string virus = "Virus";
+    public Sprite VirusSprite;
+    public CircleCollider2D ballCollider;
     public float SpeedY = 7;
     private Vector2 InitialLocation;
-
+    public bool isOriginalVirus;
     // Use this for initialization
     void Start()
     {
         InitialLocation = transform.position;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        ballCollider.GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.CurrentGameState == GameManager.GameState.Playing)
+        if (GameManager.CurrentGameState == GameManager.GameState.Playing){
             GiveBoostIfMovingOnXorYAxis();
+        }
     }
 
     private void GiveBoostIfMovingOnXorYAxis()
@@ -44,11 +48,13 @@ public class BallScript : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.0f), SpeedY);
     }
 
-    /*public void StopBall()
+    void OnCollisionEnter2D(Collision2D other)
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        if(!isOriginalVirus && other.gameObject.tag == virus){
+            transform.gameObject.tag = virus;
+            ballCollider.radius = 0.47f;
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = VirusSprite;
+        }
     }
-    */
-
 
 }
