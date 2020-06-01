@@ -6,12 +6,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
+    public static int Lives = 3;
+    public static int Score = 0;
+    public static int BlocksAlive = 20;
+    public static GameState CurrentGameState = GameState.Start;
+
+    public static BallScript Ball;
+
+
     Text statusText;
 
     // Use this for initialization
     void Start()
     {
-        blocks = GameObject.FindGameObjectsWithTag("Block");
         Ball = GameObject.Find("Ball").GetComponent<BallScript>();
         statusText = GameObject.Find("Status").GetComponent<Text>();
     }
@@ -71,11 +78,6 @@ public class GameManager : MonoBehaviour
 
     private void Restart()
     {
-        foreach (var item in blocks)
-        {
-            item.SetActive(true);
-            item.GetComponent<BlockScript>().InitializeColor();
-        }
         Lives = 3;
         Score = 0;
     }
@@ -98,14 +100,6 @@ public class GameManager : MonoBehaviour
         }
         //Ball.StopBall();
     }
-
-    public static int Lives = 3;
-    public static int Score = 0;
-    public static int BlocksAlive = 20;
-    public static GameState CurrentGameState = GameState.Start;
-
-    public static BallScript Ball;
-    private GameObject[] blocks;
 
     public enum GameState
     {
