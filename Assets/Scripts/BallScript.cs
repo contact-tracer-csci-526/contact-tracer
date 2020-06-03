@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BallScript : MonoBehaviour
 {
-    public const string virus = "Virus";
+    public const string VIRUS = "Virus";
     public Sprite VirusSprite;
     public CircleCollider2D ballCollider;
     public float SpeedY = 7;
@@ -50,8 +50,8 @@ public class BallScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if(!isOriginalVirus && other.gameObject.tag == virus){
-            transform.gameObject.tag = virus;
+        if (!isOriginalVirus && other.gameObject.tag == VIRUS) {
+            transform.gameObject.tag = VIRUS;
             ballCollider.radius = 0.47f;
             this.gameObject.GetComponent<SpriteRenderer>().sprite = VirusSprite;
         }
