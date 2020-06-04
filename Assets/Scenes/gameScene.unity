@@ -198,6 +198,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &355731741
@@ -277,6 +283,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &634759895
@@ -586,6 +598,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &851573093
@@ -665,6 +683,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1 &852773271
@@ -1004,6 +1028,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &990223709
@@ -1083,6 +1113,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1 &1031392130
@@ -1438,6 +1474,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &1443589945
@@ -1517,6 +1559,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1001 &1635428361
@@ -1596,6 +1644,12 @@ PrefabInstance:
       propertyPath: isOriginalVirus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077519739134093951, guid: 430ac7969ea64450b91249e95627a6b6,
+        type: 3}
+      propertyPath: VirusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 430ac7969ea64450b91249e95627a6b6, type: 3}
 --- !u!1 &1645214618
@@ -1880,7 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ee442abff68e94a8dc57ef4b0748c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VirusSprite: {fileID: 21300000, guid: 7931262bee02b4179ab843cecd12cb07, type: 3}
+  VirusSprite: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5, type: 3}
   ballCollider: {fileID: 1701307968}
   SpeedY: 4
   isOriginalVirus: 0
@@ -2120,12 +2174,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7931262bee02b4179ab843cecd12cb07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 638b7a16ff33e4b7faff682ae0de15f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
