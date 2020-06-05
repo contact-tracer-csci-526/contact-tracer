@@ -4,9 +4,10 @@ using System.Collections;
 public class BallScript : MonoBehaviour
 {
     public const string VIRUS = "Virus";
+    public const string BOUNDARY = "Boundary";
+    public const int speedRate = 4;
     public Sprite VirusSprite;
     public CircleCollider2D ballCollider;
-    public float SpeedY = 7;
     private Vector2 InitialLocation;
     public bool isOriginalVirus;
     // Use this for initialization
@@ -21,39 +22,32 @@ public class BallScript : MonoBehaviour
     void Update()
     {
         if (GameManager.CurrentGameState == GameManager.GameState.Playing){
-            GiveBoostIfMovingOnXorYAxis();
-        }
-    }
-
-    private void GiveBoostIfMovingOnXorYAxis()
-    {
-        if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x - 0.2f) <= 0.2f)
-        {
-            //left or right? 
-            bool right = Random.Range(-1.0f, 1.0f) >= 0;
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(right ? 5.0f : -5.0f, 0), ForceMode2D.Impulse);
-        }
-
-        if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y - 0.2f) <= 0.2f)
-        {
-            //up or down? 
-            bool down = Random.Range(-1.0f, 1.0f) >= 0;
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, down ? 5.0f : -5.0f), ForceMode2D.Impulse);
-        }
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            Vector2 v = rb.velocity.normalized;
+            rb.velocity = v * speedRate;
+        } 
     }
 
     public void StartBall()
     {
         transform.position = InitialLocation;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-3.0f, 3.0f), SpeedY);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f, 1.0f);
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (!isOriginalVirus && other.gameObject.tag == VIRUS) {
+        SpriteRenderer currentSprite = this.gameObject.GetComponent<SpriteRenderer>();
+        bool isBoundary= other.gameObject.CompareTag(BOUNDARY);
+        bool isVirus = other.gameObject.CompareTag(VIRUS);
+        if (isOriginalVirus && !isBoundary) {
+            float x = transform.localScale.x;
+            float y = transform.localScale.y;
+            transform.localScale = new Vector2(x < 2 ? x * 1.2f : x, y < 2 ? y * 1.2f : y);
+        }
+        if (!isOriginalVirus && isVirus) {
             transform.gameObject.tag = VIRUS;
-            ballCollider.radius = 0.47f;
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = VirusSprite;
+            ballCollider.radius = 0.6f;
+            currentSprite.sprite = VirusSprite;
         }
     }
 
