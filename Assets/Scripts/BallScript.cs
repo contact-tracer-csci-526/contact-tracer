@@ -5,7 +5,8 @@ public class BallScript : MonoBehaviour
 {
     public const string VIRUS = "Virus";
     public const string BOUNDARY = "Boundary";
-    public const int speedRate = 4;
+    public const string LINE = "Line";
+    public int speedRate = 3;
     public Sprite VirusSprite;
     public CircleCollider2D ballCollider;
     private Vector2 InitialLocation;
@@ -39,7 +40,9 @@ public class BallScript : MonoBehaviour
         SpriteRenderer currentSprite = this.gameObject.GetComponent<SpriteRenderer>();
         bool isBoundary= other.gameObject.CompareTag(BOUNDARY);
         bool isVirus = other.gameObject.CompareTag(VIRUS);
-        if (isOriginalVirus && !isBoundary) {
+        bool isLine = other.gameObject.CompareTag(LINE);
+
+        if (isOriginalVirus && !isBoundary && !isLine) {
             float x = transform.localScale.x;
             float y = transform.localScale.y;
             transform.localScale = new Vector2(x < 2 ? x * 1.2f : x, y < 2 ? y * 1.2f : y);
