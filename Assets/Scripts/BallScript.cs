@@ -11,9 +11,11 @@ public class BallScript : MonoBehaviour
     public CircleCollider2D ballCollider;
     private Vector2 InitialLocation;
     public bool isOriginalVirus;
+   
     // Use this for initialization
     void Start()
     {
+        
         InitialLocation = transform.position;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         ballCollider.GetComponent<CircleCollider2D>();

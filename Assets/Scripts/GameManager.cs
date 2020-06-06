@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameObject[] Cells;
 
     public static GameObject Virus;
+    
+     private DelayedStartScript CDS;
 
 
     Text statusText;
@@ -17,16 +19,17 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        CDS = GameObject.Find ("DelayedStart").GetComponent<DelayedStartScript> ();
         Cells = GameObject.FindGameObjectsWithTag("Cell");
         Virus = GameObject.Find("Virus");
         statusText = GameObject.Find("Status").GetComponent<Text>();
     }
 
 
-    private bool InputTaken()
-    {
-        return Input.touchCount > 0 || Input.GetMouseButtonUp(0);
-    }
+//    private bool InputTaken()
+//    {
+//        return Input.touchCount > 0 || Input.GetMouseButtonUp(0);
+//    }
 
 
     // Update is called once per frame
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case GameState.Start:
-                if (InputTaken())
+                if (CDS.counterDownDone == true)
                 {
                     for (int i = 0; i < Cells.Length; i++) {
                         Cells[i].GetComponent<BallScript>().StartBall();
