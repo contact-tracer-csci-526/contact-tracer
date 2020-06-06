@@ -15,28 +15,43 @@ public class DrawLine : MonoBehaviour
     // following variable keeps track of the fingure position of the player
     public List<Vector2> fingerPositions;
 
+    private float lineLength;
+
+    public const float MAX_LENGTH = 3.0f;
+    public const string LINE = "Line";
+
     void Start()
     {
-        
+        lineLength = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!currentLine) {
+            lineLength = 0.0f;
+            CreateLine();
+        }
         // we will call the CreateLine function when the player has touched the screen 
         // the following condition checks for the left mouse button
         if(Input.GetMouseButtonDown(0)){
             // before creating the line we need to remove the previously added line
-            if (currentLine == true){
+            if (currentLine){
                 Destroy (currentLine);
+                lineLength = 0.0f;
             }
             CreateLine();
         }
         // this checks if we are continuously holding it down or not
         if(Input.GetMouseButton(0)){
             Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
+            lineLength += newAddedLength;
+            if (lineLength > MAX_LENGTH) {
+                return;
+            }
             // we need to check if this finger position and the previous finger position is greater than a set buffer value
-            if(Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]) > 0.1f)
+            if(newAddedLength > 0.1f)
             {
                 UpdateLine(tempFingerPosition);
             }
@@ -50,6 +65,7 @@ public class DrawLine : MonoBehaviour
         // as soon as the user touches the screen we create a new game object from our line prefab
         // we also instantiate its corresponding edge collider and line renderer
         currentLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        currentLine.transform.gameObject.tag = LINE;
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider2D = currentLine.GetComponent<EdgeCollider2D>();
         
