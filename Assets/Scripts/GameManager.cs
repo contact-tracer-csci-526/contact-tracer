@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     public static GameObject[] Cells;
 
     public static GameObject Virus;
-    
+
      private DelayedStartScript CDS;
+
+     public int infectionLimit = 50; //percent
 
 
     Text statusText;
@@ -48,7 +50,24 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Playing:
+                //calc infection rate
+                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("Cell");
+                GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
+                int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
+                if (IR > infectionLimit) {
+                    CurrentGameState = GameState.Over;
+                }
                 break;
+
+            case GameState.Over:
+                //display "Game Over: Infection rate exceeded"
+                void onGUI() {
+                  GUI.Label(new Rect(0,0,Screen.width,Screen.height),"Game Over, Loser");
+                }
+                print("GAME OVER");
+                //return to start scene
+                break;
+
             default:
                 break;
         }
@@ -58,8 +77,6 @@ public class GameManager : MonoBehaviour
     {
         Start,
         Playing,
-        Won,
-        LostALife,
-        LostAllLives
+        Over
     }
 }
