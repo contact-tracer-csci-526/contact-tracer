@@ -56,16 +56,20 @@ public class GameManager : MonoBehaviour
                 int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
                 if (IR > infectionLimit) {
                     CurrentGameState = GameState.Over;
+                    print("GAME OVER");
+                    Time.timeScale = 0;
+                    //save time/score
                 }
                 break;
 
             case GameState.Over:
-                //display "Game Over: Infection rate exceeded"
+                //display "Game Over: Infection rate exceeded" (flash on every 10th frame?)
+                //display score/time-survived
                 void onGUI() {
                   GUI.Label(new Rect(0,0,Screen.width,Screen.height),"Game Over, Loser");
                 }
-                print("GAME OVER");
-                //return to start scene
+
+                //return to start scene (wait on button input for direction to switch out of Game over state)
                 break;
 
             default:
