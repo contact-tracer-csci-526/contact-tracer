@@ -1011,10 +1011,10 @@ RectTransform:
   m_Father: {fileID: 889531782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 14.009766, y: -6.569824}
-  m_SizeDelta: {x: 187.16, y: 30}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -80, y: 0}
+  m_SizeDelta: {x: 187.16003, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1058249110
 MonoBehaviour:
@@ -1037,18 +1037,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 36
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 36
+    m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Tap to play
+  m_Text: Game Over
 --- !u!222 &1058249111
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1482,6 +1482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 957c2fd74dec69b469225002a45ed30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infectionLimit: 50
 --- !u!4 &1696643761
 Transform:
   m_ObjectHideFlags: 0
