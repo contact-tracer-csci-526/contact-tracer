@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
                 if (CDS.counterDownDone == true)
                 {
                     for (int i = 0; i < Cells.Length; i++) {
-                        Cells[i].GetComponent<Ball>().StartBall();
+                        Cells[i].GetComponent<BallScript>().StartBall();
                     }
-                    Virus.GetComponent<Ball>().StartBall();
+                    Virus.GetComponent<BallScript>().StartBall();
                     CurrentGameState = GameState.Playing;
                 }
                 break;
