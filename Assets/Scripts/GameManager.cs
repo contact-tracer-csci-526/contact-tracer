@@ -76,10 +76,12 @@ public class GameManager : MonoBehaviour
                 frameCount++;
 
                 //return to start scene (wait on button input for direction to switch out of Game over state)
-                if (frameCount > 1000) {
+                if (frameCount > 750) {
                   //StartCoroutine(ToSplash());
                   print("transition started");
-                  SceneManager.LoadScene(0);
+                  CurrentGameState =  GameState.Start;
+                  Time.timeScale = 1;
+                  SceneManager.LoadScene(1);
                   //transitionStarted = true;
                   //Time.timeScale = 1;
                 }
