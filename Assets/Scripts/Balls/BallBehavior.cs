@@ -17,7 +17,7 @@ public abstract class BallBehavior
             transform.gameObject.tag = VirusBallBehavior.TAG;
             ballCollider.radius = 0.6f;
             currentSprite.sprite = virusSprite;
-            ball.ballBehavior = BallBehaviorMap.Get(BallType.VIRUS, ball);
+            ball.ballBehavior = BallBehaviorFactory.Get(BallType.VIRUS, ball);
             ball.ballType = BallType.VIRUS;
         }
     }
