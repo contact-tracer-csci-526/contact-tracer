@@ -6,11 +6,12 @@ public class Ball : MonoBehaviour
     public static int SPEED_RATE = 3;
     public BallBehavior ballBehavior;
     public BallType ballType;
+    public bool isOriginalVirus;
 
     void Start()
     {
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        ballBehavior = BallBehaviorMap.Get(ballType, this);
+        ballBehavior = BallBehaviorFactory.Get(ballType, this);
     }
 
     void Update()

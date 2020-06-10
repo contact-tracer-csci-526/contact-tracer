@@ -17,7 +17,12 @@ public class VirusBallBehavior : BallBehavior
         Ball otherBall = other.gameObject.GetComponent<Ball>();
 
         if (otherBall != null) {
-            // todo: this may be extended later
+            if (this.ball.isOriginalVirus) {
+                float x = transform.localScale.x;
+                float y = transform.localScale.y;
+                transform.localScale = new Vector2(x < 2 ? x * 1.2f : x, y < 2 ? y * 1.2f : y);
+            }
+
         }
     }
 }

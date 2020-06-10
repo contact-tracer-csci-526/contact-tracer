@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-class BallBehaviorMap {
+class BallBehaviorFactory {
   public static BallBehavior Get(BallType ballType, Ball ball) {
     switch (ballType) {
       case BallType.VIRUS:
