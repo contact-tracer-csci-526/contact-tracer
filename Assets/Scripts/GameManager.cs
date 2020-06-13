@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -19,14 +20,32 @@ public class GameManager : MonoBehaviour
      //private bool transitionStarted = false;
 
      private int frameCount = 0;
-
+    
 
     Text statusText;
+
+    public static int level;
+    public GameObject ballPrefab;
+    public List<GameObject> balls;
+
+    private int minX;
+    private int minY;
+    private int maxX;
+    private int maxY;
 
     // Use this for initialization
     void Start()
     {
+        
         CDS = GameObject.Find ("DelayedStart").GetComponent<DelayedStartScript> ();
+        
+        level = MainMenu.level;
+        this.minX = -3;
+        this.minY = -6;
+        this.maxX = 3;
+        this.maxY = 6;
+        this.CreateBalls();
+        
         Cells = GameObject.FindGameObjectsWithTag("Cell");
         Virus = GameObject.Find("Virus");
         statusText = GameObject.Find("Status").GetComponent<Text>();
@@ -98,6 +117,18 @@ public class GameManager : MonoBehaviour
         Start,
         Playing,
         Over
+    }
+
+    private void CreateBalls(){
+        System.Random random = new System.Random();
+        for(int i = 0; i < 3 * level; i++){
+            int x = random.Next(minX,maxX);
+            int y = random.Next(minY,maxY);
+            GameObject ball = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
+            ball.transform.gameObject.tag = "Cell";
+            //balls.Add(ball);
+        }
+       
     }
 
     // IEnumerator ToSplash()

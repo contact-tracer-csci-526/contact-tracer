@@ -4,9 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
-{
-    public void PlayGame()
+{   
+    public static int level;
+    void Awake () {
+        // stops object from automtically getting destroyed on loading another scene
+        DontDestroyOnLoad (this);
+    }
+    public void PlayGame(int l)
     {
+        //Debug.Log(level);
+        level = l;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
