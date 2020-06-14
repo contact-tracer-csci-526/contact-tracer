@@ -17,12 +17,29 @@ public class DrawLine : MonoBehaviour
 
     private float lineLength;
 
-    public const float MAX_LENGTH = 3.0f;
+    public const float MAX_LENGTH = 7.0f;
     public const string LINE = "Line";
+    public float angle;
+    public bool isCircle;
+    public float centroid_x;
+    public float centroid_y;
+    public float radius; 
+    public int MIN_ANGLE = 276;
 
+    public static List<Ball> safeBalls;
+    public static int MAX_SAFE_BALLS = 2;
+    // this will be fixed for a level and when number of balls get increased we need to restore the dynamic threshold above back to this value
+    public static int MAX_SAFE_BALLS_FIXED = 2;
+    public static GameObject[] Cells;
+    
     void Start()
     {
         lineLength = 0;
+        angle = 0;
+        isCircle = false;
+        Cells = GameObject.FindGameObjectsWithTag("Cell");
+        MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
+        safeBalls = new List<Ball>();
     }
 
     // Update is called once per frame
@@ -30,6 +47,8 @@ public class DrawLine : MonoBehaviour
     {
         if(!currentLine) {
             lineLength = 0.0f;
+            angle = 0;
+            isCircle = false;
             CreateLine();
         }
         // we will call the CreateLine function when the player has touched the screen 
@@ -39,6 +58,8 @@ public class DrawLine : MonoBehaviour
             if (currentLine){
                 Destroy (currentLine);
                 lineLength = 0.0f;
+                angle = 0;
+                isCircle = false;
             }
             CreateLine();
         }
@@ -48,13 +69,17 @@ public class DrawLine : MonoBehaviour
             float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
             lineLength += newAddedLength;
             if (lineLength > MAX_LENGTH) {
+                CheckCircle();
                 return;
             }
             // we need to check if this finger position and the previous finger position is greater than a set buffer value
-            if(newAddedLength > 0.1f)
+            if(newAddedLength > 0.08f)
             {
                 UpdateLine(tempFingerPosition);
             }
+        }
+        if (Input.GetMouseButtonUp(0)){
+            CheckCircle();
         }
     }
 
@@ -96,5 +121,88 @@ public class DrawLine : MonoBehaviour
         
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
+
+    }
+
+    private void CheckCircle(){
+        if (fingerPositions.Count <= 3){
+            isCircle = false;
+            radius = 0;
+        }
+        else
+        {    // we first find the centroid from all the points
+            centroid_x = 0;
+            centroid_y = 0;
+            radius = 0;
+            for (int i = 0; i < fingerPositions.Count ; i++ ){
+                centroid_x += fingerPositions[i].x;
+                centroid_y += fingerPositions[i].y;
+            }
+            centroid_x /= fingerPositions.Count;
+            centroid_y /= fingerPositions.Count;
+            // now we calculate sum of all the angles from the center between adjacent pair of points
+            float angle_sum = 0;
+            for (int i = 0; i < fingerPositions.Count - 1 ; i++ ){
+                float x1 = (float)fingerPositions[i].x - centroid_x;
+                float y1 = (float)fingerPositions[i].y - centroid_y;
+                float mag1 = Mathf.Sqrt(x1*x1 + y1*y1);
+                float x2 = (float)fingerPositions[i+1].x - centroid_x;
+                float y2 = (float)fingerPositions[i+1].y - centroid_y;
+                float mag2 = Mathf.Sqrt(x2*x2 + y2*y2);
+                //float temp = Mathf.Atan2((float)(y2 - y1),(float)(x2 - x1)) * Mathf.Rad2Deg;
+                float temp = Mathf.Acos(Mathf.Min(1,(x1*x2 + y1*y2) / (mag1 * mag2))) * Mathf.Rad2Deg;
+                float distance = Mathf.Sqrt((fingerPositions[i].x - centroid_x) * (fingerPositions[i].x - centroid_x) + (fingerPositions[i].y - centroid_y) * (fingerPositions[i].y - centroid_y));
+                if (radius < distance){
+                    radius = distance;
+                }                
+                angle_sum += temp;
+            }
+            // Debug.Log("Center of circle "+ centroid_x.ToString() + " "+ centroid_y.ToString() +" " + radius.ToString());
+            // Debug.Log("Angle sum " +angle_sum.ToString());
+            if (angle_sum >= MIN_ANGLE){
+                isCircle = true;
+                // now we need to find a ball which is enclosed in the circle 
+                Ball enclosedBall = null;
+                Cells = GameObject.FindGameObjectsWithTag("Cell");
+                MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
+                // Debug.Log("Cells");
+                // Debug.Log(Cells);
+                for (int i = 0; i < Cells.Length; i++){
+                    float ball_x = Cells[i].transform.position.x;
+                    float ball_y = Cells[i].transform.position.y;
+                    float distance = Mathf.Sqrt((ball_x - centroid_x) * (ball_x - centroid_x) + (ball_y - centroid_y) * (ball_y - centroid_y));
+                    if (distance <= radius){
+                        // Debug.Log("Found a ball");
+                        // Debug.Log(ball_x.ToString()+" "+ball_y.ToString());
+                        enclosedBall = Cells[i].GetComponent<Ball>();
+                        // Debug.Log(enclosedBall);
+                        break;
+                    }
+                }
+                if (enclosedBall != null){
+                    // Debug.Log("Enclosed ball is not null");
+                    bool containsItem = safeBalls.Contains(enclosedBall);
+                    // Debug.Log("Contains "+ containsItem.ToString());
+                    if (!containsItem)
+                    {
+                        safeBalls.Add(enclosedBall);
+                        enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
+                    }
+                    // Debug.Log("Count "+ safeBalls.Count.ToString() + " " + MAX_SAFE_BALLS.ToString());
+                    if (safeBalls.Count > MAX_SAFE_BALLS){
+                        Ball notSafeBall = safeBalls[0];
+                        // Debug.Log("NotSafeBall " + notSafeBall.ToString());
+                        //Debug.Log(notSafeBall);
+                        notSafeBall.ballBehavior.TransformsTo(BallType.BALL);
+                        safeBalls.RemoveAt(0);
+                        // Debug.Log("Count After Remove"+safeBalls.Count.ToString()+" " + MAX_SAFE_BALLS.ToString());
+                    }
+                    // Debug.Log(safeBalls);
+                }
+            }
+            else{
+                isCircle = false;
+            }
+        }
     }
 }
