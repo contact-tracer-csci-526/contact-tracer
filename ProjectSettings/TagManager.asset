@@ -16,7 +16,7 @@ TagManager:
   - Boundary
   - Line
   - Cure
-  - Timer
+  - Safe
   layers:
   - Default
   - TransparentFX
