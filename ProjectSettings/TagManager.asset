@@ -15,6 +15,7 @@ TagManager:
   - Cell
   - Boundary
   - Line
+  - Cure
   layers:
   - Default
   - TransparentFX

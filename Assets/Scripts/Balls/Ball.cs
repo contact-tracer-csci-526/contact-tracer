@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
-    public static int SPEED_RATE = 3;
+    public static float SPEED_RATE = 1.5f;
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
@@ -26,11 +26,19 @@ public class Ball : MonoBehaviour
     public void StartBall()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f, 1.0f);
+        GetComponent<Rigidbody2D>().isKinematic = false;
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
         ballBehavior.HandleOnCollisionEnter2D(other);
     }
+
+    public void StopBall()
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+        GetComponent<Rigidbody2D>().isKinematic = true;
+    }
+
 
 }

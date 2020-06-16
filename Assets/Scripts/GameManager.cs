@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
             case GameState.Over:
                 //display "Game Over: Infection rate exceeded" (flash on every 10th frame?)
                 //display score/time-survived
-                print("GAME OVER");
                 frameCount++;
 
                 //return to start scene (wait on button input for direction to switch out of Game over state)

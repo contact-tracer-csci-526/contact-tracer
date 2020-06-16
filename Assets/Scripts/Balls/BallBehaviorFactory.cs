@@ -7,6 +7,9 @@ class BallBehaviorFactory {
       case BallType.VIRUS:
         return new VirusBallBehavior(ball);
       case BallType.BALL:
+        return new NormalBallBehavior(ball);
+      case BallType.SAFE:
+        return new SafeBallBehavior(ball);
       default:
         return new NormalBallBehavior(ball);
     }
