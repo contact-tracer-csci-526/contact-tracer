@@ -30,7 +30,7 @@ public class DrawLine : MonoBehaviour
     public static int MAX_SAFE_BALLS = 2;
     // this will be fixed for a level and when number of balls get increased we need to restore the dynamic threshold above back to this value
     public static int MAX_SAFE_BALLS_FIXED = 2;
-    public static GameObject[] Cells;
+    private static GameObject[] Cells;
     
     void Start()
     {
@@ -38,7 +38,6 @@ public class DrawLine : MonoBehaviour
         angle = 0;
         isCircle = false;
         safeBalls = new List<Ball>();
-        MAX_SAFE_BALLS = MAX_SAFE_BALLS_FIXED;
     }
 
     // Update is called once per frame
@@ -179,7 +178,10 @@ public class DrawLine : MonoBehaviour
                 }
                 if (enclosedBall != null){
                     // Debug.Log("Enclosed ball is not null");
-                    bool containsItem = safeBalls.Contains(enclosedBall);
+                    bool containsItem = false;
+                    if (safeBalls != null && safeBalls.Count > 0){
+                        containsItem = safeBalls.Contains(enclosedBall);
+                    }
                     // Debug.Log("Contains "+ containsItem.ToString());
                     if (!containsItem)
                     {

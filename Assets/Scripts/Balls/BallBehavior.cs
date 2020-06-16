@@ -64,10 +64,11 @@ public abstract class BallBehavior
 
     public void changeMaxThreshold()
     {
-        DrawLine.Cells = GameObject.FindGameObjectsWithTag("Cell");
-        DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS,DrawLine.Cells.Length - 1);
-        // Debug.Log("Here1 "+ DrawLine.MAX_SAFE_BALLS.ToString());
-        if (DrawLine.safeBalls.Count >= DrawLine.MAX_SAFE_BALLS)
+        GameObject[] Cells = GameObject.FindGameObjectsWithTag("Cell");
+        Debug.Log("here 1 "+Cells.Length.ToString() + " "+ DrawLine.MAX_SAFE_BALLS_FIXED);
+        DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.safeBalls.Count + Cells.Length - 1);
+        Debug.Log("Here1 "+ DrawLine.MAX_SAFE_BALLS.ToString());
+        if (DrawLine.safeBalls.Count > DrawLine.MAX_SAFE_BALLS)
         {
             if (DrawLine.safeBalls.Count > 0)
             {
@@ -79,8 +80,9 @@ public abstract class BallBehavior
     }
     public void restoreOriginalThreshold()
     {
-        DrawLine.Cells = GameObject.FindGameObjectsWithTag("Cell");
-        DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.Cells.Length - 1);
-        // Debug.Log("Here2 "+ DrawLine.MAX_SAFE_BALLS.ToString());
+        GameObject[] Cells = GameObject.FindGameObjectsWithTag("Cell");
+        Debug.Log("here 2 "+ Cells.Length.ToString() + " "+ DrawLine.MAX_SAFE_BALLS_FIXED);
+        DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.safeBalls.Count + Cells.Length - 1);
+        Debug.Log("Here2 "+ DrawLine.MAX_SAFE_BALLS.ToString());
     }
 }

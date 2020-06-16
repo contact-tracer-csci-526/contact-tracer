@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
      private int frameCount = 0;
 
-     private int timeRemaining = 45; //sec
+     private int timeRemaining = 180; //sec
 
 
     Text statusText;
