@@ -38,6 +38,7 @@ public class DrawLine : MonoBehaviour
         angle = 0;
         isCircle = false;
         safeBalls = new List<Ball>();
+        MAX_SAFE_BALLS = MAX_SAFE_BALLS_FIXED;
     }
 
     // Update is called once per frame
@@ -198,7 +199,7 @@ public class DrawLine : MonoBehaviour
                         }
                         
                     }
-                    MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
+                    // MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
                     // Debug.Log(safeBalls);
                 }
             }
