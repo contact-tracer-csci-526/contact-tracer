@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour
 
      private int infectionLimit = 100; //percent
 
-     //private bool transitionStarted = false;
-
      private int frameCount = 0;
+
+     private int timeRemaining = 10; //sec
 
 
     Text statusText;
+    Text timerText;
 
     // Use this for initialization
     void Start()
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
         Virus = GameObject.Find("Virus");
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
+        timerText = GameObject.Find("Timer").GetComponent<Text>();
+        timerText.text = "" + timeRemaining;
     }
 
 
@@ -53,19 +56,27 @@ public class GameManager : MonoBehaviour
                     }
                     Virus.GetComponent<Ball>().StartBall();
                     CurrentGameState = GameState.Playing;
+                    StartCoroutine(operateTimer());
                 }
                 break;
             case GameState.Playing:
+                timerText.text = "" + timeRemaining;
                 //calc infection rate
                 GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("Cell");
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
                 int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
-                if (IR >= infectionLimit) {
+                if (IR >= infectionLimit) { //end condition
                     CurrentGameState = GameState.Over;
-
+                    StopCoroutine(operateTimer());
                     Time.timeScale = 0;
                     statusText.enabled = true;
                     //save time/score
+                } else if (timeRemaining == 0) { //win condition
+                    CurrentGameState = GameState.Over;
+                    StopCoroutine(operateTimer());
+                    Time.timeScale = 0;
+                    statusText.text = "Congrats!\n You survived!";
+                    statusText.enabled = true;
                 }
                 break;
 
@@ -75,9 +86,9 @@ public class GameManager : MonoBehaviour
                 frameCount++;
 
                 //return to start scene (wait on button input for direction to switch out of Game over state)
-                if (frameCount > 750) {
+                if (frameCount > 300) {
                   //StartCoroutine(ToSplash());
-                  print("transition started");
+                  //print("transition started");
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
                   SceneManager.LoadScene(1);
@@ -104,5 +115,13 @@ public class GameManager : MonoBehaviour
     //      //yield return new WaitForSeconds(5);
     //      SceneManager.LoadScene(0);
     //  }
+
+    IEnumerator operateTimer()
+    {
+      while (true) {
+        yield return new WaitForSeconds(1);
+        timeRemaining--;
+      }
+    }
 
 }
