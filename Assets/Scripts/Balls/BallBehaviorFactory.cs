@@ -10,6 +10,8 @@ class BallBehaviorFactory {
         return new NormalBallBehavior(ball);
       case BallType.SAFE:
         return new SafeBallBehavior(ball);
+      case BallType.CURE:
+        return new CureBallBehavior(ball);
       default:
         return new NormalBallBehavior(ball);
     }

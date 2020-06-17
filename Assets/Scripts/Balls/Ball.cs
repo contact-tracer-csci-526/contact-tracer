@@ -38,6 +38,7 @@ public class Ball : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
         GetComponent<Rigidbody2D>().isKinematic = true;
+        //Destroy(GetComponent<Rigidbody2D>);
     }
 
 

@@ -30,15 +30,13 @@ public class DrawLine : MonoBehaviour
     public static int MAX_SAFE_BALLS = 2;
     // this will be fixed for a level and when number of balls get increased we need to restore the dynamic threshold above back to this value
     public static int MAX_SAFE_BALLS_FIXED = 2;
-    public static GameObject[] Cells;
+    private static GameObject[] Cells;
     
     void Start()
     {
         lineLength = 0;
         angle = 0;
         isCircle = false;
-        Cells = GameObject.FindGameObjectsWithTag("Cell");
-        MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
         safeBalls = new List<Ball>();
     }
 
@@ -164,7 +162,6 @@ public class DrawLine : MonoBehaviour
                 // now we need to find a ball which is enclosed in the circle 
                 Ball enclosedBall = null;
                 Cells = GameObject.FindGameObjectsWithTag("Cell");
-                MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
                 // Debug.Log("Cells");
                 // Debug.Log(Cells);
                 for (int i = 0; i < Cells.Length; i++){
@@ -181,7 +178,10 @@ public class DrawLine : MonoBehaviour
                 }
                 if (enclosedBall != null){
                     // Debug.Log("Enclosed ball is not null");
-                    bool containsItem = safeBalls.Contains(enclosedBall);
+                    bool containsItem = false;
+                    if (safeBalls != null && safeBalls.Count > 0){
+                        containsItem = safeBalls.Contains(enclosedBall);
+                    }
                     // Debug.Log("Contains "+ containsItem.ToString());
                     if (!containsItem)
                     {
@@ -190,13 +190,18 @@ public class DrawLine : MonoBehaviour
                     }
                     // Debug.Log("Count "+ safeBalls.Count.ToString() + " " + MAX_SAFE_BALLS.ToString());
                     if (safeBalls.Count > MAX_SAFE_BALLS){
-                        Ball notSafeBall = safeBalls[0];
-                        // Debug.Log("NotSafeBall " + notSafeBall.ToString());
-                        //Debug.Log(notSafeBall);
-                        notSafeBall.ballBehavior.TransformsTo(BallType.BALL);
-                        safeBalls.RemoveAt(0);
-                        // Debug.Log("Count After Remove"+safeBalls.Count.ToString()+" " + MAX_SAFE_BALLS.ToString());
+                        if (safeBalls.Count > 0)
+                        {
+                            Ball notSafeBall = safeBalls[0];
+                            // Debug.Log("NotSafeBall " + notSafeBall.ToString());
+                            //Debug.Log(notSafeBall);
+                            notSafeBall.ballBehavior.TransformsTo(BallType.BALL);
+                            safeBalls.RemoveAt(0);
+                            // Debug.Log("Count After Remove"+safeBalls.Count.ToString()+" " + MAX_SAFE_BALLS.ToString());
+                        }
+                        
                     }
+                    // MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
                     // Debug.Log(safeBalls);
                 }
             }
