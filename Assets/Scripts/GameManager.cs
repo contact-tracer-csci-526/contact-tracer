@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.Over:
                 frameCount++;
-                
+
                 if (frameCount > 300) {
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
