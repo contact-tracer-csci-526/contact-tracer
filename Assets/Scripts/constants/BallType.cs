@@ -1,5 +1,5 @@
 public enum BallType {
-    BALL,
+    NORMAL,
     VIRUS,
     SAFE,
     CURE

@@ -183,8 +183,8 @@ public class DrawLine : MonoBehaviour
                     if (safeBalls.Count > MAX_SAFE_BALLS){
                         if (safeBalls.Count > 0)
                         {
-                            Ball notSafeBall = safeBalls[0];
-                            notSafeBall.ballBehavior.TransformsTo(BallType.BALL);
+                            Ball safeBall = safeBalls[0];
+                            safeBall.ballBehavior.TransformsTo(BallType.NORMAL);
                             safeBalls.RemoveAt(0);
                         }
                     }
