@@ -32,8 +32,10 @@ public class DrawLine : MonoBehaviour
     public static int MAX_SAFE_BALLS_FIXED = 2;
     private static GameObject[] Cells;
     
+     private DelayedStartScript CDS;
     void Start()
     {
+        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
         lineLength = 0;
         angle = 0;
         isCircle = false;
@@ -42,25 +44,27 @@ public class DrawLine : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if(!currentLine) {
+    {    
+        if (CDS.counterDownDone == true)
+        {
+            if(!currentLine) {
             lineLength = 0.0f;
             angle = 0;
             isCircle = false;
             CreateLine();
-        }
+             }
         // we will call the CreateLine function when the player has touched the screen 
         // the following condition checks for the left mouse button
-        if(Input.GetMouseButtonDown(0)){
+                if(Input.GetMouseButtonDown(0)){
             // before creating the line we need to remove the previously added line
-            if (currentLine){
+                    if (currentLine){
                 Destroy (currentLine);
                 lineLength = 0.0f;
                 angle = 0;
                 isCircle = false;
-            }
+                 }
             CreateLine();
-        }
+                }
         // this checks if we are continuously holding it down or not
         if(Input.GetMouseButton(0)){
             Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,6 +82,7 @@ public class DrawLine : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0)){
             CheckCircle();
+        }
         }
     }
 
