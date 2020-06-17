@@ -15,12 +15,14 @@ public class GameManager : MonoBehaviour
     private int infectionLimit = 100; //percent
     private int frameCount = 0;
     private int timeRemaining = 40; //sec
+    public int score = 0;
 
     Text statusText;
     Text timerText;
 
     public static int level;
     public GameObject ballPrefab;
+    public GameObject[] Uninfected;
 
     private int minX;
     private int minY;
@@ -86,11 +88,15 @@ public class GameManager : MonoBehaviour
 
             case GameState.Over:
                 frameCount++;
-
+                
                 if (frameCount > 300) {
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
-                  SceneManager.LoadScene(1);
+                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                    PlayerPrefs.SetInt("score", Uninfected.Length);
+                    score = PlayerPrefs.GetInt("score");
+                    PlayerPrefs.Save();
+                    SceneManager.LoadScene(3);
                 }
                 break;
 
