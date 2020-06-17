@@ -5,12 +5,11 @@ using UnityEngine;
 public class CureBallBehavior : BallBehavior
 {
 	public static string TAG="Cure";
-   
+
 	public CureBallBehavior(Ball ball){
 	   this.ball=ball;
        //Debug.Log(this.ball.currentTime);
 	}
-
 
      public override void HandleOnCollisionEnter2D(Collision2D other)
     {
@@ -23,5 +22,4 @@ public class CureBallBehavior : BallBehavior
             }
         }
     }
- 
 }

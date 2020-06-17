@@ -23,7 +23,7 @@ public class VirusBallBehavior : BallBehavior
                 transform.localScale = new Vector2(x < 2 ? x * 1.2f : x, y < 2 ? y * 1.2f : y);
             }
             bool isCureBallHit=otherBall.ballType==BallType.CURE;
-            if(isCureBallHit && !this.ball.isOriginalVirus){ 
+            if (isCureBallHit && !this.ball.isOriginalVirus) {
                 TransformsTo(BallType.BALL);
             }
         }

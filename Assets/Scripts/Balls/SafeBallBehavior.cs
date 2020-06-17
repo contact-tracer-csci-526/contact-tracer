@@ -5,8 +5,8 @@ using UnityEngine;
 public class SafeBallBehavior : BallBehavior
 {
     public static string TAG = "Safe";
-    
-     public SafeBallBehavior(Ball ball)
+
+    public SafeBallBehavior(Ball ball)
     {
         this.ball = ball;
     }

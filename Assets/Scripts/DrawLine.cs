@@ -23,7 +23,7 @@ public class DrawLine : MonoBehaviour
     public bool isCircle;
     public float centroid_x;
     public float centroid_y;
-    public float radius; 
+    public float radius;
     public int MIN_ANGLE = 276;
 
     public static List<Ball> safeBalls;
