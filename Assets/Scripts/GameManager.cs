@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private DelayedStartScript CDS;
     private int infectionLimit = 100; //percent
     private int frameCount = 0;
-    private int timeRemaining = 180; //sec
+    private int timeRemaining = 40; //sec
 
     Text statusText;
     Text timerText;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
         Cells = new GameObject[3 * level];
         this.CreateBallsRandomly();
-        Cells = GameObject.FindGameObjectsWithTag("Cell");
+        Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
         timerText = GameObject.Find("Timer").GetComponent<Text>();
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Playing:
                 timerText.text = "" + timeRemaining;
-                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("Cell");
+                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
                 int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
                 if (IR >= infectionLimit) {
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
                 y = random.Next(minY,maxY);
             }
             GameObject ball = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
-            ball.transform.gameObject.tag = "Cell";
+            ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
 }

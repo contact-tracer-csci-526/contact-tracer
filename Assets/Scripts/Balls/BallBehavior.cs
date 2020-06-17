@@ -54,7 +54,7 @@ public abstract class BallBehavior
 
     public void changeMaxThreshold()
     {
-        GameObject[] Cells = GameObject.FindGameObjectsWithTag("Cell");
+        GameObject[] Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         // Debug.Log("here 1 "+Cells.Length.ToString() + " "+ DrawLine.MAX_SAFE_BALLS_FIXED);
         DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.safeBalls.Count + Cells.Length - 1);
         // Debug.Log("Here1 "+ DrawLine.MAX_SAFE_BALLS.ToString());
@@ -70,7 +70,7 @@ public abstract class BallBehavior
     }
     public void restoreOriginalThreshold()
     {
-        GameObject[] Cells = GameObject.FindGameObjectsWithTag("Cell");
+        GameObject[] Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         // Debug.Log("here 2 "+ Cells.Length.ToString() + " "+ DrawLine.MAX_SAFE_BALLS_FIXED);
         DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.safeBalls.Count + Cells.Length - 1);
         // Debug.Log("Here2 "+ DrawLine.MAX_SAFE_BALLS.ToString());

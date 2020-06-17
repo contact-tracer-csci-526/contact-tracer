@@ -155,57 +155,42 @@ public class DrawLine : MonoBehaviour
                 }                
                 angle_sum += temp;
             }
-            // Debug.Log("Center of circle "+ centroid_x.ToString() + " "+ centroid_y.ToString() +" " + radius.ToString());
-            // Debug.Log("Angle sum " +angle_sum.ToString());
+
             if (angle_sum >= MIN_ANGLE){
                 isCircle = true;
                 // now we need to find a ball which is enclosed in the circle 
                 Ball enclosedBall = null;
-                Cells = GameObject.FindGameObjectsWithTag("Cell");
-                // Debug.Log("Cells");
-                // Debug.Log(Cells);
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 for (int i = 0; i < Cells.Length; i++){
                     float ball_x = Cells[i].transform.position.x;
                     float ball_y = Cells[i].transform.position.y;
                     float distance = Mathf.Sqrt((ball_x - centroid_x) * (ball_x - centroid_x) + (ball_y - centroid_y) * (ball_y - centroid_y));
                     if (distance <= radius){
-                        // Debug.Log("Found a ball");
-                        // Debug.Log(ball_x.ToString()+" "+ball_y.ToString());
                         enclosedBall = Cells[i].GetComponent<Ball>();
-                        // Debug.Log(enclosedBall);
                         break;
                     }
                 }
                 if (enclosedBall != null){
-                    // Debug.Log("Enclosed ball is not null");
                     bool containsItem = false;
                     if (safeBalls != null && safeBalls.Count > 0){
                         containsItem = safeBalls.Contains(enclosedBall);
                     }
-                    // Debug.Log("Contains "+ containsItem.ToString());
                     if (!containsItem)
                     {
                         safeBalls.Add(enclosedBall);
                         enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
                     }
-                    // Debug.Log("Count "+ safeBalls.Count.ToString() + " " + MAX_SAFE_BALLS.ToString());
                     if (safeBalls.Count > MAX_SAFE_BALLS){
                         if (safeBalls.Count > 0)
                         {
                             Ball notSafeBall = safeBalls[0];
-                            // Debug.Log("NotSafeBall " + notSafeBall.ToString());
-                            //Debug.Log(notSafeBall);
                             notSafeBall.ballBehavior.TransformsTo(BallType.BALL);
                             safeBalls.RemoveAt(0);
-                            // Debug.Log("Count After Remove"+safeBalls.Count.ToString()+" " + MAX_SAFE_BALLS.ToString());
                         }
-                        
                     }
-                    // MAX_SAFE_BALLS = Mathf.Min(MAX_SAFE_BALLS,Cells.Length - 1);
-                    // Debug.Log(safeBalls);
                 }
             }
-            else{
+            else {
                 isCircle = false;
             }
         }

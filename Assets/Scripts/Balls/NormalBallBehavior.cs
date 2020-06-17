@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NormalBallBehavior : BallBehavior
 {
-    public static string TAG = "Cell";
+    public static string TAG = "NORMAL_BALL";
 
     public NormalBallBehavior(Ball ball)
     {
