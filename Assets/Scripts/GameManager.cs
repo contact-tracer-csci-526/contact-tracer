@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -7,40 +8,47 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameState CurrentGameState = GameState.Start;
-
     public static GameObject[] Cells;
-
     public static GameObject Virus;
-
-     private DelayedStartScript CDS;
-
-     private int infectionLimit = 100; //percent
-
-     //private bool transitionStarted = false;
-
-     private int frameCount = 0;
-
+    public static GameObject CureBall;
+    private DelayedStartScript CDS;
+    private int infectionLimit = 100; //percent
+    private int frameCount = 0;
+    private int timeRemaining = 40; //sec
 
     Text statusText;
+    Text timerText;
 
-    // Use this for initialization
+    public static int level;
+    public GameObject ballPrefab;
+
+    private int minX;
+    private int minY;
+    private int maxX;
+    private int maxY;
+    private float minDistance;
+
     void Start()
     {
-        CDS = GameObject.Find ("DelayedStart").GetComponent<DelayedStartScript> ();
-        Cells = GameObject.FindGameObjectsWithTag("Cell");
+        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        level = MainMenu.level;
+        this.minX = -3;
+        this.minY = -6;
+        this.maxX = 3;
+        this.maxY = 6;
+        this.minDistance = 0.4f;
         Virus = GameObject.Find("Virus");
+        CureBall = GameObject.FindWithTag("Cure");
+
+        Cells = new GameObject[3 * level];
+        this.CreateBallsRandomly();
+        Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
+        timerText = GameObject.Find("Timer").GetComponent<Text>();
+        timerText.text = "" + timeRemaining;
     }
 
-
-//    private bool InputTaken()
-//    {
-//        return Input.touchCount > 0 || Input.GetMouseButtonUp(0);
-//    }
-
-
-    // Update is called once per frame
     void Update()
     {
         switch (CurrentGameState)
@@ -52,39 +60,38 @@ public class GameManager : MonoBehaviour
                         Cells[i].GetComponent<Ball>().StartBall();
                     }
                     Virus.GetComponent<Ball>().StartBall();
+                    CureBall.GetComponent<Ball>().StartBall();
                     CurrentGameState = GameState.Playing;
+                    StartCoroutine(operateTimer());
                 }
                 break;
             case GameState.Playing:
-                //calc infection rate
-                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("Cell");
+                timerText.text = "" + timeRemaining;
+                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
                 int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
                 if (IR >= infectionLimit) {
                     CurrentGameState = GameState.Over;
-
+                    StopCoroutine(operateTimer());
                     Time.timeScale = 0;
                     statusText.enabled = true;
-                    //save time/score
+                } else if (timeRemaining == 0) {
+                    CurrentGameState = GameState.Over;
+                    StopCoroutine(operateTimer());
+                    Time.timeScale = 0;
+                    statusText.text = "Congrats!\n You survived!";
+                    statusText.enabled = true;
                 }
                 break;
 
             case GameState.Over:
-                //display "Game Over: Infection rate exceeded" (flash on every 10th frame?)
-                //display score/time-survived
                 frameCount++;
 
-                //return to start scene (wait on button input for direction to switch out of Game over state)
-                if (frameCount > 750) {
-                  //StartCoroutine(ToSplash());
-                  print("transition started");
+                if (frameCount > 300) {
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
                   SceneManager.LoadScene(1);
-                  //transitionStarted = true;
-                  //Time.timeScale = 1;
                 }
-
                 break;
 
             default:
@@ -99,10 +106,27 @@ public class GameManager : MonoBehaviour
         Over
     }
 
-    // IEnumerator ToSplash()
-    //  {
-    //      //yield return new WaitForSeconds(5);
-    //      SceneManager.LoadScene(0);
-    //  }
+    IEnumerator operateTimer()
+    {
+      while (true) {
+        yield return new WaitForSeconds(1);
+        timeRemaining--;
+      }
+    }
 
+    private void CreateBallsRandomly(){
+        System.Random random = new System.Random();
+
+        for(int i = 0; i < 3 * level; i++){
+            float x = Virus.transform.position.x;
+            float y = Virus.transform.position.y;
+            while (Vector2.Distance(new Vector2(x,y),new Vector2(Virus.transform.position.x,Virus.transform.position.y)) < this.minDistance)
+            {
+                x = random.Next(minX,maxX);
+                y = random.Next(minY,maxY);
+            }
+            GameObject ball = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
+            ball.transform.gameObject.tag = "NORMAL_BALL";
+        }
+    }
 }

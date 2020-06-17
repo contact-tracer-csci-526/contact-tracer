@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SafeBallBehavior : BallBehavior
 {
-    public static string TAG = "Safe";
-    
-     public SafeBallBehavior(Ball ball)
+    public static string TAG = "SAFE_BALL";
+
+    public SafeBallBehavior(Ball ball)
     {
         this.ball = ball;
     }

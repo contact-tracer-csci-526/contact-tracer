@@ -16,6 +16,9 @@ TagManager:
   - Boundary
   - Line
   - Cure
+  - Timer
+  - NORMAL_BALL
+  - SAFE_BALL
   layers:
   - Default
   - TransparentFX
