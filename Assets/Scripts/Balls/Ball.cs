@@ -25,13 +25,17 @@ public class Ball : MonoBehaviour
 
     public void StartBall()
     {
+        Debug.LogFormat("StartBall(): ballType: {0}", ballType);
+
         GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f, 1.0f);
         GetComponent<Rigidbody2D>().isKinematic = false;
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        ballBehavior.HandleOnCollisionEnter2D(other);
+        if (ballBehavior != null) {
+            ballBehavior.HandleOnCollisionEnter2D(other);
+        }
     }
 
     public void StopBall()
