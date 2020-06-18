@@ -16,9 +16,11 @@ public class GameManager : MonoBehaviour
     private int frameCount = 0;
     private int timeRemaining = 40; //sec
     public int score = 0;
+    private int expectedScore = 20;
 
     Text statusText;
     Text timerText;
+    Text scoreToPass;
 
     public static int level;
     public GameObject ballPrefab;
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
         statusText.enabled = false;
         timerText = GameObject.Find("Timer").GetComponent<Text>();
         timerText.text = "" + timeRemaining;
+        scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
+        scoreToPass.text = "" + expectedScore;
     }
 
     void Update()
@@ -82,7 +86,7 @@ public class GameManager : MonoBehaviour
                     StopCoroutine(operateTimer());
                     Time.timeScale = 0;
                     Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL") + GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                    statusText.text = "Congrats!\n You survived! Score:"+ Uninfected.Length;
+                    statusText.text = "Congrats!\n You survived! Score: " + Uninfected.Length + "\nExpected: " + expectedScore;
                     statusText.enabled = true;
                 }
                 break;
