@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class CureBallBehavior : BallBehavior
 {
-	public static string TAG="Cure";
+	public static string TAG = "Cure";
 
 	public CureBallBehavior(Ball ball){
-	   this.ball=ball;
-       //Debug.Log(this.ball.currentTime);
+	   this.ball = ball;
 	}
 
-     public override void HandleOnCollisionEnter2D(Collision2D other)
+    public override void TransformsTo(BallType ballType) {
+    }
+
+    public override void HandleOnCollisionEnter2D(Collision2D other)
     {
-        // Debug.Log("collision "+this.ball.currentTime);
-        Ball otherBall=other.gameObject.GetComponent<Ball>();
-        if(otherBall!=null){
+        Ball otherBall = other.gameObject.GetComponent<Ball>();
+        if (otherBall != null) {
             bool isVirusHit=otherBall.ballType==BallType.VIRUS;
             if(isVirusHit){
                 TransformsTo(BallType.CURE);
