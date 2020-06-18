@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
                     CurrentGameState = GameState.Over;
                     StopCoroutine(operateTimer());
                     Time.timeScale = 0;
-                    Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                    Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL") + GameObject.FindGameObjectsWithTag("SAFE_BALL");
                     statusText.text = "Congrats!\n You survived! Score:"+ Uninfected.Length;
                     statusText.enabled = true;
                 }
