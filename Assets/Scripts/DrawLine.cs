@@ -17,7 +17,7 @@ public class DrawLine : MonoBehaviour
 
     private float lineLength;
 
-    public const float MAX_LENGTH = 7.0f;
+    public const float MAX_LENGTH = 6.0f;
     public const string LINE = "Line";
     public float angle;
     public bool isCircle;

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
-    public static float SPEED_RATE = 1.5f;
+    public static float SPEED_RATE = 2.25f;
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
