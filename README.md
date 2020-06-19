@@ -1,6 +1,20 @@
-[![unofficial Google Analytics for GitHub](https://gaforgithub.azurewebsites.net/api?repo=BrickGameUnity)](https://github.com/dgkanatsios/gaforgithub)
-
 # Contact Tracers
+Contact Tracers is a survival game. It involves two sets of balls that bounce randomly around the screen. The gameplay involves pushing uninfected balls out of the way of infected ones and the virus.
 
-Source code for a Contact Tracer (like Arkanoid) built in Unity. 
-Source for tutorial: For a blog post check [here] (https://dgkanatsios.com/2014/06/30/brick-game-like-arkanoid-tutorial-in-unity-source-code-included-3/) whereas you can play the game [here](http://unitysamples.azurewebsites.net/BrickGame.html)
+## Motivation
+To be described later...
+
+## Game Mechanics
+To be described later...
+
+## Contributors
+
+- Patrick Assaf
+- Joseph Beavans www.linkedin.com/in/joseph-beavans
+- Venkata Sai Himabindu Kandukuri https://www.linkedin.com/in/himabindu-kandukuri-a2690356/
+- Gustavo Moncada https://www.linkedin.com/in/gustavo-moncada-12591463
+- Elden Park https://www.linkedin.com/in/eldenpark/
+- Priya Patel https://www.linkedin.com/in/priya-patel-usc/
+- Bhagyashree Rawal https://www.linkedin.com/in/bhagyashreerawal/
+- Rucha Tambe https://www.linkedin.com/in/rucha-tambe/
+- Jungwon Yoon
