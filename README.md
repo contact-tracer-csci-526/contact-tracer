@@ -17,4 +17,4 @@ To be described later...
 - Priya Patel https://www.linkedin.com/in/priya-patel-usc/
 - Bhagyashree Rawal https://www.linkedin.com/in/bhagyashreerawal/
 - Rucha Tambe https://www.linkedin.com/in/rucha-tambe/
-- Jungwon Yoon
+- Jungwon Yoon https://www.linkedin.com/in/foggyoon/
