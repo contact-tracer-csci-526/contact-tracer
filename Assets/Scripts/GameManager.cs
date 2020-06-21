@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameState CurrentGameState = GameState.Start;
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     private int maxY;
     private float minDistance;
 
+    private int screenHeight;
+    private int screenWidth;
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
@@ -44,6 +47,10 @@ public class GameManager : MonoBehaviour
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
 
+        //change the size of virus ball and cure ballPrefab
+        Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+        CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
+
         Cells = new GameObject[3 * level];
         this.CreateBallsRandomly();
         Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
@@ -53,6 +60,11 @@ public class GameManager : MonoBehaviour
         timerText.text = "Time Remaining: " + timeRemaining;
         scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
         scoreToPass.text = "Expected Score: " + expectedScore;
+
+        screenHeight=Screen.height;
+        screenWidth=Screen.width;
+
+        Debug.Log(screenWidth+" "+screenHeight);
     }
 
     void Update()
@@ -130,12 +142,17 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < 3 * level; i++){
             float x = Virus.transform.position.x;
             float y = Virus.transform.position.y;
+         //   ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
             while (Vector2.Distance(new Vector2(x,y),new Vector2(Virus.transform.position.x,Virus.transform.position.y)) < this.minDistance)
             {
                 x = random.Next(minX,maxX);
                 y = random.Next(minY,maxY);
             }
             GameObject ball = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
+
+            //found this piece of code online
+
+            ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
