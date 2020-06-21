@@ -186,6 +186,7 @@ public class DrawLine : MonoBehaviour
                     }
                     if (!containsItem)
                     {
+                        Destroy(enclosedBall.GetComponent<CircleCollider2D>());
                         safeBalls.Add(enclosedBall);
                         enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
                     }
