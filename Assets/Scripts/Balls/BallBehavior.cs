@@ -33,4 +33,8 @@ public abstract class BallBehavior
         DrawLine.MAX_SAFE_BALLS = Mathf.Min(DrawLine.MAX_SAFE_BALLS_FIXED,DrawLine.safeBalls.Count + Cells.Length - 1);
         // Debug.Log("Here2 "+ DrawLine.MAX_SAFE_BALLS.ToString());
     }
+
+    // protected Vector3 getRadius(){
+        
+    // }
 }
