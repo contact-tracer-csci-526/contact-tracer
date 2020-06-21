@@ -17,7 +17,7 @@ public class DrawLine : MonoBehaviour
 
     private float lineLength;
 
-    public const float MAX_LENGTH = 7.0f;
+    public const float MAX_LENGTH = 6.0f;
     public const string LINE = "Line";
     public float angle;
     public bool isCircle;
@@ -166,11 +166,15 @@ public class DrawLine : MonoBehaviour
                 // now we need to find a ball which is enclosed in the circle 
                 Ball enclosedBall = null;
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                float ballRadius = 0;
+                if (Cells.Length > 0){
+                    ballRadius = Cells[0].GetComponent<CircleCollider2D>().radius;
+                }
                 for (int i = 0; i < Cells.Length; i++){
                     float ball_x = Cells[i].transform.position.x;
                     float ball_y = Cells[i].transform.position.y;
                     float distance = Mathf.Sqrt((ball_x - centroid_x) * (ball_x - centroid_x) + (ball_y - centroid_y) * (ball_y - centroid_y));
-                    if (distance <= radius){
+                    if (distance + ballRadius <= radius){
                         enclosedBall = Cells[i].GetComponent<Ball>();
                         break;
                     }

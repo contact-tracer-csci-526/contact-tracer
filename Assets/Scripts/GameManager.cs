@@ -16,9 +16,11 @@ public class GameManager : MonoBehaviour
     private int frameCount = 0;
     private int timeRemaining = 40; //sec
     public int score = 0;
+    private int expectedScore = 20;
 
     Text statusText;
     Text timerText;
+    Text scoreToPass;
 
     public static int level;
     public GameObject ballPrefab;
@@ -48,7 +50,9 @@ public class GameManager : MonoBehaviour
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
         timerText = GameObject.Find("Timer").GetComponent<Text>();
-        timerText.text = "" + timeRemaining;
+        timerText.text = "Time Remaining: " + timeRemaining;
+        scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
+        scoreToPass.text = "Expected Score: " + expectedScore;
     }
 
     void Update()
@@ -68,10 +72,11 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Playing:
-                timerText.text = "" + timeRemaining;
+                timerText.text = "Time Remaining: " + timeRemaining;
                 GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL"); 
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
-                int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length);
+                int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length + Frozen.Length);
                 if (IR >= infectionLimit) {
                     CurrentGameState = GameState.Over;
                     StopCoroutine(operateTimer());
@@ -81,15 +86,15 @@ public class GameManager : MonoBehaviour
                     CurrentGameState = GameState.Over;
                     StopCoroutine(operateTimer());
                     Time.timeScale = 0;
-                    Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                    statusText.text = "Congrats!\n You survived! Score:"+ Uninfected.Length;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+                    statusText.text = "Congrats!\n You survived! Score: " + Score*10 + "\nExpected: " + expectedScore;
                     statusText.enabled = true;
                 }
                 break;
 
             case GameState.Over:
                 frameCount++;
-                
+
                 if (frameCount > 300) {
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
