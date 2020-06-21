@@ -7,28 +7,27 @@ public class Ball : MonoBehaviour
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
+    private Rigidbody2D rigidbody;
 
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = Vector2.zero;
         ballBehavior = BallBehaviorFactory.Get(ballType, this);
     }
 
     void Update()
     {
         if (GameManager.CurrentGameState == GameManager.GameState.Playing) {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            Vector2 v = rb.velocity.normalized;
-            rb.velocity = v * SPEED_RATE;
+            Vector2 v = rigidbody.velocity.normalized;
+            rigidbody.velocity = v * SPEED_RATE;
         }
     }
 
     public void StartBall()
     {
-        Debug.LogFormat("StartBall(): ballType: {0}", ballType);
-
-        GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f, 1.0f);
-        GetComponent<Rigidbody2D>().isKinematic = false;
+        rigidbody.velocity = new Vector2(1.0f, 1.0f);
+        rigidbody.isKinematic = false;
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -40,10 +39,8 @@ public class Ball : MonoBehaviour
 
     public void StopBall()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-        GetComponent<Rigidbody2D>().isKinematic = true;
-        //Destroy(GetComponent<Rigidbody2D>);
+        rigidbody.velocity = new Vector2(0.0f, 0.0f);
+        rigidbody.isKinematic = true;
     }
-
 
 }
