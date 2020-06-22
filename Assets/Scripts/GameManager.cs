@@ -13,14 +13,14 @@ public class GameManager : MonoBehaviour
     public static GameObject Virus;
     public static GameObject CureBall;
     private DelayedStartScript CDS;
+    private Loading Loading;
     private int infectionLimit = 100; //percent
     private int frameCount = 0;
-    private int timeRemaining = 40; //sec
+    //private int timeRemaining = 40; //sec
     public int score = 0;
     private int expectedScore = 20;
 
     Text statusText;
-    Text timerText;
     Text scoreToPass;
 
     public static int level;
@@ -35,9 +35,17 @@ public class GameManager : MonoBehaviour
 
     private int screenHeight;
     private int screenWidth;
+     public Image loading;
+    public Text timeText;
+    public int minutes;
+     public int sec;
+     int totalSeconds = 0;
+    int TOTAL_SECONDS = 0;
+    float fillamount;
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        //Loading = GameObject.Find("TIMER").GetComponent<Loading>();
         level = MainMenu.level;
         this.minX = -3;
         this.minY = -6;
@@ -46,7 +54,8 @@ public class GameManager : MonoBehaviour
         this.minDistance = 0.4f;
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
-
+        minutes=0;
+        sec= 40;
         //change the size of virus ball and cure ballPrefab
         Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
@@ -56,8 +65,18 @@ public class GameManager : MonoBehaviour
         Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
-        timerText = GameObject.Find("Timer").GetComponent<Text>();
-        timerText.text = "Time Remaining: " + timeRemaining;
+        loading = GameObject.Find("fg").GetComponent<Image>();
+        timeText = GameObject.Find("TimeText").GetComponent<Text>();
+       
+        timeText.text = minutes + " : " + sec;
+         if (minutes > 0)
+            totalSeconds += minutes * 60;
+        if (sec > 0)
+             totalSeconds += sec;
+            TOTAL_SECONDS = totalSeconds;
+           
+        //timerText = GameObject.Find("Timer").GetComponent<Text>();
+        //timerText.text = "Time Remaining: " + timeRemaining;
         scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
         scoreToPass.text = "Expected Score: " + expectedScore;
 
@@ -80,23 +99,27 @@ public class GameManager : MonoBehaviour
                     Virus.GetComponent<Ball>().StartBall();
                     CureBall.GetComponent<Ball>().StartBall();
                     CurrentGameState = GameState.Playing;
-                    StartCoroutine(operateTimer());
+                    //Loading.StartCoroutine (second ());
+                    //StartCoroutine(operateTimer());
+                     StartCoroutine (second ());
+                    
                 }
                 break;
             case GameState.Playing:
-                timerText.text = "Time Remaining: " + timeRemaining;
+                //timerText.text = "Time Remaining: " + timeRemaining;
                 GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL"); 
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
                 int IR = (100 * Infected.Length) / (Uninfected.Length + Infected.Length + Frozen.Length);
                 if (IR >= infectionLimit) {
                     CurrentGameState = GameState.Over;
-                    StopCoroutine(operateTimer());
+                    StopCoroutine (second ());
+                    //StopCoroutine(operateTimer());
                     Time.timeScale = 0;
                     statusText.enabled = true;
-                } else if (timeRemaining == 0) {
-                    CurrentGameState = GameState.Over;
-                    StopCoroutine(operateTimer());
+                } else if (sec == 0 && minutes == 0) {
+                    timeText.text = "Time's Up!";
+                    StopCoroutine (second ());
                     Time.timeScale = 0;
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
                     if(Score == expectedScore)
@@ -134,13 +157,27 @@ public class GameManager : MonoBehaviour
         Over
     }
 
-    IEnumerator operateTimer()
-    {
-      while (true) {
-        yield return new WaitForSeconds(1);
-        timeRemaining--;
-      }
-    }
+    IEnumerator second()
+ {
+  yield return new WaitForSeconds (1f);
+  if(sec > 0)
+  sec--;
+  if (sec == 0 && minutes != 0) {
+   sec = 60;
+   minutes--;
+  } 
+  timeText.text = minutes + " : " + sec;
+  fillLoading ();
+  StartCoroutine (second ());
+ }
+
+ void fillLoading()
+ {
+  totalSeconds--;
+  float fill = (float)totalSeconds/TOTAL_SECONDS;
+  loading.fillAmount = fill;
+ }
+
 
     private void CreateBallsRandomly(){
         System.Random random = new System.Random();
