@@ -42,15 +42,16 @@ public class GameManager : MonoBehaviour
      int totalSeconds = 0;
     int TOTAL_SECONDS = 0;
     float fillamount;
+    int goToMenu = 0;
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
         //Loading = GameObject.Find("TIMER").GetComponent<Loading>();
         level = MainMenu.level;
-        this.minX = -3;
-        this.minY = -6;
-        this.maxX = 3;
-        this.maxY = 6;
+        this.minX = -2;
+        this.minY = -5;
+        this.maxX = 2;
+        this.maxY = 5;
         this.minDistance = 0.4f;
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
@@ -83,7 +84,15 @@ public class GameManager : MonoBehaviour
         screenHeight=Screen.height;
         screenWidth=Screen.width;
 
+        StartCoroutine(sceneLoader());
+
         Debug.Log(screenWidth+" "+screenHeight);
+    }
+
+    IEnumerator sceneLoader() {
+        yield return new WaitUntil(() => goToMenu == 1);
+        yield return new WaitForSecondsRealtime(3);
+        SceneManager.LoadScene(1);
     }
 
     void Update()
@@ -129,6 +138,7 @@ public class GameManager : MonoBehaviour
                     {
                         statusText.text = "Level failed! \n Your Score: " + Score * 10 + "\nExpected: " + expectedScore;
                     }
+                    goToMenu = 1;
                     statusText.enabled = true;
                 }
                 break;
