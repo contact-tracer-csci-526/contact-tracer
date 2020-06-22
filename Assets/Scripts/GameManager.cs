@@ -99,7 +99,13 @@ public class GameManager : MonoBehaviour
                     StopCoroutine(operateTimer());
                     Time.timeScale = 0;
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                    statusText.text = "Congrats!\n You survived! Score: " + Score*10 + "\nExpected: " + expectedScore;
+                    if(Score == expectedScore)
+                    {
+                        statusText.text = "Congrats!\n You survived! Score: " + Score * 10 + "\nExpected: " + expectedScore;
+                    } else
+                    {
+                        statusText.text = "Level failed! \n Your Score: " + Score * 10 + "\nExpected: " + expectedScore;
+                    }
                     statusText.enabled = true;
                 }
                 break;
