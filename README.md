@@ -12,7 +12,7 @@ To be described later...
 To be described later...
 
 ## Contributors
-- Patrick Assaf
+- Patrick Assaf https://www.linkedin.com/in/patrick-assaf-964029161
 - Joseph Beavans https://www.linkedin.com/in/joseph-beavans
 - Venkata Sai Himabindu Kandukuri https://www.linkedin.com/in/himabindu-kandukuri-a2690356/
 - Gustavo Moncada https://www.linkedin.com/in/gustavo-moncada-12591463
