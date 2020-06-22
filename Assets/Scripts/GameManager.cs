@@ -39,10 +39,10 @@ public class GameManager : MonoBehaviour
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
         level = MainMenu.level;
-        this.minX = -3;
-        this.minY = -6;
-        this.maxX = 3;
-        this.maxY = 6;
+        this.minX = -2;
+        this.minY = -5;
+        this.maxX = 2;
+        this.maxY = 5;
         this.minDistance = 0.4f;
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
