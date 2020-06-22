@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
                     StopCoroutine (second ());
                     Time.timeScale = 0;
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                    if(Score == expectedScore)
+                    if(Score * 10 >= expectedScore)
                     {
                         statusText.text = "Congrats!\n You survived! Score: " + Score * 10 + "\nExpected: " + expectedScore;
                     } else
