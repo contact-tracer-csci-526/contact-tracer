@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 0;
                     statusText.enabled = true;
                 } else if (sec == 0 && minutes == 0) {
+                    CurrentGameState = GameState.Over;
                     timeText.text = "Time's Up!";
                     StopCoroutine (second ());
                     Time.timeScale = 0;
