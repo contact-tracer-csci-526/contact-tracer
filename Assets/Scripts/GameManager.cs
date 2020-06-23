@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public static int level;
     public GameObject ballPrefab;
     public GameObject[] Uninfected;
+    public GameObject[] Frozen;
 
     private int minX;
     private int minY;
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 0;
                     statusText.enabled = true;
                 } else if (sec == 0 && minutes == 0) {
-                    CurrentGameState = GameState.Over;
+                    CurrentGameState = GameState.Start;
                     timeText.text = "Time's Up!";
                     StopCoroutine (second ());
                     Time.timeScale = 0;
@@ -148,11 +149,13 @@ public class GameManager : MonoBehaviour
                 frameCount++;
 
                 if (frameCount > 300) {
-                  CurrentGameState =  GameState.Start;
-                  Time.timeScale = 1;
-                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                    statusText.text = "Score:" + Uninfected.Length;
-                    SceneManager.LoadScene(1);
+                    CurrentGameState =  GameState.Start;
+                    Time.timeScale = 0;
+                    Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                    Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL"); 
+                    int Score = Uninfected.Length + Frozen.Length;
+                    statusText.text = "Score: " + Score*10;
+                    goToMenu = 1;
                 }
                 break;
 
