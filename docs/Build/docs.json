@@ -1,7 +1,7 @@
 {
-"companyName": "Unity",
-"productName": "Sample Assets",
-"productVersion": "1.0",
+"companyName": "contact-tracer",
+"productName": "Contact Tracer",
+"productVersion": "0.0.0",
 "dataUrl": "docs.data.unityweb",
 "wasmCodeUrl": "docs.wasm.code.unityweb",
 "wasmFrameworkUrl": "docs.wasm.framework.unityweb",
