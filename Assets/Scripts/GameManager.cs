@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-             case GameState.MenuRestart:
+             case GameState.Restart:
 
                  CurrentGameState =GameState.Start;
                  Time.timeScale = 1;
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         Start,
         Playing,
         Over,
-        MenuRestart
+        Restart
     }
 
     IEnumerator second()

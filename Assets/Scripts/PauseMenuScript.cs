@@ -35,7 +35,7 @@ public class PauseMenuScript : MonoBehaviour
     public void LoadMenu()
     {
         //Debug.Log("Menu");
-        GameManager.CurrentGameState = GameManager.GameState.MenuRestart;
+        GameManager.CurrentGameState = GameManager.GameState.Restart;
         Time.timeScale = 1f;
         SceneManager.LoadScene("menu");
        
@@ -47,5 +47,13 @@ public class PauseMenuScript : MonoBehaviour
     {
         //Debug.Log("Quit");
         Application.Quit();
+    }
+
+    public void Restart()
+
+    {   
+        Time.timeScale = 1f;
+         GameManager.CurrentGameState = GameManager.GameState.Restart;
+         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
