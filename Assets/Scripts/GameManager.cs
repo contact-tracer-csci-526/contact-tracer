@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
      int totalSeconds = 0;
     int TOTAL_SECONDS = 0;
     float fillamount;
+
+
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
@@ -146,6 +148,12 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
+             case GameState.MenuRestart:
+
+                 CurrentGameState =GameState.Start;
+                 Time.timeScale = 1;
+                break; 
+
             default:
                 break;
         }
@@ -155,7 +163,8 @@ public class GameManager : MonoBehaviour
     {
         Start,
         Playing,
-        Over
+        Over,
+        MenuRestart
     }
 
     IEnumerator second()
