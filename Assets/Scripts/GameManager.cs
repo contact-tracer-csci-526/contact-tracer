@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public static GameObject[] Cells;
     public static GameObject Virus;
     public static GameObject CureBall;
+
+    public GameObject GameOver;
     private DelayedStartScript CDS;
     private Loading Loading;
     private int infectionLimit = 100; //percent
@@ -21,9 +23,11 @@ public class GameManager : MonoBehaviour
     private int expectedScore = 20;
 
     Text statusText;
+
+
     Text scoreToPass;
 
-    public static int level;
+    public  int level;
     public GameObject ballPrefab;
     public GameObject[] Uninfected;
 
@@ -45,8 +49,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        //GameOver =GameObject.Find("GameOver");
         //Loading = GameObject.Find("TIMER").GetComponent<Loading>();
-        level = MainMenu.level;
+        //level = MainMenu.p;
         this.minX = -2;
         this.minY = -5;
         this.maxX = 2;
@@ -55,7 +60,7 @@ public class GameManager : MonoBehaviour
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
         minutes=0;
-        sec= 40;
+        sec= 05;
         //change the size of virus ball and cure ballPrefab
         Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
@@ -126,9 +131,27 @@ public class GameManager : MonoBehaviour
                     if(Score * 10 >= expectedScore)
                     {
                         statusText.text = "Congrats!\n You survived! Score: " + Score * 10 + "\nExpected: " + expectedScore;
+                        if(level==1)
+                        {
+                        CurrentGameState = GameState.Start;
+                        Time.timeScale= 1f;
+                        SceneManager.LoadScene("score");
+                        //GameOver.SetActive(true);
+                        }
+                        else if(level==2)
+                        {
+                        CurrentGameState = GameState.Start;
+                        Time.timeScale= 1f;
+                        SceneManager.LoadScene("score");
+                        //GameOver.SetActive(true);
+
+                        }
+                        
+                        
                     } else
                     {
                         statusText.text = "Level failed! \n Your Score: " + Score * 10 + "\nExpected: " + expectedScore;
+                        CurrentGameState = GameState.Over;
                     }
                     statusText.enabled = true;
                 }
@@ -142,7 +165,8 @@ public class GameManager : MonoBehaviour
                   Time.timeScale = 1;
                     Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
                     statusText.text = "Score:" + Uninfected.Length;
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadScene("score");
+                    //GameOver.SetActive(true);
                 }
                 break;
 

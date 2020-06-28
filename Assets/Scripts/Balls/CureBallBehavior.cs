@@ -5,6 +5,7 @@ using UnityEngine;
 public class CureBallBehavior : BallBehavior
 {
 	public static string TAG = "Cure";
+    private AudioSource source;
 
 	public CureBallBehavior(Ball ball){
 	   this.ball = ball;
@@ -14,13 +15,15 @@ public class CureBallBehavior : BallBehavior
     }
 
     public override void HandleOnCollisionEnter2D(Collision2D other)
-    {
+    {   
+        source = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         Ball otherBall = other.gameObject.GetComponent<Ball>();
         if (otherBall != null) {
             bool isVirusHit=otherBall.ballType==BallType.VIRUS;
             if(isVirusHit){
                 TransformsTo(BallType.CURE);
             }
+            source.Play();
         }
     }
 }
