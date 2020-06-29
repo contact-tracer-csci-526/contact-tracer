@@ -15,25 +15,14 @@ public class SafeBallBehavior : BallBehavior
     {
     }
 
-    public override void TransformsTo(BallType ballType) {
+    public override void HandleOnCollisionWith(BallType ballType) {
         if (ballType == BallType.NORMAL) {
-            TransformsToNormalBall();
+            HandleOnCollisionWithNormalBall();
         }
     }
 
-    private void TransformsToNormalBall() {
-        Transform transform = ball.transform;
-        SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
-        currentSprite.color = new Color(1f,1f,1f,1f);
-        ball.gameObject.AddComponent<CircleCollider2D>();
-        CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
-
-        Sprite ballSprite = Resources.Load<Sprite>("Sprites/ball");
-        transform.gameObject.tag = NormalBallBehavior.TAG;
-        ballCollider.radius = 0.19f;
-        currentSprite.sprite = ballSprite;
-        ball.ballBehavior = BallBehaviorFactory.Get(BallType.NORMAL, ball);
-        ball.ballType = BallType.NORMAL;
+    private void HandleOnCollisionWithNormalBall() {
+        ball.ballTransform.TransformsToNormalBall();
         ball.StartBall();
     }
 }

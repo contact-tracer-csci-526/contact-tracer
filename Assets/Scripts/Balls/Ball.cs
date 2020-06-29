@@ -4,10 +4,17 @@ using System.Collections;
 public class Ball : MonoBehaviour
 {
     public static float SPEED_RATE = 2.25f;
+
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
+    public BallTransform ballTransform;
+
     private Rigidbody2D rigidbody;
+
+    public Ball() {
+        ballTransform = new BallTransform(this);
+    }
 
     void Start()
     {
@@ -18,7 +25,7 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.CurrentGameState == GameManager.GameState.Playing) {
+        if (GameManager.getInstance().currentGameState == GameState.Playing) {
             Vector2 v = rigidbody.velocity.normalized;
             rigidbody.velocity = v * SPEED_RATE;
         }
@@ -42,5 +49,4 @@ public class Ball : MonoBehaviour
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
         rigidbody.isKinematic = true;
     }
-
 }

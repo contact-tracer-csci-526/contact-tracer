@@ -22,29 +22,20 @@ public class VirusBallBehavior : BallBehavior
             }
             bool isCureBallHit=otherBall.ballType==BallType.CURE;
             if (isCureBallHit && !this.ball.isOriginalVirus) {
-                TransformsToNormalBall();
+                HandleOnCollisionWith(BallType.NORMAL);
             }
         }
     }
 
-    public override void TransformsTo(BallType ballType) {
+    public override void HandleOnCollisionWith(BallType ballType)
+    {
         if (ballType == BallType.NORMAL) {
-            TransformsToNormalBall();
+            HandleOnCollisionWithNormalBall();
         }
     }
 
-    private void TransformsToNormalBall()
+    private void HandleOnCollisionWithNormalBall()
     {
-        Transform transform = ball.transform;
-        CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
-        SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
-
-        Sprite ballSprite = Resources.Load<Sprite>("Sprites/ball");
-        transform.gameObject.tag = NormalBallBehavior.TAG;
-        ballCollider.radius = 0.19f;
-        currentSprite.sprite = ballSprite;
-        ball.ballBehavior = BallBehaviorFactory.Get(BallType.NORMAL, ball);
-        ball.ballType = BallType.NORMAL;
-        restoreOriginalThreshold();
+        ball.ballTransform.TransformsToNormalBall();
     }
 }
