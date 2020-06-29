@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class DrawLine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // following variable stores the prefab of our line object
+    public static List<Ball> safeBalls;
+    public static int MAX_SAFE_BALLS = 2;
+    public static int MAX_SAFE_BALLS_FIXED = 2;
+    public static GameObject[] Cells;
+
     public GameObject linePrefab;
     public GameObject currentLine;
-
     public LineRenderer lineRenderer;
     public EdgeCollider2D edgeCollider2D;
-
-    // following variable keeps track of the fingure position of the player
-    public List<Vector2> fingerPositions;
-
-    private float lineLength;
-
     public const float MAX_LENGTH = 6.0f;
     public const string LINE = "Line";
     public float angle;
@@ -25,16 +21,14 @@ public class DrawLine : MonoBehaviour
     public float centroid_y;
     public float radius;
     public int MIN_ANGLE = 276;
+    public List<Vector2> fingerPositions;
 
-    public static List<Ball> safeBalls;
-    public static int MAX_SAFE_BALLS = 2;
-    // this will be fixed for a level and when number of balls get increased we need to restore the dynamic threshold above back to this value
-    public static int MAX_SAFE_BALLS_FIXED = 2;
-    private static GameObject[] Cells;
-    
-     private DelayedStartScript CDS;
+    private float lineLength;
+    private DelayedStartScript CDS;
+
     void Start()
     {
+        linePrefab = Resources.Load("Prefabs/Line") as GameObject;
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
         lineLength = 0;
         angle = 0;
@@ -42,20 +36,18 @@ public class DrawLine : MonoBehaviour
         safeBalls = new List<Ball>();
     }
 
-    // Update is called once per frame
     void Update()
-    {    
+    {
         if (CDS.counterDownDone == true)
         {
-            if(!currentLine) {
-            lineLength = 0.0f;
-            angle = 0;
-            isCircle = false;
-            CreateLine();
-             }
-        // we will call the CreateLine function when the player has touched the screen 
-        // the following condition checks for the left mouse button
-                if(Input.GetMouseButtonDown(0)){
+            if (!currentLine) {
+                lineLength = 0.0f;
+                angle = 0;
+                isCircle = false;
+                CreateLine();
+            }
+
+            if (Input.GetMouseButtonDown(0)) {
             // before creating the line we need to remove the previously added line
                     if (currentLine){
                 Destroy (currentLine);
@@ -86,7 +78,7 @@ public class DrawLine : MonoBehaviour
         }
     }
 
-    // the following function creates a new line and save that line to a different variable and 
+    // the following function creates a new line and save that line to a different variable and
     // it will set first two points of the line renderer and edge collider components
     void CreateLine()
     {
@@ -96,16 +88,16 @@ public class DrawLine : MonoBehaviour
         currentLine.transform.gameObject.tag = LINE;
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider2D = currentLine.GetComponent<EdgeCollider2D>();
-        
+
         // we also clear the finger positions list containing the positions for previous line
         fingerPositions.Clear();
-        
+
         // we need to add the coordinates of the screen where the user touched in the finger positions list
         fingerPositions.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         // we add the same point because currently the start and end of the line is the same point
         fingerPositions.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        
-        // now we set the first two positions of the line renderer component 
+
+        // now we set the first two positions of the line renderer component
         lineRenderer.SetPosition(0,fingerPositions[0]);
         lineRenderer.SetPosition(1,fingerPositions[1]);
 
@@ -117,14 +109,13 @@ public class DrawLine : MonoBehaviour
     void UpdateLine(Vector2 newFingerPosition)
     {
         fingerPositions.Add(newFingerPosition);
-        
+
         // we update the line renderer
         lineRenderer.positionCount++;
         lineRenderer.SetPosition(lineRenderer.positionCount - 1,newFingerPosition);
-        
+
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
-
     }
 
     private void CheckCircle(){
@@ -132,12 +123,11 @@ public class DrawLine : MonoBehaviour
             isCircle = false;
             radius = 0;
         }
-        else
-        {    // we first find the centroid from all the points
+        else {    // we first find the centroid from all the points
             centroid_x = 0;
             centroid_y = 0;
             radius = 0;
-            for (int i = 0; i < fingerPositions.Count ; i++ ){
+            for (int i = 0; i < fingerPositions.Count ; i++ ) {
                 centroid_x += fingerPositions[i].x;
                 centroid_y += fingerPositions[i].y;
             }
@@ -145,7 +135,7 @@ public class DrawLine : MonoBehaviour
             centroid_y /= fingerPositions.Count;
             // now we calculate sum of all the angles from the center between adjacent pair of points
             float angle_sum = 0;
-            for (int i = 0; i < fingerPositions.Count - 1 ; i++ ){
+            for (int i = 0; i < fingerPositions.Count - 1 ; i++) {
                 float x1 = (float)fingerPositions[i].x - centroid_x;
                 float y1 = (float)fingerPositions[i].y - centroid_y;
                 float mag1 = Mathf.Sqrt(x1*x1 + y1*y1);
@@ -157,20 +147,20 @@ public class DrawLine : MonoBehaviour
                 float distance = Mathf.Sqrt((fingerPositions[i].x - centroid_x) * (fingerPositions[i].x - centroid_x) + (fingerPositions[i].y - centroid_y) * (fingerPositions[i].y - centroid_y));
                 if (radius < distance){
                     radius = distance;
-                }                
+                }
                 angle_sum += temp;
             }
 
-            if (angle_sum >= MIN_ANGLE){
+            if (angle_sum >= MIN_ANGLE) {
                 isCircle = true;
-                // now we need to find a ball which is enclosed in the circle 
+                // now we need to find a ball which is enclosed in the circle
                 Ball enclosedBall = null;
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 float ballRadius = 0;
-                if (Cells.Length > 0){
+                if (Cells.Length > 0) {
                     ballRadius = Cells[0].GetComponent<CircleCollider2D>().radius;
                 }
-                for (int i = 0; i < Cells.Length; i++){
+                for (int i = 0; i < Cells.Length; i++) {
                     float ball_x = Cells[i].transform.position.x;
                     float ball_y = Cells[i].transform.position.y;
                     float distance = Mathf.Sqrt((ball_x - centroid_x) * (ball_x - centroid_x) + (ball_y - centroid_y) * (ball_y - centroid_y));
@@ -179,7 +169,7 @@ public class DrawLine : MonoBehaviour
                         break;
                     }
                 }
-                if (enclosedBall != null){
+                if (enclosedBall != null) {
                     bool containsItem = false;
                     if (safeBalls != null && safeBalls.Count > 0){
                         containsItem = safeBalls.Contains(enclosedBall);
@@ -188,13 +178,12 @@ public class DrawLine : MonoBehaviour
                     {
                         Destroy(enclosedBall.GetComponent<CircleCollider2D>());
                         safeBalls.Add(enclosedBall);
-                        enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
+                        enclosedBall.ballTransform.TransformsToSafeBall();
                     }
                     if (safeBalls.Count > MAX_SAFE_BALLS){
-                        if (safeBalls.Count > 0)
-                        {
+                        if (safeBalls.Count > 0) {
                             Ball safeBall = safeBalls[0];
-                            safeBall.ballBehavior.TransformsTo(BallType.NORMAL);
+                            safeBall.ballTransform.TransformsToNormalBall();
                             safeBalls.RemoveAt(0);
                         }
                     }

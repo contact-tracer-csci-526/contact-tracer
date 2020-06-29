@@ -5,23 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-   // public static bool GamePause = false;
-
-    public GameObject pauseMenuUI, PauseButton;
-    
-
-
-    // Update is called once per frame
-   
+    public GameObject pauseMenuUI;
+    public GameObject PauseButton;
 
     public void Resume()
     {
         Time.timeScale = 1f;
         pauseMenuUI.SetActive(false);
         PauseButton.SetActive(true);
-       
-        //GamePause = false;
     }
 
     public void Pause()
@@ -29,31 +20,24 @@ public class PauseMenuScript : MonoBehaviour
         pauseMenuUI.SetActive(true);
         PauseButton.SetActive(false);
         Time.timeScale = 0f;
-        //GamePause = true;
     }
 
     public void LoadMenu()
     {
-        //Debug.Log("Menu");
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
+        GameManager.getInstance().currentGameState = GameState.Restart;
         Time.timeScale = 1f;
         SceneManager.LoadScene("menu");
-       
-        
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()
     {
-        //Debug.Log("Quit");
         Application.Quit();
     }
 
     public void Restart()
-
-    {   
+    {
         Time.timeScale = 1f;
-         GameManager.CurrentGameState = GameManager.GameState.Restart;
+         GameManager.getInstance().currentGameState = GameState.Restart;
          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
