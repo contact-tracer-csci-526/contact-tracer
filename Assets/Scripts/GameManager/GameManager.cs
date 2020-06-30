@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         maxY = 5;
         minDistance = 0.4f;
         minutes = 0;
-        sec = 03;
+        sec = 40;
 
         CreateBallsRandomly();
         statusText = GameObject.Find("Status").GetComponent<Text>();
