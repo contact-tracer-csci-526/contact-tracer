@@ -12,14 +12,20 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState = GameState.Start;
 
     private List<GameObject> balls;
-    private int level;
+    public int level;
     private GameObject[] Uninfected;
+    public GameObject GameOverWin;
+    public GameObject GameOverLose;
     private Image loading;
     private Text timeText;
     private Loading Loading;
     private DelayedStartScript CDS;
     private Text statusText;
     private Text scoreToPass;
+
+    public Text scoreWin; 
+
+    public Text scoreLose; 
     private int score = 0;
     private int minutes;
     private int sec;
@@ -49,7 +55,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
-        level = MainMenu.level;
+        //level = MainMenu.level;
         minX = -2;
         minY = -5;
         maxX = 2;
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
         loading = GameObject.Find("fg").GetComponent<Image>();
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
         timeText.text = minutes + " : " + sec;
+        
 
         if (minutes > 0)
             totalSeconds += minutes * 60;
@@ -98,29 +105,42 @@ public class GameManager : MonoBehaviour
                 int IR = (100 * Infected.Length)
                          / (Uninfected.Length + Infected.Length + Frozen.Length);
                 if (IR >= infectionLimit) {
-                    currentGameState = GameState.Over;
+                    //currentGameState = GameState.Over;
                     StopCoroutine(second());
                     Time.timeScale = 0;
-                    statusText.enabled = true;
+                    //statusText.enabled = true;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                                + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+                     GameOverLose.gameObject.SetActive(true);
+                        scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+                        scoreLose.text = "SCORE: " + Score * 10;
                 } else if (sec == 0 && minutes == 0) {
-                    currentGameState = GameState.Over;
+                    //currentGameState = GameState.Over;
                     timeText.text = "Time's Up!";
                     StopCoroutine(second());
                     Time.timeScale = 0;
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
                                 + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
                     if (Score * 10 >= expectedScore) {
-                        statusText.text = "Congrats!\n You survived! Score: "
-                                          + Score * 10
-                                          + "\nExpected: "
-                                          + expectedScore;
+                        // statusText.text = "Congrats!\n You survived! Score: "
+                        //                   + Score * 10
+                        //                   + "\nExpected: "
+                        //                   + expectedScore;
+                        GameOverWin.gameObject.SetActive(true);
+                        scoreWin = GameObject.Find("ScoreWin").GetComponent<Text>();
+                        scoreWin.text = "SCORE: " + Score * 10;
+                        //Debug.Log(scoreWin.text);
+
                     } else {
-                        statusText.text = "Level failed! \n Your Score: "
-                                          + Score * 10
-                                          + "\nExpected: "
-                                          + expectedScore;
+                        // statusText.text = "Level failed! \n Your Score: "
+                        //                   + Score * 10
+                        //                   + "\nExpected: "
+                        //                   + expectedScore;
+                        GameOverLose.gameObject.SetActive(true);
+                        scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+                        scoreLose.text = "SCORE: " + Score * 10;
                     }
-                    statusText.enabled = true;
+                    //statusText.enabled = true;
                 }
                 break;
 
@@ -130,9 +150,11 @@ public class GameManager : MonoBehaviour
                 if (frameCount > 300) {
                     currentGameState =  GameState.Start;
                     Time.timeScale = 1;
-                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                    statusText.text = "Score:" + Uninfected.Length;
-                    SceneManager.LoadScene(1);
+                    // Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                   // statusText.text = "Score:" + Uninfected.Length;
+                    //SceneManager.LoadScene(1);
+                    GameOverLose.gameObject.SetActive(true);
+                    
                 }
                 break;
 
