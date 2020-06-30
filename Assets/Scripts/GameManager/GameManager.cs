@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState = GameState.Start;
 
     private List<GameObject> balls;
-    public int level;
+    public static int level;
     private GameObject[] Uninfected;
     public GameObject GameOverWin;
     public GameObject GameOverLose;
@@ -55,14 +55,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
-        //level = MainMenu.level;
+        level = MainMenu.level;
         minX = -2;
         minY = -5;
         maxX = 2;
         maxY = 5;
         minDistance = 0.4f;
         minutes = 0;
-        sec = 40;
+        sec = 03;
 
         CreateBallsRandomly();
         statusText = GameObject.Find("Status").GetComponent<Text>();

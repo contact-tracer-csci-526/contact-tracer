@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameOverScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int level;
-    public string Level1,Level2,scene;
+    public static int level;
+   
     
     //  void Awake () {
          
@@ -19,27 +19,30 @@ public class GameOverScript : MonoBehaviour
     {   
          //Debug.Log(level);
         Time.timeScale = 1f;
-       scene= SceneManager.GetActiveScene().name;
-       Debug.Log(scene);
-        if(scene == "Level1")
+        Debug.Log(MainMenu.level);
+
+    //    scene= SceneManager.GetActiveScene().name;
+    //    Debug.Log(scene);
+        if(MainMenu.level==1)
         {
         
-        Debug.Log(scene);
+        //Debug.Log(scene);
         GameManager.getInstance().currentGameState= GameState.Restart;
+        MainMenu.level=2;  
         Time.timeScale = 1f; 
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene("gameScene");
         
         }
-        if (scene == "Level2")
+       else if(MainMenu.level==2)
         {
-          
-            GameManager.getInstance().currentGameState = GameState.Restart;
-            Time.timeScale = 1f;
-           SceneManager.LoadScene("Level3");
-            
-            
-        }
         
+        //Debug.Log(scene);
+        GameManager.getInstance().currentGameState= GameState.Restart;
+        MainMenu.level=3;  
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene("gameScene");
+        
+        }
     }
  public void LoadMenu()
     {
