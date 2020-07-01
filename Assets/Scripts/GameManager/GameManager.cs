@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public volatile static GameManager instance;
 
     public GameState currentGameState = GameState.Start;
+    public int gameLevel;
+    public GameConfig gameConfig;
 
     private List<GameObject> balls;
-    private int level;
     private GameObject[] Uninfected;
     private Image loading;
     private Text timeText;
@@ -43,6 +44,9 @@ public class GameManager : MonoBehaviour
     public Text scoreLose;
 
     public static GameManager getInstance() {
+        if (instance == null) {
+            instance = new GameManager();
+        }
         return instance;
     }
 
@@ -54,7 +58,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
-        level = MainMenu.level;
+        gameConfig = GameConfigFactory.Get((GameLevel)gameLevel);
         minX = -2;
         minY = -5;
         maxX = 2;
@@ -194,6 +198,7 @@ public class GameManager : MonoBehaviour
         float HARDCODED__virusBallY = -2.61f;
         int HARDCODED__cureBallCount = 1;
         int HARDCODED__virusBallCount = 1;
+        int level = gameConfig.level;
         int totalBallCount = 3 * level + HARDCODED__cureBallCount + HARDCODED__virusBallCount;
 
         for (int i = 0; i < totalBallCount; i++) {
