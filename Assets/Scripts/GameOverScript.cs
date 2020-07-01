@@ -8,61 +8,40 @@ public class GameOverScript : MonoBehaviour
     // Start is called before the first frame update
     public static int level;
 
-
-    //  void Awake () {
-
-    //     // stops object from automtically getting destroyed on loading another scene
-    //     DontDestroyOnLoad (this);
-    // }
-
-        public void NextLevel()
+    public void NextLevel()
     {
-         //Debug.Log(level);
+        int level = GameManager.getInstance().gameConfig.level;
         Time.timeScale = 1f;
-        Debug.Log(MainMenu.level);
-
-    //    scene= SceneManager.GetActiveScene().name;
-    //    Debug.Log(scene);
-        if(MainMenu.level==1)
-        {
-
-        //Debug.Log(scene);
-        GameManager.getInstance().currentGameState= GameState.Restart;
-        MainMenu.level=2;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("gameScene");
-
+        if (level == 1) {
+            GameManager.getInstance().currentGameState = GameState.Restart;
+            GameManager.getInstance().gameConfig.level = 2;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("gameScene");
         }
-       else if(MainMenu.level==2)
-        {
+        else if(level==2) {
 
         //Debug.Log(scene);
         GameManager.getInstance().currentGameState= GameState.Restart;
-        MainMenu.level=3;
+        GameManager.getInstance().gameConfig.level = 2;
         Time.timeScale = 1f;
         SceneManager.LoadScene("gameScene");
 
         }
     }
- public void LoadMenu()
+
+    public void LoadMenu()
     {
-        //Debug.Log("Menu");
         GameManager.getInstance().currentGameState = GameState.Restart;
         Time.timeScale = 1f;
         SceneManager.LoadScene("menu");
-
-
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()
     {
-        //Debug.Log("Quit");
         Application.Quit();
     }
 
     public void Restart()
-
     {
         Time.timeScale = 1f;
         GameManager.getInstance().currentGameState = GameState.Restart;
