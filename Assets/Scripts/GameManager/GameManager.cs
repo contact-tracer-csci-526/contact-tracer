@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverWin;
     public GameObject GameOverLose;
 
-    public Text scoreWin; 
+    public Text scoreWin;
     public Text scoreLose;
 
     public static GameManager getInstance() {
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         maxY = 5;
         minDistance = 0.4f;
         minutes = 0;
-        sec = 40;
+        sec = 20;
 
         CreateBallsRandomly();
         statusText = GameObject.Find("Status").GetComponent<Text>();
