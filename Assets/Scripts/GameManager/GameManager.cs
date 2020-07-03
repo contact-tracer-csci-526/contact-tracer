@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         CreateBallsRandomly();
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
-        loading = GameObject.Find("fg").GetComponent<Image>();
+        //loading = GameObject.Find("fg").GetComponent<Image>();
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
         timeText.text = minutes + " : " + sec;
 
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
             minutes--;
         }
         timeText.text = minutes + " : " + sec;
-        fillLoading();
+        //fillLoading();
         StartCoroutine(second());
     }
 
