@@ -184,6 +184,7 @@ public class DrawLine : MonoBehaviour
                         if (safeBalls.Count > 0) {
                             Ball safeBall = safeBalls[0];
                             safeBall.ballTransform.TransformsToNormalBall();
+                            safeBall.StartBall();
                             safeBalls.RemoveAt(0);
                         }
                     }
