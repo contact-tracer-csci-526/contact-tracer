@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         //timerText = GameObject.Find("Timer").GetComponent<Text>();
         //timerText.text = "Time Remaining: " + timeRemaining;
         scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
-        scoreToPass.text = "Expected Score: " + expectedScore;
+        scoreToPass.text = "EXPECTED SCORE: " + expectedScore;
 
         screenHeight=Screen.height;
         screenWidth=Screen.width;
