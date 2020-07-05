@@ -48,41 +48,41 @@ public class DrawLine : MonoBehaviour
         if (CDS.counterDownDone == true)
         {
             if(!currentLine) {
-            lineLength = 0.0f;
-            angle = 0;
-            isCircle = false;
-            CreateLine();
-             }
-        // we will call the CreateLine function when the player has touched the screen 
-        // the following condition checks for the left mouse button
-                if(Input.GetMouseButtonDown(0)){
-            // before creating the line we need to remove the previously added line
-                    if (currentLine){
-                Destroy (currentLine);
                 lineLength = 0.0f;
                 angle = 0;
                 isCircle = false;
-                 }
-            CreateLine();
+                CreateLine();
+            }
+            // we will call the CreateLine function when the player has touched the screen 
+            // the following condition checks for the left mouse button
+            if(Input.GetMouseButtonDown(0)){
+            // before creating the line we need to remove the previously added line
+                if (currentLine){
+                        Destroy (currentLine);
+                        lineLength = 0.0f;
+                        angle = 0;
+                        isCircle = false;
                 }
-        // this checks if we are continuously holding it down or not
-        if(Input.GetMouseButton(0)){
-            Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
-            lineLength += newAddedLength;
-            if (lineLength > MAX_LENGTH) {
+                CreateLine();
+            }
+            // this checks if we are continuously holding it down or not
+            if(Input.GetMouseButton(0)){
+                Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
+                lineLength += newAddedLength;
+                if (lineLength > MAX_LENGTH) {
+                    CheckCircle();
+                    return;
+                }
+                // we need to check if this finger position and the previous finger position is greater than a set buffer value
+                if(newAddedLength > 0.08f)
+                {
+                    UpdateLine(tempFingerPosition);
+                }
+            }
+            if (Input.GetMouseButtonUp(0)){
                 CheckCircle();
-                return;
             }
-            // we need to check if this finger position and the previous finger position is greater than a set buffer value
-            if(newAddedLength > 0.08f)
-            {
-                UpdateLine(tempFingerPosition);
-            }
-        }
-        if (Input.GetMouseButtonUp(0)){
-            CheckCircle();
-        }
         }
     }
 
@@ -124,7 +124,18 @@ public class DrawLine : MonoBehaviour
         
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
-
+        // we also delete the previous line if it is Tutorial Level 1
+        if (MainMenu.level == 1 && GameManager.tutorialLine != null){
+            Destroy(GameManager.tutorialLine);
+            Destroy(GameManager.handObject);
+            GameManager.CurrentGameState = GameManager.GameState.Playing;
+            GameManager.Cells = new GameObject[1];
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            for (int i = 0; i < Cells.Length; i++) {
+                Cells[i].GetComponent<Ball>().StartBall();
+            }
+            GameManager.Virus.GetComponent<Ball>().StartBall();
+        }
     }
 
     private void CheckCircle(){
