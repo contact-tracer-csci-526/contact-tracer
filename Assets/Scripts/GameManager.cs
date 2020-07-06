@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     int totalSeconds = 0;
     int TOTAL_SECONDS = 0;
     float fillamount;
+    int degrees = 0;
 
 
     void Start()
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
                 lineRenderer.SetPosition(0,lineStart);
                 lineRenderer.SetPosition(1,lineEnd);
                 MoveHandInStraightLine();
+                //MoveHandInCircularMotion();
                 break;
             case GameState.Tutorial2:
                 MoveHandInCircularMotion();
@@ -125,13 +127,14 @@ public class GameManager : MonoBehaviour
                 {
                     switch (level){
                         case 1:
-                            SetSceenForTutorial1();
+                            SetSceneForTutorial1();
                             CurrentGameState = GameState.Tutorial1;
                             // dottedLine = new DottedLine();
                             // dottedLine.DrawDottedLine(start, end);
                             break;
                         case 2:
-                            drawCircle();
+                            SetSceneForTutorial2();
+                            //drawCircle();
                             CurrentGameState = GameState.Tutorial2;
                             break;
                         // case 3:
@@ -272,7 +275,7 @@ public class GameManager : MonoBehaviour
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
-    private void SetSceenForTutorial1()
+    private void SetSceneForTutorial1()
     {
         tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
@@ -283,15 +286,23 @@ public class GameManager : MonoBehaviour
         handObject = Instantiate(ballPrefab, new Vector3(-2.0f,-0.5f), Quaternion.identity);
         handObject.GetComponent<SpriteRenderer>().sprite = handSprite;
     }
-    private void SetSceenForTutorial2()
+    private void SetSceneForTutorial2()
     {
         tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0,0,0), Quaternion.identity);
+        GameObject ball1 = Instantiate(ballPrefab, new Vector3(0,0,0), Quaternion.identity);
+        GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2,2,0), Quaternion.identity);
+        GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2,-2,0), Quaternion.identity);
+
+
         //found this piece of code online
-        ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
-        ball.transform.gameObject.tag = "NORMAL_BALL";
-        handObject = Instantiate(ballPrefab, new Vector3(-2,-2), Quaternion.identity);
+        ball1.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+        ball1.transform.gameObject.tag = "NORMAL_BALL";
+        ball2.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+        ball2.transform.gameObject.tag = "NORMAL_BALL";
+        ball3.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+        ball3.transform.gameObject.tag = "NORMAL_BALL";
+        handObject = Instantiate(ballPrefab, new Vector3(-1,-1), Quaternion.identity);
         handObject.GetComponent<SpriteRenderer>().sprite = handSprite;
     }
    private void MoveHandInStraightLine()
@@ -305,14 +316,16 @@ public class GameManager : MonoBehaviour
 
    private void MoveHandInCircularMotion()
    {
-
+      degrees++;
+      float rads = Mathf.PI * degrees / 180;
+      handObject.transform.position = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads));
    }
    private void CollideCureBallWithInfectedBall()
    {
 
    }
-   private void drawCircle()
-   {
-
-   }
+   // private void drawCircle()
+   // {
+   //
+   // }
 }
