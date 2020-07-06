@@ -72,6 +72,12 @@ EditorBuildSettings:
     path: Assets/Scenes/splash.unity
     guid: 4394551c98dc1a94aa5bf9e7ef25a9ba
   - enabled: 1
+    path: Assets/Scenes/StoryBoard.unity
+    guid: 717bff194348b03469c19d89ee89ed71
+  - enabled: 1
+    path: Assets/Scenes/TutorialOrGameNavigator.unity
+    guid: 9e73770e5d1988b44b3afc1938251f4e
+  - enabled: 1
     path: Assets/Scenes/menu.unity
     guid: 5d635c3942ac44db0818735df3f2e43c
   - enabled: 1
