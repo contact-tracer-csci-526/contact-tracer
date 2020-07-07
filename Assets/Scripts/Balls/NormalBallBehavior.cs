@@ -33,7 +33,7 @@ public class NormalBallBehavior : BallBehavior
     private void TransformsToSafeBall() {
         Transform transform = ball.transform;
         SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
-        currentSprite.color = new Color(1f,1f,1f,.1f);
+        currentSprite.color = new Color(1f,1f,1f,.5f);
         CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
 
         Sprite safeSprite = Resources.Load<Sprite>("Sprites/safe");
