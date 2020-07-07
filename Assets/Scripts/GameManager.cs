@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public static GameObject[] Cells;
     public static GameObject Virus;
     public static GameObject CureBall;
+
+    private GameObject DYNAMIC__cureBall;
+
     private DelayedStartScript CDS;
     private Loading Loading;
     private int infectionLimit = 100; //percent
@@ -57,9 +60,15 @@ public class GameManager : MonoBehaviour
     public int sec;
     int totalSeconds = 0;
     int TOTAL_SECONDS = 0;
+    public  GameObject CureBallGameObject;
     float fillamount;
     int degrees = 0;
 
+    int cureBallLifeTime=5;
+    int cureBallRegenerateInterval = 10;
+    int currentTime=0;
+    int previousTime=0;
+    bool shouldCureballRender=true;
 
     void Start()
     {
@@ -72,20 +81,25 @@ public class GameManager : MonoBehaviour
         this.maxY = 5;
         this.minDistance = 0.4f;
         Virus = GameObject.Find("Virus");
-        CureBall = GameObject.FindWithTag("Cure");
+       // CureBall = GameObject.FindWithTag("Cure");
         minutes=0;
         sec= 40;
         //change the size of virus ball and cure ballPrefab
         Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
-        CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
-        if(level >= 3){
+        // CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
+        if (level >= 3) {
             Cells = new GameObject[3 * level];
             this.CreateBallsRandomly();
             Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         }
+        //change the size of virus ball
+        Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+
+        Cells = new GameObject[3 * level];
+         this.CreateBallsRandomly();
+        Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
-        //loading = GameObject.Find("fg").GetComponent<Image>();
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
 
         timeText.text = minutes + " : " + sec;
@@ -95,15 +109,11 @@ public class GameManager : MonoBehaviour
              totalSeconds += sec;
             TOTAL_SECONDS = totalSeconds;
 
-        //timerText = GameObject.Find("Timer").GetComponent<Text>();
-        //timerText.text = "Time Remaining: " + timeRemaining;
         scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
         scoreToPass.text = "EXPECTED SCORE: " + expectedScore;
 
         screenHeight=Screen.height;
         screenWidth=Screen.width;
-
-        Debug.Log(screenWidth+" "+screenHeight);
     }
 
     void Update()
@@ -122,6 +132,7 @@ public class GameManager : MonoBehaviour
                 CollideCureBallWithInfectedBall();
                 break;
             case GameState.Start:
+
                 if (CDS.counterDownDone == true)
                 {
                     switch (level){
@@ -147,8 +158,12 @@ public class GameManager : MonoBehaviour
                             CurrentGameState = GameState.Playing;
                             break;
                     }
+                    Virus.GetComponent<Ball>().StartBall();
+                    CurrentGameState = GameState.Playing;
+
                      StartCoroutine (second ());
                 }
+
                 break;
             case GameState.Playing:
                 //timerText.text = "Time Remaining: " + timeRemaining;
@@ -157,16 +172,41 @@ public class GameManager : MonoBehaviour
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
                 int IR = (100 * Infected.Length)
                          / (Uninfected.Length + Infected.Length + Frozen.Length);
+
+                if(previousTime-currentTime>=cureBallLifeTime){
+                    Debug.Log("destroy");
+                    if(CureBallGameObject!=null){
+                        Destroy(CureBallGameObject,0);
+                        CureBallGameObject=null;
+                    }
+                    currentTime=minutes*60+sec;
+                    previousTime=minutes*60+sec;
+                }
+                if ((minutes * 60 + sec) % (cureBallRegenerateInterval) == 0
+                    && shouldCureballRender
+                    && CureBallGameObject==null
+                ) {
+                    shouldCureballRender=false;
+                    StartCoroutine(StartBallLate());
+                    RenderCureBall();
+
+                    currentTime=(minutes*60+sec);
+                    previousTime=minutes*60+sec;
+                }
+                else if ((minutes*60+sec)%(cureBallRegenerateInterval)!=0){
+                    shouldCureballRender=true;
+                    currentTime=minutes*60+sec;
+
+                }
                 if (IR >= infectionLimit) {
-                    //currentGameState = GameState.Over;
-                    StopCoroutine(second());
+                     StopCoroutine(second());
                     Time.timeScale = 0;
-                    //statusText.enabled = true;
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
                                 + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                     GameOverLose.gameObject.SetActive(true);
-                        scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-                        scoreLose.text = "SCORE: " + Score * 10;
+                    GameOverLose.gameObject.SetActive(true);
+                    scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+                    scoreLose.text = "SCORE: " + Score * 10;
+
                 } else if (sec == 0 && minutes == 0) {
                     //currentGameState = GameState.Over;
                     timeText.text = "Time's Up!";
@@ -175,25 +215,17 @@ public class GameManager : MonoBehaviour
                     int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
                                 + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
                     if (Score * 10 >= expectedScore) {
-                        // statusText.text = "Congrats!\n You survived! Score: "
-                        //                   + Score * 10
-                        //                   + "\nExpected: "
-                        //                   + expectedScore;
+
                         GameOverWin.gameObject.SetActive(true);
                         scoreWin = GameObject.Find("ScoreWin").GetComponent<Text>();
                         scoreWin.text = "SCORE: " + Score * 10;
-                        //Debug.Log(scoreWin.text);
 
                     } else {
-                        // statusText.text = "Level failed! \n Your Score: "
-                        //                   + Score * 10
-                        //                   + "\nExpected: "
-                        //                   + expectedScore;
+
                         GameOverLose.gameObject.SetActive(true);
                         scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
                         scoreLose.text = "SCORE: " + Score * 10;
                     }
-                    //statusText.enabled = true;
                 }
                 break;
 
@@ -253,21 +285,24 @@ public class GameManager : MonoBehaviour
   loading.fillAmount = fill;
  }
 
+     IEnumerator StartBallLate()
+     {
+        yield return new WaitForSeconds(1);
+        DYNAMIC__cureBall.GetComponent<Ball>().StartBall();
+     }
+
     private void CreateBallsRandomly(){
         System.Random random = new System.Random();
 
         for(int i = 0; i < 3 * level; i++){
             float x = Virus.transform.position.x;
             float y = Virus.transform.position.y;
-         //   ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
             while (Vector2.Distance(new Vector2(x,y),new Vector2(Virus.transform.position.x,Virus.transform.position.y)) < this.minDistance)
             {
                 x = random.Next(minX,maxX);
                 y = random.Next(minY,maxY);
             }
             GameObject ball = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
-
-            //found this piece of code online
 
             ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
             ball.transform.gameObject.tag = "NORMAL_BALL";
@@ -342,8 +377,24 @@ public class GameManager : MonoBehaviour
    {
 
    }
-   // private void drawCircle()
-   // {
-   //
-   // }
+
+    private void RenderCureBall(){
+
+            System.Random random = new System.Random();
+            int x = random.Next(minX, maxX);
+            int y = random.Next(minY, maxY);
+            CureBallGameObject = Instantiate(ballPrefab, new Vector3(x,y,0), Quaternion.identity);
+            Ball cureball = CureBallGameObject.GetComponent<Ball>();
+            SpriteRenderer currentSprite = CureBallGameObject.GetComponent<SpriteRenderer>();
+
+            Debug.Log("cureball "+CureBallGameObject.ToString());
+
+            Sprite sprite = Resources.Load<Sprite>("Sprites/cureball");
+            currentSprite.sprite = sprite;
+            CureBallGameObject.transform.localScale=new Vector3(0.8f, 0.8f,0.8f);
+            CureBallGameObject.transform.gameObject.tag = "Cure";
+
+            cureball.WARN__Initialize(BallType.CURE);
+            DYNAMIC__cureBall = CureBallGameObject;
+    }
 }

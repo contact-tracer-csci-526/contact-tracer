@@ -43,4 +43,10 @@ public class Ball : MonoBehaviour
         rigidbody.isKinematic = true;
     }
 
+    public void WARN__Initialize(BallType bt) {
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = Vector2.zero;
+        ballType = bt;
+        ballBehavior = BallBehaviorFactory.Get(this.ballType, this);
+    }
 }
