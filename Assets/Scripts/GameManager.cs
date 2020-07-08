@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private GameObject tutorialCircle;
     public static GameObject handObject;
     private LineRenderer lineRenderer;
-    private List<Vector2> linePositions;
+    //private List<Vector2> circlePositions;
     private Vector3 lineStart = new Vector3(-2,0,0);
     private Vector3 lineEnd = new Vector3(2,0,0);
     public Sprite handSprite;
@@ -114,7 +114,6 @@ public class GameManager : MonoBehaviour
                 lineRenderer.SetPosition(0,lineStart);
                 lineRenderer.SetPosition(1,lineEnd);
                 MoveHandInStraightLine();
-                //MoveHandInCircularMotion();
                 break;
             case GameState.Tutorial2:
                 MoveHandInCircularMotion();
@@ -134,7 +133,6 @@ public class GameManager : MonoBehaviour
                             break;
                         case 2:
                             SetSceneForTutorial2();
-                            //drawCircle();
                             CurrentGameState = GameState.Tutorial2;
                             break;
                         // case 3:
@@ -280,30 +278,50 @@ public class GameManager : MonoBehaviour
         tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
         GameObject ball = Instantiate(ballPrefab, new Vector3(-2,2,0), Quaternion.identity);
-        //found this piece of code online
         ball.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         ball.transform.gameObject.tag = "NORMAL_BALL";
-        handObject = Instantiate(ballPrefab, new Vector3(-2.0f,-0.5f), Quaternion.identity);
-        handObject.GetComponent<SpriteRenderer>().sprite = handSprite;
+        handObject = new GameObject("Hand");
+        SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
+        renderer.sprite = handSprite;
     }
     private void SetSceneForTutorial2()
     {
         tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
+        CreateCircularPoints();
         GameObject ball1 = Instantiate(ballPrefab, new Vector3(0,0,0), Quaternion.identity);
         GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2,2,0), Quaternion.identity);
         GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2,-2,0), Quaternion.identity);
 
-
-        //found this piece of code online
         ball1.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         ball1.transform.gameObject.tag = "NORMAL_BALL";
         ball2.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         ball2.transform.gameObject.tag = "NORMAL_BALL";
         ball3.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         ball3.transform.gameObject.tag = "NORMAL_BALL";
-        handObject = Instantiate(ballPrefab, new Vector3(-1,-1), Quaternion.identity);
-        handObject.GetComponent<SpriteRenderer>().sprite = handSprite;
+        handObject = new GameObject("Hand");
+        SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
+        renderer.sprite = handSprite;
+    }
+     void CreateCircularPoints ()
+    {
+        float x;
+        float y;
+        float z;
+        float xradius = 1;
+        float yradius = 1;
+        float angle = 20f;
+        int segments = 50;
+        lineRenderer.positionCount = 0;
+        for (int i = 0; i < (segments + 1); i++)
+        {
+            x = Mathf.Sin (Mathf.Deg2Rad * angle) * xradius;
+            y = Mathf.Cos (Mathf.Deg2Rad * angle) * yradius;
+            Debug.Log(x+" "+y);
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition (i,new Vector2(x,y));
+            angle += (360f / segments);
+        }
     }
    private void MoveHandInStraightLine()
    {

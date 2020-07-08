@@ -125,16 +125,18 @@ public class DrawLine : MonoBehaviour
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
         // we also delete the previous line if it is Tutorial Level 1
-        if (MainMenu.level == 1 || MainMenu.level == 2 && GameManager.tutorialLine != null){
+        if ((MainMenu.level == 1 || MainMenu.level == 2) && GameManager.tutorialLine != null && GameManager.GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
+            Debug.Log("here");
             Destroy(GameManager.tutorialLine);
             Destroy(GameManager.handObject);
-            GameManager.CurrentGameState = GameManager.GameState.Playing;
             GameManager.Cells = new GameObject[1];
             Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
             for (int i = 0; i < Cells.Length; i++) {
                 Cells[i].GetComponent<Ball>().StartBall();
             }
             GameManager.Virus.GetComponent<Ball>().StartBall();
+            GameManager.CurrentGameState = GameManager.GameState.Playing;
+
         }
     }
 
@@ -200,6 +202,19 @@ public class DrawLine : MonoBehaviour
                         Destroy(enclosedBall.GetComponent<CircleCollider2D>());
                         safeBalls.Add(enclosedBall);
                         enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
+                        if (MainMenu.level == 2 && GameManager.tutorialLine != null && GameManager.GameState.Tutorial2.CompareTo(GameManager.CurrentGameState) == 0){
+                            Debug.Log("here");
+                            Destroy(GameManager.tutorialLine);
+                            Destroy(GameManager.handObject);
+                            GameManager.Cells = new GameObject[3];
+                            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                            for (int i = 0; i < Cells.Length; i++) {
+                                Cells[i].GetComponent<Ball>().StartBall();
+                            }
+                            GameManager.Virus.GetComponent<Ball>().StartBall();
+                            GameManager.CurrentGameState = GameManager.GameState.Playing;
+
+                        }
                     }
                     if (safeBalls.Count > MAX_SAFE_BALLS){
                         if (safeBalls.Count > 0)
