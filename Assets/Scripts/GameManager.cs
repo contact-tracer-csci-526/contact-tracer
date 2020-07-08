@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         Virus = GameObject.Find("Virus");
         CureBall = GameObject.FindWithTag("Cure");
         minutes=0;
-        sec= 05;
+        sec= 40;
         //change the size of virus ball and cure ballPrefab
         Virus.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
         CureBall.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
