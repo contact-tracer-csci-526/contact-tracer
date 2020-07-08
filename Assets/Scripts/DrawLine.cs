@@ -31,7 +31,7 @@ public class DrawLine : MonoBehaviour
     // this will be fixed for a level and when number of balls get increased we need to restore the dynamic threshold above back to this value
     public static int MAX_SAFE_BALLS_FIXED = 2;
     private static GameObject[] Cells;
-    
+
      private DelayedStartScript CDS;
     void Start()
     {
@@ -44,49 +44,49 @@ public class DrawLine : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {    
+    {
         if (CDS.counterDownDone == true)
         {
             if(!currentLine) {
-            lineLength = 0.0f;
-            angle = 0;
-            isCircle = false;
-            CreateLine();
-             }
-        // we will call the CreateLine function when the player has touched the screen 
-        // the following condition checks for the left mouse button
-                if(Input.GetMouseButtonDown(0)){
-            // before creating the line we need to remove the previously added line
-                    if (currentLine){
-                Destroy (currentLine);
                 lineLength = 0.0f;
                 angle = 0;
                 isCircle = false;
-                 }
-            CreateLine();
+                CreateLine();
+            }
+            // we will call the CreateLine function when the player has touched the screen
+            // the following condition checks for the left mouse button
+            if(Input.GetMouseButtonDown(0)){
+            // before creating the line we need to remove the previously added line
+                if (currentLine){
+                        Destroy (currentLine);
+                        lineLength = 0.0f;
+                        angle = 0;
+                        isCircle = false;
                 }
-        // this checks if we are continuously holding it down or not
-        if(Input.GetMouseButton(0)){
-            Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
-            lineLength += newAddedLength;
-            if (lineLength > MAX_LENGTH) {
+                CreateLine();
+            }
+            // this checks if we are continuously holding it down or not
+            if(Input.GetMouseButton(0)){
+                Vector2 tempFingerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float newAddedLength = Vector2.Distance(tempFingerPosition, fingerPositions[fingerPositions.Count - 1]);
+                lineLength += newAddedLength;
+                if (lineLength > MAX_LENGTH) {
+                    CheckCircle();
+                    return;
+                }
+                // we need to check if this finger position and the previous finger position is greater than a set buffer value
+                if(newAddedLength > 0.08f)
+                {
+                    UpdateLine(tempFingerPosition);
+                }
+            }
+            if (Input.GetMouseButtonUp(0)){
                 CheckCircle();
-                return;
             }
-            // we need to check if this finger position and the previous finger position is greater than a set buffer value
-            if(newAddedLength > 0.08f)
-            {
-                UpdateLine(tempFingerPosition);
-            }
-        }
-        if (Input.GetMouseButtonUp(0)){
-            CheckCircle();
-        }
         }
     }
 
-    // the following function creates a new line and save that line to a different variable and 
+    // the following function creates a new line and save that line to a different variable and
     // it will set first two points of the line renderer and edge collider components
     void CreateLine()
     {
@@ -96,16 +96,16 @@ public class DrawLine : MonoBehaviour
         currentLine.transform.gameObject.tag = LINE;
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider2D = currentLine.GetComponent<EdgeCollider2D>();
-        
+
         // we also clear the finger positions list containing the positions for previous line
         fingerPositions.Clear();
-        
+
         // we need to add the coordinates of the screen where the user touched in the finger positions list
         fingerPositions.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         // we add the same point because currently the start and end of the line is the same point
         fingerPositions.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        
-        // now we set the first two positions of the line renderer component 
+
+        // now we set the first two positions of the line renderer component
         lineRenderer.SetPosition(0,fingerPositions[0]);
         lineRenderer.SetPosition(1,fingerPositions[1]);
 
@@ -117,14 +117,27 @@ public class DrawLine : MonoBehaviour
     void UpdateLine(Vector2 newFingerPosition)
     {
         fingerPositions.Add(newFingerPosition);
-        
+
         // we update the line renderer
         lineRenderer.positionCount++;
         lineRenderer.SetPosition(lineRenderer.positionCount - 1,newFingerPosition);
-        
+
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
+        // we also delete the previous line if it is Tutorial Level 1
+        if ((MainMenu.level == 1 || MainMenu.level == 2) && GameManager.tutorialLine != null && GameManager.GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
+            Debug.Log("here");
+            Destroy(GameManager.tutorialLine);
+            Destroy(GameManager.handObject);
+            GameManager.Cells = new GameObject[1];
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            for (int i = 0; i < Cells.Length; i++) {
+                Cells[i].GetComponent<Ball>().StartBall();
+            }
+            GameManager.Virus.GetComponent<Ball>().StartBall();
+            GameManager.CurrentGameState = GameManager.GameState.Playing;
 
+        }
     }
 
     private void CheckCircle(){
@@ -157,13 +170,13 @@ public class DrawLine : MonoBehaviour
                 float distance = Mathf.Sqrt((fingerPositions[i].x - centroid_x) * (fingerPositions[i].x - centroid_x) + (fingerPositions[i].y - centroid_y) * (fingerPositions[i].y - centroid_y));
                 if (radius < distance){
                     radius = distance;
-                }                
+                }
                 angle_sum += temp;
             }
 
             if (angle_sum >= MIN_ANGLE){
                 isCircle = true;
-                // now we need to find a ball which is enclosed in the circle 
+                // now we need to find a ball which is enclosed in the circle
                 Ball enclosedBall = null;
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 float ballRadius = 0;
@@ -189,6 +202,19 @@ public class DrawLine : MonoBehaviour
                         Destroy(enclosedBall.GetComponent<CircleCollider2D>());
                         safeBalls.Add(enclosedBall);
                         enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
+                        if (MainMenu.level == 2 && GameManager.tutorialLine != null && GameManager.GameState.Tutorial2.CompareTo(GameManager.CurrentGameState) == 0){
+                            Debug.Log("here");
+                            Destroy(GameManager.tutorialLine);
+                            Destroy(GameManager.handObject);
+                            GameManager.Cells = new GameObject[3];
+                            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                            for (int i = 0; i < Cells.Length; i++) {
+                                Cells[i].GetComponent<Ball>().StartBall();
+                            }
+                            GameManager.Virus.GetComponent<Ball>().StartBall();
+                            GameManager.CurrentGameState = GameManager.GameState.Playing;
+
+                        }
                     }
                     if (safeBalls.Count > MAX_SAFE_BALLS){
                         if (safeBalls.Count > 0)

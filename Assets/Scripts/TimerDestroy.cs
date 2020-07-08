@@ -8,7 +8,10 @@ public class TimerDestroy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject,INTERVAL);
+        if (transform.gameObject.tag == "Line")
+        {
+            Destroy(gameObject,INTERVAL);
+        }
     }
 
     // Update is called once per frame
