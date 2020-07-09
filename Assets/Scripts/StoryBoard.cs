@@ -5,19 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class StoryBoard : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private const int DURATION = 9;
     void Start()
     {
 
     }
+
     void Update()
     {
         StartCoroutine(ToNextScene());
     }
 
-    IEnumerator ToNextScene()
+    private IEnumerator ToNextScene()
     {
-        yield return new WaitForSeconds(9); // Timer is for 9 seconds because the story timeline rolls for 9 seconds
+        yield return new WaitForSeconds(DURATION);
         SceneManager.LoadScene(2);
     }
 }

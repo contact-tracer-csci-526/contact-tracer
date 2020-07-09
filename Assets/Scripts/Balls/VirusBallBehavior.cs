@@ -27,7 +27,7 @@ public class VirusBallBehavior : BallBehavior
             }
         }
         else if (line != null){
-            if(this.ball.isOriginalVirus) 
+            if(this.ball.isOriginalVirus)
             {
                 Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), this.ball.GetComponent<Collider2D>());
             }
