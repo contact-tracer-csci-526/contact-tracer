@@ -163,13 +163,16 @@ public class GameManager : MonoBehaviour
     private void CreateBallsRandomly()
     {
         System.Random random = new System.Random();
+        int naivelyCalculatedBallCount = 3 * (level % 100);
 
-        for (int i = 0; i < 3 * level; i++)
+        for (int i = 0; i < naivelyCalculatedBallCount; i++)
         {
             float x = Virus.transform.position.x;
             float y = Virus.transform.position.y;
-            while (Vector2.Distance(new Vector2(x, y), new Vector2(Virus.transform.position.x, Virus.transform.position.y)) < this.minDistance)
-            {
+            while (Vector2.Distance(new Vector2(x, y),
+                                    new Vector2(Virus.transform.position.x,
+                                                Virus.transform.position.y))
+                   < this.minDistance) {
                 x = random.Next(minX, maxX);
                 y = random.Next(minY, maxY);
             }
@@ -321,7 +324,7 @@ public class GameManager : MonoBehaviour
         maxX = 2;
         maxY = 5;
         minDistance = 0.4f;
-        sec = 10;
+        sec = 30;
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
@@ -398,7 +401,6 @@ public class GameManager : MonoBehaviour
                         Cells[i].GetComponent<Ball>().StartBall();
                     }
                     Virus.GetComponent<Ball>().StartBall();
-                    CureBall.GetComponent<Ball>().StartBall();
                     CurrentGameState = GameState.Playing;
                     break;
             }
