@@ -13,23 +13,23 @@ public class GameOverScript : MonoBehaviour
 
         if (MainMenu.level == 1)
         {
-            GameManager.CurrentGameState = GameManager.GameState.Restart;
+            GameManager.CurrentGameState = GameState.Restart;
             MainMenu.level = 2;
             Time.timeScale = 1f;
             SceneManager.LoadScene("gameScene");
         }
         else if (MainMenu.level == 2)
         {
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
-        MainMenu.level = 3;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("gameScene");
+            GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 3;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("gameScene");
         }
     }
 
     public void LoadMenu()
     {
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
+        GameManager.CurrentGameState = GameState.Restart;
         Time.timeScale = 1f;
         SceneManager.LoadScene("menu");
     }
@@ -42,7 +42,7 @@ public class GameOverScript : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
+        GameManager.CurrentGameState = GameState.Restart;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -5,12 +5,11 @@ using UnityEngine;
 public class SetCountDownScript : MonoBehaviour
 {
     private DelayedStartScript CDS;
-    
+
     public void SetCountDownNow()
     {
-       CDS = GameObject.Find ("DelayedStart").GetComponent<DelayedStartScript> ();
+        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
         CDS.counterDownDone = true;
-        
     }
-    
+
 }

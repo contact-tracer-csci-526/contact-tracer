@@ -24,7 +24,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void LoadMenu()
     {
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
+        GameManager.CurrentGameState = GameState.Restart;
         Time.timeScale = 1f;
         SceneManager.LoadScene("menu");
     }
@@ -37,7 +37,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
-        GameManager.CurrentGameState = GameManager.GameState.Restart;
+        GameManager.CurrentGameState = GameState.Restart;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

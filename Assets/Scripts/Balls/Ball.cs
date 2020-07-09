@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.CurrentGameState == GameManager.GameState.Playing) {
+        if (GameManager.CurrentGameState == GameState.Playing) {
             Vector2 v = rigidbody.velocity.normalized;
             rigidbody.velocity = v * SPEED_RATE;
         }

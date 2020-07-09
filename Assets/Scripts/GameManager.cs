@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public static GameObject[] Cells;
     public static GameObject Virus;
     public static GameObject CureBall;
-    public static int level;
     public static GameObject tutorialLine;
     public static GameObject handObject;
 
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
+    private int level;
     private GameObject DYNAMIC__cureBall;
     private DelayedStartScript CDS;
     private Loading Loading;
@@ -60,183 +60,120 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
-        level = MainMenu.level;
-        this.minX = -2;
-        this.minY = -5;
-        this.maxX = 2;
-        this.maxY = 5;
-        this.minDistance = 0.4f;
-        Virus = GameObject.Find("Virus");
-        minutes = 0;
-        sec = 40;
-        Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-
-        if (level >= 3)
-        {
-            Cells = new GameObject[3 * level];
-            this.CreateBallsRandomly();
-            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-        }
-        Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-
-        Cells = new GameObject[3 * level];
-        this.CreateBallsRandomly();
-        Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-        statusText = GameObject.Find("Status").GetComponent<Text>();
-        statusText.enabled = false;
-        timeText = GameObject.Find("TimeText").GetComponent<Text>();
-
-        timeText.text = minutes + " : " + sec;
-        if (minutes > 0)
-            totalSeconds += minutes * 60;
-        if (sec > 0)
-            totalSeconds += sec;
-        TOTAL_SECONDS = totalSeconds;
-
-        scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
-        scoreToPass.text = "Expected Score: " + expectedScore;
-        screenHeight = Screen.height;
-        screenWidth = Screen.width;
+        InitializeGameScene();
+        CurrentGameState = GameState.Start;
     }
 
     void Update()
     {
         switch (CurrentGameState)
         {
-          case GameState.Tutorial1:
-              lineRenderer.SetPosition(0, lineStart);
-              lineRenderer.SetPosition(1, lineEnd);
-              MoveHandInStraightLine();
-              break;
+            case GameState.TUTORIAL1_PRELIMINARY:
+                lineRenderer.SetPosition(0, lineStart);
+                lineRenderer.SetPosition(1, lineEnd);
+                MoveHandInStraightLine();
+                break;
 
-          case GameState.Tutorial2:
-              MoveHandInCircularMotion();
-              break;
+            case GameState.TUTORIAL2_PRELIMINARY:
+                MoveHandInCircularMotion();
+                break;
 
-          case GameState.Tutorial3:
-              MoveHandVertically();
-              break;
+            case GameState.TUTORIAL3_PRELIMINARY:
+                MoveHandVertically();
+                break;
 
-          case GameState.Start:
-              if (CDS.counterDownDone == true)
-              {
-                switch (level)
+            case GameState.Start:
+                StartGame();
+                break;
+
+            case GameState.Playing:
+                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
+                int IR = (100 * Infected.Length)
+                        / (Uninfected.Length + Infected.Length + Frozen.Length);
+
+                if (previousTime - currentTime >= cureBallLifeTime)
                 {
-                  case 1:
-                      SetSceneForTutorial1();
-                      CurrentGameState = GameState.Tutorial1;
-                      break;
-                  case 2:
-                      SetSceneForTutorial2();
-                      CurrentGameState = GameState.Tutorial2;
-                      break;
-                  case 3:
-                      SetSceneForTutorial3();
-                      CurrentGameState = GameState.Tutorial3;
-                      break;
-                  default:
-                    for (int i = 0; i < Cells.Length; i++)
+                    if (CureBallGameObject != null)
                     {
-                        Cells[i].GetComponent<Ball>().StartBall();
+                        Destroy(CureBallGameObject, 0);
+                        CureBallGameObject = null;
                     }
-                    Virus.GetComponent<Ball>().StartBall();
-                    CureBall.GetComponent<Ball>().StartBall();
-                    CurrentGameState = GameState.Playing;
-                    break;
+                    currentTime = minutes * 60 + sec;
+                    previousTime = minutes * 60 + sec;
                 }
-                Virus.GetComponent<Ball>().StartBall();
-                CurrentGameState = GameState.Playing;
-                StartCoroutine(second());
-              }
-              break;
 
-          case GameState.Playing:
-              GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-              GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-              GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
-              int IR = (100 * Infected.Length)
-                      / (Uninfected.Length + Infected.Length + Frozen.Length);
-              if (previousTime - currentTime >= cureBallLifeTime)
-              {
-                  if (CureBallGameObject != null)
-                  {
-                      Destroy(CureBallGameObject, 0);
-                      CureBallGameObject = null;
-                  }
-                  currentTime = minutes * 60 + sec;
-                  previousTime = minutes * 60 + sec;
-              }
-              if ((minutes * 60 + sec) % (cureBallRegenerateInterval) == 0
-                  && shouldCureballRender
-                  && CureBallGameObject == null
-              ) {
-                  shouldCureballRender = false;
-                  StartCoroutine(StartBallLate());
-                  RenderCureBall();
+                if ((minutes * 60 + sec) % (cureBallRegenerateInterval) == 0
+                    && shouldCureballRender
+                    && CureBallGameObject == null
+                ) {
+                    shouldCureballRender = false;
+                    StartCoroutine(StartBallLate());
+                    RenderCureBall();
 
-                  currentTime = (minutes * 60 + sec);
-                  previousTime = minutes * 60 + sec;
-              }
-              else if ((minutes * 60 + sec) % (cureBallRegenerateInterval) != 0)
-              {
-                  shouldCureballRender = true;
-                  currentTime = minutes * 60 + sec;
-              }
-              if (IR >= infectionLimit)
-              {
-                  StopCoroutine(second());
-                  Time.timeScale = 0;
-                  int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                              + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                  GameOverLose.gameObject.SetActive(true);
-                  scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-                  scoreLose.text = "SCORE: " + Score * 10;
-              }
-              else if (sec == 0 && minutes == 0)
-              {
-                  CurrentGameState = GameState.Over;
-                  timeText.text = "Time's Up!";
-                  StopCoroutine(second());
-                  Time.timeScale = 0;
-                  int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                  if (Score * 10 >= expectedScore)
-                  {
-                      statusText.text = "Congrats!\n You survived! Score: " + Score * 10 + "\nExpected: " + expectedScore;
-                  }
-                  else
-                  {
-                      statusText.text = "Level failed! \n Your Score: " + Score * 10 + "\nExpected: " + expectedScore;
-                  }
-                  statusText.enabled = true;
-              }
-              break;
+                    currentTime = (minutes * 60 + sec);
+                    previousTime = minutes * 60 + sec;
+                } else if ((minutes * 60 + sec) % (cureBallRegenerateInterval) != 0) {
+                    shouldCureballRender = true;
+                    currentTime = minutes * 60 + sec;
+                }
 
-          case GameState.Over:
-            frameCount++;
+                if (IR >= infectionLimit)
+                {
+                    StopCoroutine(second());
+                    Time.timeScale = 0;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                                + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+                    GameOverLose.gameObject.SetActive(true);
+                    scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+                    scoreLose.text = "SCORE: " + Score * 10;
+                } else if (sec == 0 && minutes == 0) {
+                    CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    Time.timeScale = 0;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                      + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
 
-            if (frameCount > 300)
-            {
+                    if (Score * 10 >= expectedScore)
+                    {
+                        statusText.text = "Congrats!\n You survived! Score: "
+                                  + Score * 10 + "\nExpected: " + expectedScore;
+                    }
+                    else
+                    {
+                        statusText.text = "Level failed! \n Your Score: "
+                                  + Score * 10 + "\nExpected: " + expectedScore;
+                    }
+                    statusText.enabled = true;
+                }
+                break;
+
+            case GameState.Over:
+                frameCount++;
+
+                if (frameCount > 300)
+                {
+                    CurrentGameState = GameState.Start;
+                    Time.timeScale = 1;
+                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                    statusText.text = "Score:" + Uninfected.Length;
+                    SceneManager.LoadScene(1);
+                }
+                break;
+
+            case GameState.Restart:
                 CurrentGameState = GameState.Start;
                 Time.timeScale = 1;
-                Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                statusText.text = "Score:" + Uninfected.Length;
-                SceneManager.LoadScene(1);
-            }
-            break;
+                break;
 
-          case GameState.Restart:
-              CurrentGameState = GameState.Start;
-              Time.timeScale = 1;
-              break;
-
-          default:
-            break;
+            default:
+                break;
       }
     }
 
-
-    IEnumerator second()
+    private IEnumerator second()
     {
         yield return new WaitForSeconds(1f);
         if (sec > 0)
@@ -247,7 +184,6 @@ public class GameManager : MonoBehaviour
             minutes--;
         }
         timeText.text = minutes + " : " + sec;
-        //fillLoading ();
         StartCoroutine(second());
     }
 
@@ -263,17 +199,17 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < 3 * level; i++)
         {
-          float x = Virus.transform.position.x;
-          float y = Virus.transform.position.y;
-          while (Vector2.Distance(new Vector2(x, y), new Vector2(Virus.transform.position.x, Virus.transform.position.y)) < this.minDistance)
-          {
-            x = random.Next(minX, maxX);
-            y = random.Next(minY, maxY);
-          }
-          GameObject ball = Instantiate(ballPrefab, new Vector3(x, y, 0), Quaternion.identity);
+            float x = Virus.transform.position.x;
+            float y = Virus.transform.position.y;
+            while (Vector2.Distance(new Vector2(x, y), new Vector2(Virus.transform.position.x, Virus.transform.position.y)) < this.minDistance)
+            {
+                x = random.Next(minX, maxX);
+                y = random.Next(minY, maxY);
+            }
+            GameObject ball = Instantiate(ballPrefab, new Vector3(x, y, 0), Quaternion.identity);
 
-          ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-          ball.transform.gameObject.tag = "NORMAL_BALL";
+            ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
 
@@ -402,14 +338,104 @@ public class GameManager : MonoBehaviour
         DYNAMIC__cureBall = CureBallGameObject;
     }
 
-    public enum GameState
-    {
-        Start,
-        Playing,
-        Over,
-        Restart,
-        Tutorial1,
-        Tutorial2,
-        Tutorial3
+    private void InitializeGameScene() {
+        Debug.LogFormat("GameManager.InitializeGameScene(): MainMenu.level: {0}", MainMenu.level);
+        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        level = MainMenu.level;
+        minX = -2;
+        minY = -5;
+        maxX = 2;
+        maxY = 5;
+        minDistance = 0.4f;
+        minutes = 0;
+        sec = 40;
+        Virus = GameObject.Find("Virus");
+        Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        timeText = GameObject.Find("TimeText").GetComponent<Text>();
+        timeText.text = minutes + " : " + sec;
+        GameLevel gameLevel = (GameLevel)MainMenu.level;
+
+        switch (gameLevel) {
+            case GameLevel.TUTORIAL_1:
+                SetSceneForTutorial1();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+            case GameLevel.TUTORIAL_2:
+                SetSceneForTutorial2();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+            case GameLevel.TUTORIAL_3:
+                SetSceneForTutorial3();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+            case GameLevel.NORMAL_1:
+                CreateBallsRandomly();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+            case GameLevel.NORMAL_2:
+                CreateBallsRandomly();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+            case GameLevel.NORMAL_3:
+                CreateBallsRandomly();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
+        default:
+            statusText = GameObject.Find("Status").GetComponent<Text>();
+            statusText.enabled = false;
+
+            if (minutes > 0)
+                totalSeconds += minutes * 60;
+            if (sec > 0)
+                totalSeconds += sec;
+            TOTAL_SECONDS = totalSeconds;
+
+            scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
+            scoreToPass.text = "Expected Score: " + expectedScore;
+            screenHeight = Screen.height;
+            screenWidth = Screen.width;
+            break;
+        }
+    }
+
+    private void StartGame() {
+        GameLevel gameLevel = (GameLevel)MainMenu.level;
+
+        if (CDS.counterDownDone == true) {
+            switch (gameLevel) {
+                case GameLevel.TUTORIAL_1:
+                    CurrentGameState = GameState.TUTORIAL1_PRELIMINARY;
+                    break;
+
+                case GameLevel.TUTORIAL_2:
+                    CurrentGameState = GameState.TUTORIAL2_PRELIMINARY;
+                    break;
+
+                case GameLevel.TUTORIAL_3:
+                    CurrentGameState = GameState.TUTORIAL3_PRELIMINARY;
+                    break;
+
+                case GameLevel.NORMAL_1:
+                case GameLevel.NORMAL_2:
+                case GameLevel.NORMAL_3:
+                default:
+                    for (int i = 0; i < Cells.Length; i++)
+                    {
+                        Cells[i].GetComponent<Ball>().StartBall();
+                    }
+                    Virus.GetComponent<Ball>().StartBall();
+                    CureBall.GetComponent<Ball>().StartBall();
+                    CurrentGameState = GameState.Playing;
+                    break;
+            }
+
+            StartCoroutine(second());
+        }
     }
 }

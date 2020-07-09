@@ -125,7 +125,7 @@ public class DrawLine : MonoBehaviour
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
         // we also delete the previous line if it is Tutorial Level 1
-        if ((MainMenu.level == 1 || MainMenu.level == 2 || MainMenu.level == 3) && GameManager.tutorialLine != null){// && GameManager.GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
+        if ((MainMenu.level == 1 || MainMenu.level == 2 || MainMenu.level == 3) && GameManager.tutorialLine != null){// && GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
             Destroy(GameManager.tutorialLine);
             Destroy(GameManager.handObject);
             GameManager.Cells = new GameObject[1];
@@ -134,7 +134,7 @@ public class DrawLine : MonoBehaviour
                 Cells[i].GetComponent<Ball>().StartBall();
             }
             GameManager.Virus.GetComponent<Ball>().StartBall();
-            GameManager.CurrentGameState = GameManager.GameState.Playing;
+            GameManager.CurrentGameState = GameState.Playing;
 
         }
     }
@@ -196,12 +196,15 @@ public class DrawLine : MonoBehaviour
                     if (safeBalls != null && safeBalls.Count > 0){
                         containsItem = safeBalls.Contains(enclosedBall);
                     }
+
                     if (!containsItem)
                     {
                         Destroy(enclosedBall.GetComponent<CircleCollider2D>());
                         safeBalls.Add(enclosedBall);
                         enclosedBall.ballBehavior.TransformsTo(BallType.SAFE);
-                        if (MainMenu.level == 2 && GameManager.tutorialLine != null && GameManager.GameState.Tutorial2.CompareTo(GameManager.CurrentGameState) == 0){
+                        if (MainMenu.level == (int)GameLevel.TUTORIAL_2
+                            && GameManager.tutorialLine != null
+                            && GameState.TUTORIAL2_PRELIMINARY.CompareTo(GameManager.CurrentGameState) == 0) {
                             Destroy(GameManager.tutorialLine);
                             Destroy(GameManager.handObject);
                             GameManager.Cells = new GameObject[3];
@@ -210,8 +213,7 @@ public class DrawLine : MonoBehaviour
                                 Cells[i].GetComponent<Ball>().StartBall();
                             }
                             GameManager.Virus.GetComponent<Ball>().StartBall();
-                            GameManager.CurrentGameState = GameManager.GameState.Playing;
-
+                            GameManager.CurrentGameState = GameState.Playing;
                         }
                     }
                     if (safeBalls.Count > MAX_SAFE_BALLS){

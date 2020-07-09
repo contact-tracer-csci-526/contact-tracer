@@ -39,7 +39,7 @@ public class Loading : MonoBehaviour {
   if (sec == 0 && minutes != 0) {
    sec = 60;
    minutes--;
-  } 
+  }
   timeText.text = minutes + " : " + sec;
   fillLoading ();
   StartCoroutine (second ());
