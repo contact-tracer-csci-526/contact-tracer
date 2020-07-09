@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial3 : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private const int DURATION = 7;
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         StartCoroutine(ToTutorialThree());
@@ -19,7 +19,7 @@ public class Tutorial3 : MonoBehaviour
 
     IEnumerator ToTutorialThree()
     {
-        yield return new WaitForSeconds(7); // Timer is for 9 seconds because the story timeline rolls for 9 seconds
+        yield return new WaitForSeconds(7);
         SceneManager.LoadScene(7);
     }
 }
