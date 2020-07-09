@@ -217,13 +217,17 @@ public class GameManager : MonoBehaviour
 
     private void SetSceneForTutorial3()
     {
-        tutorialLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        tutorialLine = Instantiate(linePrefab, Vector3.zero,
+                                               Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, new Vector2(0, -2));
         lineRenderer.SetPosition(1, new Vector2(0, 2));
-        GameObject ball1 = Instantiate(ballPrefab, new Vector3(2, 0, 0), Quaternion.identity);
-        GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2, 2, 0), Quaternion.identity);
-        GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
+        GameObject ball1 = Instantiate(ballPrefab, new Vector3(2, 0, 0),
+                                                   Quaternion.identity);
+        GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2, 2, 0),
+                                                   Quaternion.identity);
+        GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
+                                                   Quaternion.identity);
 
         ball1.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         ball1.transform.gameObject.tag = "NORMAL_BALL";
@@ -235,10 +239,15 @@ public class GameManager : MonoBehaviour
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
 
-        GameObject cb = GameObject.FindGameObjectsWithTag("Cure")[0];
-        cb.transform.position = new Vector3(2, 1.5f, 0);
-        GameObject v = GameObject.FindGameObjectsWithTag("Virus")[0];
-        v.transform.position = new Vector3(2, -1.5f, 0);
+        GameObject[] cbs = GameObject.FindGameObjectsWithTag("Cure");
+        if (cbs.Length > 0) {
+            cbs[0].transform.position = new Vector3(2, 1.5f, 0);
+        }
+
+        GameObject[] vbs = GameObject.FindGameObjectsWithTag("Virus");
+        if (vbs.Length > 0) {
+            vbs[0].transform.position = new Vector3(2, -1.5f, 0);
+        }
     }
 
     private String makePrintableTime(int sec)
