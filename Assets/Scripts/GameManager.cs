@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     private int infectionLimit = 100;
     private const int INFECTION_RATIO_LIMIT = 100;
     private int frameCount = 0;
-    private int expectedScore = 20;
+    private int expectedScore;
     private GameObject tutorialCircle;
     private LineRenderer lineRenderer;
     private Vector3 lineStart = new Vector3(-2, 0, 0);
@@ -325,6 +325,7 @@ public class GameManager : MonoBehaviour
         maxY = 5;
         minDistance = 0.4f;
         sec = 30;
+        expectedScore = level > 100 ? (level % 100) * 10 : level * 10;
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
@@ -426,13 +427,14 @@ public class GameManager : MonoBehaviour
             int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
                      + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
 
-            Debug.Log(statusText);
             if (Score * 10 >= expectedScore) {
-                statusText.text = "Congrats!\n You survived! Score: "
-                        + Score * 10 + "\nExpected: " + expectedScore;
+                GameOverWin.gameObject.SetActive(true);
+                scoreLose = GameObject.Find("ScoreWin").GetComponent<Text>();
+                scoreLose.text = "SCORE: " + Score * 10;
             } else {
-                statusText.text = "Level failed! \n Your Score: "
-                        + Score * 10 + "\nExpected: " + expectedScore;
+                GameOverLose.gameObject.SetActive(true);
+                scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+                scoreLose.text = "SCORE: " + Score * 10;
             }
             statusText.enabled = true;
         }
