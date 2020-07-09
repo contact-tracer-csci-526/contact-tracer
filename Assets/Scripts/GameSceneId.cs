@@ -4,7 +4,9 @@ public enum GameSceneId
     STORY_BOARD = 1,
     TUTORIAL_OR_GAME_NAVIGATOR = 2,
     MENU = 3,
-    TUTORIAL_STORY_LINE = 4,
-    GAME_SCENE = 5,
-    SCORE = 6,
+    TUTORIAL1_STORY_LINE = 4,
+    TUTORIAL2_STORY_LINE = 5,
+    TUTORIAL3_STORY_LINE = 6,
+    GAME_SCENE = 7,
+    SCORE = 8,
 }

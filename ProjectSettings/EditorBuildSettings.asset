@@ -81,8 +81,14 @@ EditorBuildSettings:
     path: Assets/Scenes/menu.unity
     guid: 5d635c3942ac44db0818735df3f2e43c
   - enabled: 1
-    path: Assets/Scenes/TutorialStoryLine.unity
+    path: Assets/Scenes/Tutorial1StoryLine.unity
     guid: db30643e58b51664f8f9320ed546203e
+  - enabled: 1
+    path: Assets/Scenes/Tutorial2StoryLine.unity
+    guid: 5a5bdabf509a62149b985f8605729bff
+  - enabled: 1
+    path: Assets/Scenes/Tutorial3StoryLine.unity
+    guid: 96fe3bcfa22ce0440b5d95a4751a8870
   - enabled: 1
     path: Assets/Scenes/gameScene.unity
     guid: bb148147ddca33647a17440fd600afd0

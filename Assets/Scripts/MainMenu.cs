@@ -27,15 +27,15 @@ public class MainMenu : MonoBehaviour
 
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
-                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL1_STORY_LINE);
                 break;
 
             case GameLevel.TUTORIAL_2:
-                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL2_STORY_LINE);
                 break;
 
             case GameLevel.TUTORIAL_3:
-                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL3_STORY_LINE);
                 break;
 
             default:

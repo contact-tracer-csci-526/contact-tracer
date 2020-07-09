@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Tutorial1 : MonoBehaviour
+public class Tutorial2 : MonoBehaviour
 {
+    private const int DURATION = 7;
+
     void Start()
     {
 
@@ -12,12 +14,12 @@ public class Tutorial1 : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(ToTutorialOne());
+        StartCoroutine(ToTutorialTwo());
     }
 
-    IEnumerator ToTutorialOne()
+    IEnumerator ToTutorialTwo()
     {
-        yield return new WaitForSeconds(9); // Timer is for 9 seconds because the story timeline rolls for 9 seconds
+        yield return new WaitForSeconds(DURATION);
         SceneManager.LoadScene(7);
     }
 }
