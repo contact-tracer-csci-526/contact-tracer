@@ -352,16 +352,25 @@ public class GameManager : MonoBehaviour
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
                 SetSceneForTutorial1();
+                sec= 05;
+                timeText = GameObject.Find("TimeText").GetComponent<Text>();
+        timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
             case GameLevel.TUTORIAL_2:
                 SetSceneForTutorial2();
+                sec= 10;
+                timeText = GameObject.Find("TimeText").GetComponent<Text>();
+                timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
             case GameLevel.TUTORIAL_3:
                 SetSceneForTutorial3();
+                sec= 20;
+                timeText = GameObject.Find("TimeText").GetComponent<Text>();
+                 timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
