@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class Ball : MonoBehaviour
@@ -26,15 +26,12 @@ public class Ball : MonoBehaviour
 
     public void StartBall()
     {
-        Debug.Log(ballType);
         if (MainMenu.level != 3) {
           rigidbody.velocity = new Vector2(1.0f, 1.0f);
         } else if (ballType == BallType.CURE) {
           rigidbody.velocity = new Vector2(-1.0f, 0.0f);
-          Debug.Log("Cure ball velocity set to " + rigidbody.velocity);
         } else if (ballType == BallType.VIRUS) {
           rigidbody.velocity = new Vector2(0.0f, 1.0f);
-          Debug.Log("Virus velocity set to " + rigidbody.velocity);
         } else {
           rigidbody.velocity = new Vector2(0.0f, -1.0f);
         }
