@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
         maxY = 5;
         minDistance = 0.4f;
         sec = 30;
-        expectedScore = level * 10;
+        expectedScore = level > 100 ? (level % 100) * 10 : level * 10;
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
