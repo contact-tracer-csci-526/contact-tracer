@@ -119,35 +119,7 @@ public class GameManager : MonoBehaviour
                     currentTime = sec;
                 }
 
-                if (infectionRatio >= INFECTION_RATIO_LIMIT)
-                {
-                    StopCoroutine(second());
-                    Time.timeScale = 0;
-                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                                + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                    GameOverLose.gameObject.SetActive(true);
-                    scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + Score * 10;
-                } else if (sec == 0) {
-                    CurrentGameState = GameState.Over;
-                    timeText.text = "Time's Up!";
-                    StopCoroutine(second());
-                    Time.timeScale = 0;
-                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                      + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-
-                    if (Score * 10 >= expectedScore)
-                    {
-                        statusText.text = "Congrats!\n You survived! Score: "
-                                  + Score * 10 + "\nExpected: " + expectedScore;
-                    }
-                    else
-                    {
-                        statusText.text = "Level failed! \n Your Score: "
-                                  + Score * 10 + "\nExpected: " + expectedScore;
-                    }
-                    statusText.enabled = true;
-                }
+                EndGame(infectionRatio);
                 break;
 
             case GameState.Over:
@@ -266,7 +238,8 @@ public class GameManager : MonoBehaviour
         v.transform.position = new Vector3(2, -1.5f, 0);
     }
 
-    private String makePrintableTime(int sec) {
+    private String makePrintableTime(int sec)
+    {
         int minutes = sec / 60;
         int _sec = sec % 60;
         return minutes + " : " + _sec;
@@ -348,12 +321,20 @@ public class GameManager : MonoBehaviour
         maxX = 2;
         maxY = 5;
         minDistance = 0.4f;
-        sec = 40;
+        sec = 10;
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
         timeText.text = makePrintableTime(sec);
         GameLevel gameLevel = (GameLevel)MainMenu.level;
+        statusText = GameObject.Find("Status").GetComponent<Text>();
+        statusText.enabled = false;
+
+        scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
+        scoreToPass.text = "Expected Score: " + expectedScore;
+
+        screenHeight = Screen.height;
+        screenWidth = Screen.width;
 
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
@@ -387,14 +368,6 @@ public class GameManager : MonoBehaviour
                 break;
 
         default:
-            statusText = GameObject.Find("Status").GetComponent<Text>();
-            statusText.enabled = false;
-
-            scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
-            scoreToPass.text = "Expected Score: " + expectedScore;
-
-            screenHeight = Screen.height;
-            screenWidth = Screen.width;
             break;
         }
     }
@@ -431,6 +404,35 @@ public class GameManager : MonoBehaviour
             }
 
             StartCoroutine(second());
+        }
+    }
+
+    private void EndGame(int infectionRatio) {
+        if (infectionRatio >= INFECTION_RATIO_LIMIT) {
+            StopCoroutine(second());
+            Time.timeScale = 0;
+            int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                        + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+            GameOverLose.gameObject.SetActive(true);
+            scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
+            scoreLose.text = "SCORE: " + Score * 10;
+        } else if (sec == 0) {
+            CurrentGameState = GameState.Over;
+            timeText.text = "Time's Up!";
+            StopCoroutine(second());
+            Time.timeScale = 0;
+            int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                     + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+
+            Debug.Log(statusText);
+            if (Score * 10 >= expectedScore) {
+                statusText.text = "Congrats!\n You survived! Score: "
+                        + Score * 10 + "\nExpected: " + expectedScore;
+            } else {
+                statusText.text = "Level failed! \n Your Score: "
+                        + Score * 10 + "\nExpected: " + expectedScore;
+            }
+            statusText.enabled = true;
         }
     }
 }
