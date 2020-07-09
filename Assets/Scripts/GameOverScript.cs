@@ -11,20 +11,20 @@ public class GameOverScript : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (MainMenu.level == 1)
+        if (MainMenu.level == 101)
         {
             GameManager.CurrentGameState = GameState.Restart;
-            MainMenu.level = 2;
+            MainMenu.level = 102;
             Time.timeScale = 1f;
             SceneManager.LoadScene("gameScene");
         }
-        else if (MainMenu.level == 2)
-        {
-            GameManager.CurrentGameState = GameState.Restart;
-            MainMenu.level = 3;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("gameScene");
-        }
+        // else if (MainMenu.level == 2)
+        // {
+        //     GameManager.CurrentGameState = GameState.Restart;
+        //     MainMenu.level = 3;
+        //     Time.timeScale = 1f;
+        //     SceneManager.LoadScene("gameScene");
+        // }
     }
 
     public void LoadMenu()
