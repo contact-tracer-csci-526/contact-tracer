@@ -22,6 +22,13 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+   
+    public void Menu()
+    {
+    
+        SceneManager.LoadScene("TutorialOrGameNavigator");
+    }
+
     private void MoveToScene(int level) {
         GameLevel gameLevel = (GameLevel)level;
 

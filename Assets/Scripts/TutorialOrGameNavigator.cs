@@ -6,19 +6,11 @@ using UnityEngine.SceneManagement;
 /* To be changed */
 public class TutorialOrGameNavigator : MonoBehaviour
 {
-    void Start()
-    {
+    
 
+     public void LoadGame()
+    {
+        SceneManager.LoadScene("menu");
     }
 
-    void Update()
-    {
-        StartCoroutine(ToNextScene());
-    }
-
-    IEnumerator ToNextScene()
-    {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(3);
-    }
 }
