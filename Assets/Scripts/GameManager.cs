@@ -26,16 +26,13 @@ public class GameManager : MonoBehaviour
     Text statusText;
     Text scoreToPass;
 
-    public Text scoreWin;
-
-    public Text scoreLose;
-
     public static int level;
     public GameObject ballPrefab;
     public GameObject[] Uninfected;
 
     public GameObject GameOverWin;
     public GameObject GameOverLose;
+    public Text scoreLose;
     public GameObject linePrefab;
     public static GameObject tutorialLine;
     private GameObject tutorialCircle;
@@ -110,7 +107,7 @@ public class GameManager : MonoBehaviour
             TOTAL_SECONDS = totalSeconds;
 
         scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
-        scoreToPass.text = "EXPECTED SCORE: " + expectedScore;
+        scoreToPass.text = "Expected Score: " + expectedScore;
 
         screenHeight=Screen.height;
         screenWidth=Screen.width;
@@ -129,7 +126,7 @@ public class GameManager : MonoBehaviour
                 MoveHandInCircularMotion();
                 break;
             case GameState.Tutorial3:
-                CollideCureBallWithInfectedBall();
+                MoveHandVertically();
                 break;
             case GameState.Start:
 
@@ -146,12 +143,14 @@ public class GameManager : MonoBehaviour
                             SetSceneForTutorial2();
                             CurrentGameState = GameState.Tutorial2;
                             break;
-                        // case 3:
-                        //     CurrentGameState = GameState.Tutorial3;
-                        //     break;
+                        case 3:
+                            SetSceneForTutorial3();
+                            CurrentGameState = GameState.Tutorial3;
+                            break;
                         default:
                             for (int i = 0; i < Cells.Length; i++) {
                                 Cells[i].GetComponent<Ball>().StartBall();
+                                Debug.Log(i);
                             }
                             Virus.GetComponent<Ball>().StartBall();
                             CureBall.GetComponent<Ball>().StartBall();
@@ -208,24 +207,19 @@ public class GameManager : MonoBehaviour
                     scoreLose.text = "SCORE: " + Score * 10;
 
                 } else if (sec == 0 && minutes == 0) {
-                    //currentGameState = GameState.Over;
+                    CurrentGameState = GameState.Over;
                     timeText.text = "Time's Up!";
-                    StopCoroutine(second());
+                    StopCoroutine (second ());
                     Time.timeScale = 0;
-                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                                + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-                    if (Score * 10 >= expectedScore) {
-
-                        GameOverWin.gameObject.SetActive(true);
-                        scoreWin = GameObject.Find("ScoreWin").GetComponent<Text>();
-                        scoreWin.text = "SCORE: " + Score * 10;
-
-                    } else {
-
-                        GameOverLose.gameObject.SetActive(true);
-                        scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-                        scoreLose.text = "SCORE: " + Score * 10;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+                    if(Score * 10 >= expectedScore)
+                    {
+                        statusText.text = "Congrats!\n You survived! Score: " + Score * 10 + "\nExpected: " + expectedScore;
+                    } else
+                    {
+                        statusText.text = "Level failed! \n Your Score: " + Score * 10 + "\nExpected: " + expectedScore;
                     }
+                    statusText.enabled = true;
                 }
                 break;
 
@@ -235,10 +229,9 @@ public class GameManager : MonoBehaviour
                 if (frameCount > 300) {
                   CurrentGameState =  GameState.Start;
                   Time.timeScale = 1;
-                    // Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                    // statusText.text = "Score:" + Uninfected.Length;
-                    // SceneManager.LoadScene(1);
-                    GameOverLose.gameObject.SetActive(true);
+                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                    statusText.text = "Score:" + Uninfected.Length;
+                    SceneManager.LoadScene(1);
                 }
                 break;
 
@@ -265,25 +258,26 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator second()
- {
-  yield return new WaitForSeconds (1f);
-  if(sec > 0)
-  sec--;
-  if (sec == 0 && minutes != 0) {
-   sec = 60;
-   minutes--;
-  }
-  timeText.text = minutes + " : " + sec;
-  //fillLoading ();
-  StartCoroutine (second ());
- }
+    {
+    yield return new WaitForSeconds (1f);
+    if(sec > 0)
+    sec--;
+    if (sec == 0 && minutes != 0) {
+    sec = 60;
+    minutes--;
+    }
+    timeText.text = minutes + " : " + sec;
+    //fillLoading ();
+    StartCoroutine (second ());
+    }
 
- void fillLoading()
- {
-  totalSeconds--;
-  float fill = (float)totalSeconds/TOTAL_SECONDS;
-  loading.fillAmount = fill;
- }
+    // void fillLoading()
+    // {
+    // totalSeconds--;
+    // float fill = (float)totalSeconds/TOTAL_SECONDS;
+    // loading.fillAmount = fill;
+    // }
+
 
      IEnumerator StartBallLate()
      {
@@ -319,6 +313,7 @@ public class GameManager : MonoBehaviour
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
     }
+
     private void SetSceneForTutorial2()
     {
         tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
@@ -338,6 +333,45 @@ public class GameManager : MonoBehaviour
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
     }
+
+    private void SetSceneForTutorial3()
+    {
+      tutorialLine =  Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+      lineRenderer = tutorialLine.GetComponent<LineRenderer>();
+      lineRenderer.SetPosition(0, new Vector2(0, -2));
+      lineRenderer.SetPosition(1, new Vector2(0, 2));
+      GameObject ball1 = Instantiate(ballPrefab, new Vector3(2,0,0), Quaternion.identity);
+      GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2,2,0), Quaternion.identity);
+      GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2,-2,0), Quaternion.identity);
+
+      ball1.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+      ball1.transform.gameObject.tag = "NORMAL_BALL";
+      ball2.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+      ball2.transform.gameObject.tag = "NORMAL_BALL";
+      ball3.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+      ball3.transform.gameObject.tag = "NORMAL_BALL";
+      handObject = new GameObject("Hand");
+      SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
+      renderer.sprite = handSprite;
+
+      //reposition virus and cure ball1
+      GameObject cb = GameObject.FindGameObjectsWithTag("Cure")[0];
+      cb.transform.position = new Vector3(2,1.5f,0);
+      GameObject v = GameObject.FindGameObjectsWithTag("Virus")[0];
+      v.transform.position = new Vector3(2,-1.5f,0);
+
+      //velocity to ball 1, virus, and Cure
+      // Rigidbody2D b1RB = ball1.GetComponent<Rigidbody2D>();
+      // Vector2 newBall1direction = new Vector2(0,-1);
+      // ball1.GetComponent<Ball>().rigidbody.velocity = ball1.GetComponent<Ball>().rigidbody.velocity * newBall1direction.normalized;
+      // Rigidbody2D cbRB = cb.GetComponent<Rigidbody2D>();
+      // Vector2 newCBdirection = new Vector2(-1,0);
+      // cb.GetComponent<Ball>().rigidbody.velocity = cb.GetComponent<Ball>().rigidbody.velocity * newCBdirection.normalized;
+      //Rigidbody2D vRB = v.GetComponent<Rigidbody2D>();
+      // Vector2 newVirusdirection = new Vector2(0,1);
+      // v.GetComponent<Ball>().rigidbody.velocity = v.GetComponent<Ball>().rigidbody.velocity * newVirusdirection.normalized;
+    }
+
      void CreateCircularPoints ()
     {
         float x;
@@ -365,6 +399,15 @@ public class GameManager : MonoBehaviour
        {
            handObject.transform.position = new Vector3(-2.0f,handObject.transform.position.y);
        }
+   }
+
+   private void MoveHandVertically()
+   {
+      handObject.transform.position = new Vector3(handObject.transform.position.x, handObject.transform.position.y + 0.005f);
+      if (handObject.transform.position.y > 2.0f)
+      {
+        handObject.transform.position = new Vector3(handObject.transform.position.x, -2.0f);
+      }
    }
 
    private void MoveHandInCircularMotion()

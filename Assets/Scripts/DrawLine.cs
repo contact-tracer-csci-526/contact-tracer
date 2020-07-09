@@ -125,7 +125,7 @@ public class DrawLine : MonoBehaviour
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
         // we also delete the previous line if it is Tutorial Level 1
-        if ((MainMenu.level == 1 || MainMenu.level == 2) && GameManager.tutorialLine != null && GameManager.GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
+        if ((MainMenu.level == 1 || MainMenu.level == 2 || MainMenu.level == 3) && GameManager.tutorialLine != null){// && GameManager.GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
             Debug.Log("here");
             Destroy(GameManager.tutorialLine);
             Destroy(GameManager.handObject);
