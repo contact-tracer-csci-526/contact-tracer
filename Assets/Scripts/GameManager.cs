@@ -411,32 +411,51 @@ public class GameManager : MonoBehaviour
     }
 
     private void EndGame(int infectionRatio) {
-        if (infectionRatio >= INFECTION_RATIO_LIMIT) {
-            StopCoroutine(second());
-            Time.timeScale = 0;
-            int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                        + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
-            GameOverLose.gameObject.SetActive(true);
-            scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-            scoreLose.text = "SCORE: " + Score * 10;
-        } else if (sec == 0) {
-            CurrentGameState = GameState.Over;
-            timeText.text = "Time's Up!";
-            StopCoroutine(second());
-            Time.timeScale = 0;
-            int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
-                     + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
+        GameLevel gameLevel = (GameLevel) level;
 
-            if (Score * 10 >= expectedScore) {
-                GameOverWin.gameObject.SetActive(true);
-                scoreLose = GameObject.Find("ScoreWin").GetComponent<Text>();
-                scoreLose.text = "SCORE: " + Score * 10;
-            } else {
-                GameOverLose.gameObject.SetActive(true);
-                scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
-                scoreLose.text = "SCORE: " + Score * 10;
-            }
-            statusText.enabled = true;
+        switch (gameLevel) {
+            case GameLevel.TUTORIAL_1:
+            case GameLevel.TUTORIAL_2:
+            case GameLevel.TUTORIAL_3:
+            case GameLevel.NORMAL_1:
+            case GameLevel.NORMAL_2:
+            case GameLevel.NORMAL_3:
+            default:
+                if (infectionRatio >= INFECTION_RATIO_LIMIT) {
+                    StopCoroutine(second());
+                    Time.timeScale = 0;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL")
+                                          .Length
+                              + GameObject.FindGameObjectsWithTag("SAFE_BALL")
+                                          .Length;
+                    GameOverLose.gameObject.SetActive(true);
+                    scoreLose = GameObject.Find("ScoreLose")
+                                          .GetComponent<Text>();
+                    scoreLose.text = "SCORE: " + Score * 10;
+                } else if (sec == 0) {
+                    CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    Time.timeScale = 0;
+                    int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL")
+                                          .Length
+                              + GameObject.FindGameObjectsWithTag("SAFE_BALL")
+                                          .Length;
+
+                    if (Score * 10 >= expectedScore) {
+                        GameOverWin.gameObject.SetActive(true);
+                        scoreLose = GameObject.Find("ScoreWin")
+                                              .GetComponent<Text>();
+                        scoreLose.text = "SCORE: " + Score * 10;
+                    } else {
+                        GameOverLose.gameObject.SetActive(true);
+                        scoreLose = GameObject.Find("ScoreLose")
+                                              .GetComponent<Text>();
+                        scoreLose.text = "SCORE: " + Score * 10;
+                    }
+                    statusText.enabled = true;
+                }
+                break;
         }
     }
 }
