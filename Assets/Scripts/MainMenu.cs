@@ -22,7 +22,13 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private void MoveToScene(int level) {
+    public void HandleClickMenu()
+    {
+        SceneManager.LoadScene((int) GameSceneId.TUTORIAL_OR_GAME_NAVIGATOR);
+    }
+
+    private void MoveToScene(int level)
+    {
         GameLevel gameLevel = (GameLevel)level;
 
         switch (gameLevel) {
