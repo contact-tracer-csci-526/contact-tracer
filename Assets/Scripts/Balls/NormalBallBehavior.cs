@@ -40,7 +40,7 @@ public class NormalBallBehavior : BallBehavior
         transform.gameObject.tag = SafeBallBehavior.TAG;
 
         ballCollider.radius = 0.6f;
-        
+
         currentSprite.sprite = safeSprite;
         ball.ballBehavior = BallBehaviorFactory.Get(BallType.SAFE, ball);
         ball.ballType = BallType.SAFE;

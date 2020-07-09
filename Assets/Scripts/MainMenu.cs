@@ -8,17 +8,39 @@ public class MainMenu : MonoBehaviour
     public static int level;
 
     void Awake () {
-        DontDestroyOnLoad (this);
+        DontDestroyOnLoad(this);
     }
 
     public void PlayGame(int l)
     {
         level = l;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        MoveToScene(level);
     }
 
-    public void QuitGame()
+    private void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void MoveToScene(int level) {
+        GameLevel gameLevel = (GameLevel)level;
+
+        switch (gameLevel) {
+            case GameLevel.TUTORIAL_1:
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                break;
+
+            case GameLevel.TUTORIAL_2:
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                break;
+
+            case GameLevel.TUTORIAL_3:
+                SceneManager.LoadScene((int)GameSceneId.TUTORIAL_STORY_LINE);
+                break;
+
+            default:
+                SceneManager.LoadScene((int)GameSceneId.GAME_SCENE);
+                break;
+        }
     }
 }
