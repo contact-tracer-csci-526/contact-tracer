@@ -13,6 +13,7 @@ public class VirusBallBehavior : BallBehavior
     public override void HandleOnCollisionEnter2D(Collision2D other)
     {
         Ball otherBall = other.gameObject.GetComponent<Ball>();
+        LineScript line = other.gameObject.GetComponent<LineScript>();
         if (otherBall != null) {
             if (this.ball.isOriginalVirus && otherBall.ballType == BallType.NORMAL) {
                 Transform transform = ball.transform;
@@ -23,6 +24,12 @@ public class VirusBallBehavior : BallBehavior
             bool isCureBallHit=otherBall.ballType==BallType.CURE;
             if (isCureBallHit && !this.ball.isOriginalVirus) {
                 TransformsToNormalBall();
+            }
+        }
+        else if (line != null){
+            if(this.ball.isOriginalVirus) 
+            {
+                Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), this.ball.GetComponent<Collider2D>());
             }
         }
     }
