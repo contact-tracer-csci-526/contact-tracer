@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public Sprite handSprite;
     public Image loading;
     public Text timeText;
-    public int minutes;
     public int sec;
     public int totalSeconds = 0;
     public int TOTAL_SECONDS = 0;
@@ -44,6 +43,7 @@ public class GameManager : MonoBehaviour
     private DelayedStartScript CDS;
     private Loading Loading;
     private int infectionLimit = 100;
+    private const int INFECTION_RATIO_LIMIT = 100;
     private int frameCount = 0;
     private int expectedScore = 20;
     private GameObject tutorialCircle;
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
                 GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL");
                 GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
-                int IR = (100 * Infected.Length)
+                int infectionRatio = (100 * Infected.Length)
                         / (Uninfected.Length + Infected.Length + Frozen.Length);
 
                 if (previousTime - currentTime >= cureBallLifeTime)
@@ -100,11 +100,11 @@ public class GameManager : MonoBehaviour
                         Destroy(CureBallGameObject, 0);
                         CureBallGameObject = null;
                     }
-                    currentTime = minutes * 60 + sec;
-                    previousTime = minutes * 60 + sec;
+                    currentTime = sec;
+                    previousTime = sec;
                 }
 
-                if ((minutes * 60 + sec) % (cureBallRegenerateInterval) == 0
+                if ((sec) % (cureBallRegenerateInterval) == 0
                     && shouldCureballRender
                     && CureBallGameObject == null
                 ) {
@@ -112,14 +112,14 @@ public class GameManager : MonoBehaviour
                     StartCoroutine(StartBallLate());
                     RenderCureBall();
 
-                    currentTime = (minutes * 60 + sec);
-                    previousTime = minutes * 60 + sec;
-                } else if ((minutes * 60 + sec) % (cureBallRegenerateInterval) != 0) {
+                    currentTime = sec;
+                    previousTime = sec;
+                } else if ((sec) % (cureBallRegenerateInterval) != 0) {
                     shouldCureballRender = true;
-                    currentTime = minutes * 60 + sec;
+                    currentTime = sec;
                 }
 
-                if (IR >= infectionLimit)
+                if (infectionRatio >= INFECTION_RATIO_LIMIT)
                 {
                     StopCoroutine(second());
                     Time.timeScale = 0;
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
                     scoreLose.text = "SCORE: " + Score * 10;
-                } else if (sec == 0 && minutes == 0) {
+                } else if (sec == 0) {
                     CurrentGameState = GameState.Over;
                     timeText.text = "Time's Up!";
                     StopCoroutine(second());
@@ -178,12 +178,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (sec > 0)
             sec--;
-        if (sec == 0 && minutes != 0)
-        {
-            sec = 60;
-            minutes--;
-        }
-        timeText.text = minutes + " : " + sec;
+        timeText.text = makePrintableTime(sec);
         StartCoroutine(second());
     }
 
@@ -271,7 +266,13 @@ public class GameManager : MonoBehaviour
         v.transform.position = new Vector3(2, -1.5f, 0);
     }
 
-    void CreateCircularPoints()
+    private String makePrintableTime(int sec) {
+        int minutes = sec / 60;
+        int _sec = sec % 60;
+        return minutes + " : " + _sec;
+    }
+
+    private void CreateCircularPoints()
     {
         float x;
         float y;
@@ -347,12 +348,11 @@ public class GameManager : MonoBehaviour
         maxX = 2;
         maxY = 5;
         minDistance = 0.4f;
-        minutes = 0;
         sec = 40;
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
-        timeText.text = minutes + " : " + sec;
+        timeText.text = makePrintableTime(sec);
         GameLevel gameLevel = (GameLevel)MainMenu.level;
 
         switch (gameLevel) {
@@ -390,14 +390,9 @@ public class GameManager : MonoBehaviour
             statusText = GameObject.Find("Status").GetComponent<Text>();
             statusText.enabled = false;
 
-            if (minutes > 0)
-                totalSeconds += minutes * 60;
-            if (sec > 0)
-                totalSeconds += sec;
-            TOTAL_SECONDS = totalSeconds;
-
             scoreToPass = GameObject.Find("ExpectedScore").GetComponent<Text>();
             scoreToPass.text = "Expected Score: " + expectedScore;
+
             screenHeight = Screen.height;
             screenWidth = Screen.width;
             break;
