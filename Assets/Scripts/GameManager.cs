@@ -427,11 +427,10 @@ public class GameManager : MonoBehaviour
             int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
                      + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
 
-            Debug.Log(statusText);
             if (Score * 10 >= expectedScore) {
                 GameOverWin.gameObject.SetActive(true);
                 scoreLose = GameObject.Find("ScoreWin").GetComponent<Text>();
-                scoreLose.text = "SCORE: " + Score * 10; 
+                scoreLose.text = "SCORE: " + Score * 10;
             } else {
                 GameOverLose.gameObject.SetActive(true);
                 scoreLose = GameObject.Find("ScoreLose").GetComponent<Text>();
