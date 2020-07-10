@@ -22,10 +22,10 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void HandleClickMenu()
-    {
-        SceneManager.LoadScene((int) GameSceneId.TUTORIAL_OR_GAME_NAVIGATOR);
-    }
+    // public void HandleClickMenu()
+    // {
+    //     SceneManager.LoadScene((int) GameSceneId.TUTORIAL_OR_GAME_NAVIGATOR);
+    // }
 
     private void MoveToScene(int level)
     {

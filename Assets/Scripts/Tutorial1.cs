@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial1 : MonoBehaviour
 {
+    private const int DURATION = 9;
+
     void Start()
     {
 
@@ -17,7 +19,7 @@ public class Tutorial1 : MonoBehaviour
 
     IEnumerator ToTutorialOne()
     {
-        yield return new WaitForSeconds(9); // Timer is for 9 seconds because the story timeline rolls for 9 seconds
-        SceneManager.LoadScene(8);
+        yield return new WaitForSeconds(DURATION);
+        SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
     }
 }

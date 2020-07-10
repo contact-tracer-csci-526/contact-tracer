@@ -19,7 +19,7 @@ public class Tutorial3 : MonoBehaviour
 
     IEnumerator ToTutorialThree()
     {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(8);
+        yield return new WaitForSeconds(DURATION);
+        SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
     }
 }
