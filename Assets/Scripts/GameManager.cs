@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
-    private int level;
     private GameObject DYNAMIC__cureBall;
     private DelayedStartScript CDS;
     private Loading Loading;
@@ -163,6 +162,7 @@ public class GameManager : MonoBehaviour
     private void CreateBallsRandomly()
     {
         System.Random random = new System.Random();
+        int level = MainMenu.level;
         int naivelyCalculatedBallCount = 3 * (level % 100);
 
         for (int i = 0; i < naivelyCalculatedBallCount; i++)
@@ -327,7 +327,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGameScene() {
         Debug.LogFormat("GameManager.InitializeGameScene(): MainMenu.level: {0}", MainMenu.level);
         CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
-        level = MainMenu.level;
+        int level = MainMenu.level;
         minX = -2;
         minY = -5;
         maxX = 2;
@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
         timeText.text = makePrintableTime(sec);
-        GameLevel gameLevel = (GameLevel)MainMenu.level;
+        GameLevel gameLevel = (GameLevel) level;
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
 
@@ -395,7 +395,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void StartGame() {
-        GameLevel gameLevel = (GameLevel)MainMenu.level;
+        GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         if (CDS.counterDownDone == true) {
             switch (gameLevel) {
@@ -429,7 +429,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void EndGame(int infectionRatio) {
-        GameLevel gameLevel = (GameLevel) level;
+        GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
