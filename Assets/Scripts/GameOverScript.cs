@@ -24,6 +24,26 @@ public class GameOverScript : MonoBehaviour
         }
     }
 
+    public void NextTutorial()
+    {
+        Time.timeScale = 1f;
+
+        if (MainMenu.level == (int) GameLevel.TUTORIAL_1)
+        {
+            GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 2;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene((int) GameSceneId.TUTORIAL2_STORY_LINE);
+        }
+        else if (MainMenu.level == (int) GameLevel.TUTORIAL_2)
+        {
+            GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 3;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene((int) GameSceneId.TUTORIAL3_STORY_LINE);
+        }
+    }
+
     public void LoadMenu()
     {
         GameManager.CurrentGameState = GameState.Restart;
