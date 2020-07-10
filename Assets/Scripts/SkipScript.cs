@@ -9,4 +9,9 @@ public class SkipScript : MonoBehaviour
     {
         SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
     }
+
+    public void SkipStory()
+    {
+        SceneManager.LoadScene((int) GameSceneId.MENU);
+    }
 }
