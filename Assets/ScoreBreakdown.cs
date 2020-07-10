@@ -20,6 +20,6 @@ public class ScoreBreakdown : MonoBehaviour
     IEnumerator ToLevelOne()
     {
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(8);
+        SceneManager.LoadScene(7);
     }
 }
