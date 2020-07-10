@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Tutorial3 : MonoBehaviour
+public class ScoreBreakdown : MonoBehaviour
 {
     private const int DURATION = 3;
 
@@ -14,12 +14,12 @@ public class Tutorial3 : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(ToTutorialThree());
+        StartCoroutine(ToLevelOne());
     }
 
-    IEnumerator ToTutorialThree()
+    IEnumerator ToLevelOne()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(8);
     }
 }

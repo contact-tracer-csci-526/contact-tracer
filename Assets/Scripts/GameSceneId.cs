@@ -7,6 +7,7 @@ public enum GameSceneId
     TUTORIAL1_STORY_LINE = 4,
     TUTORIAL2_STORY_LINE = 5,
     TUTORIAL3_STORY_LINE = 6,
-    GAME_SCENE = 7,
-    SCORE = 8,
+    SCORE_BREAKDOWN = 7,
+    GAME_SCENE = 8,
+    SCORE = 9,
 }
