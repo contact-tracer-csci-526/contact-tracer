@@ -28,7 +28,7 @@ public class GameOverScript : MonoBehaviour
     {
         GameManager.CurrentGameState = GameState.Restart;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(GameSceneId.MENU);
+        SceneManager.LoadScene((int) GameSceneId.MENU);
     }
 
     public void QuitGame()

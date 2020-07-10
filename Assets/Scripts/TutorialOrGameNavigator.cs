@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TutorialOrGameNavigator : MonoBehaviour
 {
-
     public void LoadGame()
     {
-        SceneManager.LoadScene("menu");
+        SceneManager.LoadScene((int) GameSceneId.MENU);
     }
 }
