@@ -23,26 +23,25 @@ public class GameOverScript : MonoBehaviour
                 break;
         }
     }
-        public void NextTutorial()
+
+    public void NextTutorial()
     {
         Time.timeScale = 1f;
 
-        if (MainMenu.level == 1)
+        if (MainMenu.level == (int) GameLevel.TUTORIAL_1)
         {
             GameManager.CurrentGameState = GameState.Restart;
             MainMenu.level = 2;
             Time.timeScale = 1f;
-            SceneManager.LoadScene("Tutorial2StoryLine");
+            SceneManager.LoadScene((int) GameSceneId.TUTORIAL2_STORY_LINE);
         }
-        else if (MainMenu.level == 2)
+        else if (MainMenu.level == (int) GameLevel.TUTORIAL_2)
         {
             GameManager.CurrentGameState = GameState.Restart;
             MainMenu.level = 3;
             Time.timeScale = 1f;
-            SceneManager.LoadScene("Tutorial3StoryLine");
+            SceneManager.LoadScene((int) GameSceneId.TUTORIAL3_STORY_LINE);
         }
-
-        
     }
 
     public void LoadMenu()
