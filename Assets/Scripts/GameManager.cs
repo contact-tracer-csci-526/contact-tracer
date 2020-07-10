@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Uninfected;
     public GameObject GameOverWin;
     public GameObject GameOverLose;
+    public GameObject NextTutorial;
     public Text scoreLose;
     public GameObject linePrefab;
     public Sprite handSprite;
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 1;
                     Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
                     statusText.text = "Score:" + Uninfected.Length;
-                    SceneManager.LoadScene(1);
+                    //SceneManager.LoadScene(1);
                 }
                 break;
 
@@ -433,8 +434,39 @@ public class GameManager : MonoBehaviour
 
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
+
+            if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    NextTutorial.gameObject.SetActive(true);
+
+            }
+            break;
+
+
+
             case GameLevel.TUTORIAL_2:
+
+              if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    NextTutorial.gameObject.SetActive(true);
+
+            }
+            break;
             case GameLevel.TUTORIAL_3:
+
+              if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    SceneManager.LoadScene("menu");
+
+            }
+            break;
+
             case GameLevel.NORMAL_1:
             case GameLevel.NORMAL_2:
             case GameLevel.NORMAL_3:
