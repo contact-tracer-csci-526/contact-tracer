@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     public static GameObject CureBall;
     public static GameObject tutorialLine;
     public static GameObject handObject;
-        public GameObject NextTutorial;
+    public static GameObject DYNAMIC__cureBall;
 
+    public GameObject NextTutorial;
     public Text statusText;
     public Text scoreToPass;
     public int score = 0;
@@ -39,7 +40,6 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
-    private GameObject DYNAMIC__cureBall;
     private DelayedStartScript CDS;
     private Loading Loading;
     private int infectionLimit = 100;
@@ -93,10 +93,8 @@ public class GameManager : MonoBehaviour
                 int infectionRatio = (100 * Infected.Length)
                         / (Uninfected.Length + Infected.Length + Frozen.Length);
 
-                if (previousTime - currentTime >= cureBallLifeTime)
-                {
-                    if (CureBallGameObject != null)
-                    {
+                if (previousTime - currentTime >= cureBallLifeTime) {
+                    if (CureBallGameObject != null) {
                         Destroy(CureBallGameObject, 0);
                         CureBallGameObject = null;
                     }
@@ -109,8 +107,8 @@ public class GameManager : MonoBehaviour
                     && CureBallGameObject == null
                 ) {
                     shouldCureballRender = false;
-                    StartCoroutine(StartBallLate());
                     RenderCureBall();
+                    StartCoroutine(StartBallLate());
 
                     currentTime = sec;
                     previousTime = sec;
@@ -240,6 +238,7 @@ public class GameManager : MonoBehaviour
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
         RenderCureBall();
+
         GameObject[] cbs = GameObject.FindGameObjectsWithTag("Cure");
         if (cbs.Length > 0) {
             cbs[0].transform.position = new Vector3(2, 2f, 0);
@@ -353,15 +352,15 @@ public class GameManager : MonoBehaviour
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
                 SetSceneForTutorial1();
-                sec= 05;
+                sec = 05;
                 timeText = GameObject.Find("TimeText").GetComponent<Text>();
-        timeText.text = makePrintableTime(sec);
+                timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
             case GameLevel.TUTORIAL_2:
                 SetSceneForTutorial2();
-                sec= 10;
+                sec = 10;
                 timeText = GameObject.Find("TimeText").GetComponent<Text>();
                 timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
@@ -369,9 +368,9 @@ public class GameManager : MonoBehaviour
 
             case GameLevel.TUTORIAL_3:
                 SetSceneForTutorial3();
-                sec= 20;
+                sec = 20;
                 timeText = GameObject.Find("TimeText").GetComponent<Text>();
-                 timeText.text = makePrintableTime(sec);
+                timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
