@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public GameObject CureBallGameObject;
     public float fillamount;
     public int degrees = 0;
-    public int cureBallLifeTime = 5;
+    public int cureBallLifeTime = 7;
     public int cureBallRegenerateInterval = 10;
     public int currentTime = 0;
     public int previousTime = 0;
@@ -284,11 +284,10 @@ public class GameManager : MonoBehaviour
     private void MoveHandInStraightLine()
     {
         handObject.transform.position = new Vector3(
-                                                handObject.transform.position.x
-                                                + 0.005f,
-                                               handObject.transform.position.y);
-
-        if (handObject.transform.position.x > 2.0f) {
+                                       handObject.transform.position.x + 0.01f,
+                                       handObject.transform.position.y);
+        if (handObject.transform.position.x > 2.0f)
+        {
             handObject.transform.position = new Vector3(-2.0f,
                                                handObject.transform.position.y);
         }
@@ -299,7 +298,7 @@ public class GameManager : MonoBehaviour
         handObject.transform.position = new Vector3(
                                                 handObject.transform.position.x,
                                                 handObject.transform.position.y
-                                                + 0.005f);
+                                                + 0.01f);
         if (handObject.transform.position.y > 2.0f)
         {
             handObject.transform.position = new Vector3(
@@ -309,7 +308,7 @@ public class GameManager : MonoBehaviour
 
     private void MoveHandInCircularMotion()
     {
-        degrees++;
+        degrees+=2;
         float rads = Mathf.PI * degrees / 180;
         handObject.transform.position = new Vector3(Mathf.Cos(rads),
                                                     Mathf.Sin(rads));
