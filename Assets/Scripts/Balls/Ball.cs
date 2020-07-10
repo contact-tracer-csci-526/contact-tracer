@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Ball : MonoBehaviour
 {
@@ -26,9 +27,16 @@ public class Ball : MonoBehaviour
 
     public void StartBall()
     {
+        float speed=Mathf.Sqrt(2);
+        
+        System.Random random = new System.Random();
+        float angle=random.Next(0,360);
+        float x= Mathf.Sin(Mathf.Deg2Rad * angle) * speed;
+        float y=  Mathf.Cos(Mathf.Deg2Rad * angle) * speed;
         if (MainMenu.level != 3) {
-          rigidbody.velocity = new Vector2(1.0f, 1.0f);
+          rigidbody.velocity = new Vector2(x, y);
         } else if (ballType == BallType.CURE) {
+        
           rigidbody.velocity = new Vector2(-1.0f, 0.0f);
         } else if (ballType == BallType.VIRUS) {
           rigidbody.velocity = new Vector2(0.0f, 1.0f);

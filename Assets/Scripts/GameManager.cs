@@ -239,15 +239,15 @@ public class GameManager : MonoBehaviour
         handObject = new GameObject("Hand");
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
-
+        RenderCureBall();
         GameObject[] cbs = GameObject.FindGameObjectsWithTag("Cure");
         if (cbs.Length > 0) {
-            cbs[0].transform.position = new Vector3(2, 1.5f, 0);
+            cbs[0].transform.position = new Vector3(2, 2f, 0);
         }
 
         GameObject[] vbs = GameObject.FindGameObjectsWithTag("Virus");
         if (vbs.Length > 0) {
-            vbs[0].transform.position = new Vector3(2, -1.5f, 0);
+            vbs[0].transform.position = new Vector3(2, -2f, 0);
         }
     }
 
