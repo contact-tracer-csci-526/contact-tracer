@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial1 : MonoBehaviour
 {
-    private const int DURATION = 9;
+    private const int DURATION = 4;
 
     void Start()
     {
@@ -20,6 +20,6 @@ public class Tutorial1 : MonoBehaviour
     IEnumerator ToTutorialOne()
     {
         yield return new WaitForSeconds(DURATION);
-        SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+        SceneManager.LoadScene((int) GameSceneId.SCORE);
     }
 }
