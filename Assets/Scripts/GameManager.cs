@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameObject CureBall;
     public static GameObject tutorialLine;
     public static GameObject handObject;
+        public GameObject NextTutorial;
 
     public Text statusText;
     public Text scoreToPass;
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 1;
                     Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
                     statusText.text = "Score:" + Uninfected.Length;
-                    SceneManager.LoadScene(1);
+                    //SceneManager.LoadScene(1);
                 }
                 break;
 
@@ -432,9 +433,40 @@ public class GameManager : MonoBehaviour
         GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         switch (gameLevel) {
-            case GameLevel.TUTORIAL_1:
+              case GameLevel.TUTORIAL_1:
+
+            if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    NextTutorial.gameObject.SetActive(true);
+
+            }
+            break;
+
+
+
             case GameLevel.TUTORIAL_2:
+
+              if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    NextTutorial.gameObject.SetActive(true);
+
+            }
+            break;
             case GameLevel.TUTORIAL_3:
+
+              if (sec == 0) {
+                    //CurrentGameState = GameState.Over;
+                    timeText.text = "Time's Up!";
+                    StopCoroutine(second());
+                    SceneManager.LoadScene("menu");
+
+            }
+            break;
+
             case GameLevel.NORMAL_1:
             case GameLevel.NORMAL_2:
             case GameLevel.NORMAL_3:

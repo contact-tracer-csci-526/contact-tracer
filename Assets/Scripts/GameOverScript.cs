@@ -23,6 +23,27 @@ public class GameOverScript : MonoBehaviour
                 break;
         }
     }
+        public void NextTutorial()
+    {
+        Time.timeScale = 1f;
+
+        if (MainMenu.level == 1)
+        {
+            GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 2;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("Tutorial2StoryLine");
+        }
+        else if (MainMenu.level == 2)
+        {
+            GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 3;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("Tutorial3StoryLine");
+        }
+
+        
+    }
 
     public void LoadMenu()
     {
