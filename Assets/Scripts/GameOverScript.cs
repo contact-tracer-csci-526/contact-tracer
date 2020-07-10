@@ -10,20 +10,17 @@ public class GameOverScript : MonoBehaviour
     public void NextLevel()
     {
         Time.timeScale = 1f;
+        GameLevel gameLevel = (GameLevel) MainMenu.level;
 
-        if (MainMenu.level == 1)
-        {
-            GameManager.CurrentGameState = GameState.Restart;
-            MainMenu.level = 2;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("gameScene");
-        }
-        else if (MainMenu.level == 2)
-        {
-            GameManager.CurrentGameState = GameState.Restart;
-            MainMenu.level = 3;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("gameScene");
+        switch (gameLevel) {
+            case GameLevel.NORMAL_1:
+            case GameLevel.NORMAL_2:
+            default:
+                GameManager.CurrentGameState = GameState.Restart;
+                MainMenu.level = 102;
+                Time.timeScale = 1f;
+                SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+                break;
         }
     }
 
@@ -31,7 +28,7 @@ public class GameOverScript : MonoBehaviour
     {
         GameManager.CurrentGameState = GameState.Restart;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("menu");
+        SceneManager.LoadScene(GameSceneId.MENU);
     }
 
     public void QuitGame()
