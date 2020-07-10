@@ -193,6 +193,7 @@ public class GameManager : MonoBehaviour
         ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         ball.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
+        handObject.transform.position = new Vector3(transform.position.x, -0.58f);
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
     }
@@ -238,6 +239,7 @@ public class GameManager : MonoBehaviour
         ball3.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         ball3.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
+        handObject.transform.position = new Vector3(-0.1f, -0.58f);
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
         RenderCureBall();
@@ -308,10 +310,10 @@ public class GameManager : MonoBehaviour
 
     private void MoveHandInCircularMotion()
     {
-        degrees+=2;
+        degrees += 2;
         float rads = Mathf.PI * degrees / 180;
         handObject.transform.position = new Vector3(Mathf.Cos(rads),
-                                                    Mathf.Sin(rads));
+                                               Mathf.Sin(rads) - 0.58f, -0.58f);
     }
 
     private void CollideCureBallWithInfectedBall()

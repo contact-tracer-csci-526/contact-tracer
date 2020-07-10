@@ -5236,7 +5236,7 @@ MonoBehaviour:
   scoreLose: {fileID: 1016116624}
   linePrefab: {fileID: 6226252633412879870, guid: dd96620fcb4ae754c85bb8d86dd468e7,
     type: 3}
-  handSprite: {fileID: 21300000, guid: 91a6f4c9b969b4bb9866c25cba77273c, type: 3}
+  handSprite: {fileID: 21300000, guid: c244547b8f09d481a9b55efef1314a10, type: 3}
   loading: {fileID: 0}
   timeText: {fileID: 0}
   sec: 5
