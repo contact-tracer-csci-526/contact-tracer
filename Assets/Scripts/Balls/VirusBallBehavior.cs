@@ -26,12 +26,6 @@ public class VirusBallBehavior : BallBehavior
                 TransformsToNormalBall();
             }
         }
-        else if (line != null){
-            if(this.ball.isOriginalVirus)
-            {
-                Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), this.ball.GetComponent<Collider2D>());
-            }
-        }
     }
 
     public override void TransformsTo(BallType ballType) {

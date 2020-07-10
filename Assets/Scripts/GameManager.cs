@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static GameObject tutorialLine;
     public static GameObject handObject;
     public static GameObject DYNAMIC__cureBall;
+    public static DelayedStartScript CDS;
 
     public GameObject NextTutorial;
     public Text statusText;
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
-    private DelayedStartScript CDS;
     private Loading Loading;
     private int infectionLimit = 100;
     private const int INFECTION_RATIO_LIMIT = 100;
@@ -87,9 +87,12 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Playing:
-                GameObject[] Uninfected = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                GameObject[] Frozen = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                GameObject[] Infected = GameObject.FindGameObjectsWithTag("Virus");
+                GameObject[] Uninfected = GameObject
+                                         .FindGameObjectsWithTag("NORMAL_BALL");
+                GameObject[] Frozen = GameObject
+                                         .FindGameObjectsWithTag("SAFE_BALL");
+                GameObject[] Infected = GameObject
+                                         .FindGameObjectsWithTag("Virus");
                 int infectionRatio = (100 * Infected.Length)
                         / (Uninfected.Length + Infected.Length + Frozen.Length);
 
@@ -280,19 +283,27 @@ public class GameManager : MonoBehaviour
 
     private void MoveHandInStraightLine()
     {
-        handObject.transform.position = new Vector3(handObject.transform.position.x + 0.005f, handObject.transform.position.y);
-        if (handObject.transform.position.x > 2.0f)
-        {
-            handObject.transform.position = new Vector3(-2.0f, handObject.transform.position.y);
+        handObject.transform.position = new Vector3(
+                                                handObject.transform.position.x
+                                                + 0.005f,
+                                               handObject.transform.position.y);
+
+        if (handObject.transform.position.x > 2.0f) {
+            handObject.transform.position = new Vector3(-2.0f,
+                                               handObject.transform.position.y);
         }
     }
 
     private void MoveHandVertically()
     {
-        handObject.transform.position = new Vector3(handObject.transform.position.x, handObject.transform.position.y + 0.005f);
+        handObject.transform.position = new Vector3(
+                                                handObject.transform.position.x,
+                                                handObject.transform.position.y
+                                                + 0.005f);
         if (handObject.transform.position.y > 2.0f)
         {
-            handObject.transform.position = new Vector3(handObject.transform.position.x, -2.0f);
+            handObject.transform.position = new Vector3(
+                                       handObject.transform.position.x, -2.0f);
         }
     }
 
@@ -300,7 +311,8 @@ public class GameManager : MonoBehaviour
     {
         degrees++;
         float rads = Mathf.PI * degrees / 180;
-        handObject.transform.position = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads));
+        handObject.transform.position = new Vector3(Mathf.Cos(rads),
+                                                    Mathf.Sin(rads));
     }
 
     private void CollideCureBallWithInfectedBall()
@@ -313,9 +325,11 @@ public class GameManager : MonoBehaviour
         System.Random random = new System.Random();
         int x = random.Next(minX, maxX);
         int y = random.Next(minY, maxY);
-        CureBallGameObject = Instantiate(ballPrefab, new Vector3(x, y, 0), Quaternion.identity);
+        CureBallGameObject = Instantiate(ballPrefab, new Vector3(x, y, 0),
+                                                     Quaternion.identity);
         Ball cureball = CureBallGameObject.GetComponent<Ball>();
-        SpriteRenderer currentSprite = CureBallGameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer currentSprite = CureBallGameObject
+                                            .GetComponent<SpriteRenderer>();
         Sprite sprite = Resources.Load<Sprite>("Sprites/cureball");
         currentSprite.sprite = sprite;
         CureBallGameObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
@@ -325,9 +339,14 @@ public class GameManager : MonoBehaviour
     }
 
     private void InitializeGameScene() {
-        Debug.LogFormat("GameManager.InitializeGameScene(): MainMenu.level: {0}", MainMenu.level);
-        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        Debug.LogFormat(
+            "GameManager.InitializeGameScene(): MainMenu.level: {0}",
+            MainMenu.level);
+
+        CDS = GameObject.Find("DelayedStart")
+                        .GetComponent<DelayedStartScript>();
         int level = MainMenu.level;
+
         minX = -2;
         minY = -5;
         maxX = 2;
@@ -335,11 +354,16 @@ public class GameManager : MonoBehaviour
         minDistance = 0.4f;
         sec = 30;
         expectedScore = level > 100 ? (level % 100) * 10 : level * 10;
+
         Virus = GameObject.Find("Virus");
         Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        GameObject CurrentLine = DrawLine.CurrentLine;
+        Physics2D.IgnoreCollision(CurrentLine.GetComponent<Collider2D>(),
+                                  Virus.GetComponent<Collider2D>());
+
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
         timeText.text = makePrintableTime(sec);
-        GameLevel gameLevel = (GameLevel) level;
+
         statusText = GameObject.Find("Status").GetComponent<Text>();
         statusText.enabled = false;
 
@@ -349,6 +373,7 @@ public class GameManager : MonoBehaviour
         screenHeight = Screen.height;
         screenWidth = Screen.width;
 
+        GameLevel gameLevel = (GameLevel) level;
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
                 SetSceneForTutorial1();
