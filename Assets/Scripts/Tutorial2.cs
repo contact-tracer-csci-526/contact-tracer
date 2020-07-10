@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial2 : MonoBehaviour
 {
-    private const int DURATION = 7;
+    private const int DURATION = 3;
 
     void Start()
     {
