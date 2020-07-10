@@ -20,6 +20,6 @@ public class Tutorial1 : MonoBehaviour
     IEnumerator ToTutorialOne()
     {
         yield return new WaitForSeconds(DURATION);
-        SceneManager.LoadScene((int) GameSceneId.SCORE);
+        SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
     }
 }
