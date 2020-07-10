@@ -124,18 +124,40 @@ public class DrawLine : MonoBehaviour
 
         // we also update the edge collider
         edgeCollider2D.points = fingerPositions.ToArray();
-        // we also delete the previous line if it is Tutorial Level 1
-        if ((MainMenu.level == 1 || MainMenu.level == 2 || MainMenu.level == 3) && GameManager.tutorialLine != null){// && GameState.Tutorial1.CompareTo(GameManager.CurrentGameState) == 0){
-            Destroy(GameManager.tutorialLine);
-            Destroy(GameManager.handObject);
-            GameManager.Cells = new GameObject[1];
-            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-            for (int i = 0; i < Cells.Length; i++) {
-                Cells[i].GetComponent<Ball>().StartBall();
-            }
-            GameManager.Virus.GetComponent<Ball>().StartBall();
-            GameManager.CurrentGameState = GameState.Playing;
 
+        if (GameManager.tutorialLine != null) {
+            GameLevel gameLevel = (GameLevel) MainMenu.level;
+
+            switch (gameLevel) {
+            case GameLevel.TUTORIAL_1:
+            case GameLevel.TUTORIAL_2:
+                Destroy(GameManager.tutorialLine);
+                Destroy(GameManager.handObject);
+                GameManager.Cells = new GameObject[1];
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                for (int i = 0; i < Cells.Length; i++) {
+                    Cells[i].GetComponent<Ball>().StartBall();
+                }
+                GameManager.Virus.GetComponent<Ball>().StartBall();
+                GameManager.CurrentGameState = GameState.Playing;
+                break;
+
+            case GameLevel.TUTORIAL_3:
+                Destroy(GameManager.tutorialLine);
+                Destroy(GameManager.handObject);
+                GameManager.Cells = new GameObject[1];
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                for (int i = 0; i < Cells.Length; i++) {
+                    Cells[i].GetComponent<Ball>().StartBall(0, -1);
+                }
+                GameManager.Virus.GetComponent<Ball>().StartBall(0, 1);
+                GameManager.CurrentGameState = GameState.Playing;
+                GameManager.DYNAMIC__cureBall.GetComponent<Ball>().StartBall(-1, 0);
+                break;
+
+            default:
+                break;
+            }
         }
     }
 

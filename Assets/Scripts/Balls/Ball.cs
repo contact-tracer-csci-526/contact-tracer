@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Ball : MonoBehaviour
 {
@@ -24,18 +25,20 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void StartBall()
+    public void StartBall(float x = Single.MaxValue, float y = Single.MaxValue)
     {
-        if (MainMenu.level != 3) {
-          rigidbody.velocity = new Vector2(1.0f, 1.0f);
-        } else if (ballType == BallType.CURE) {
-          rigidbody.velocity = new Vector2(-1.0f, 0.0f);
-        } else if (ballType == BallType.VIRUS) {
-          rigidbody.velocity = new Vector2(0.0f, 1.0f);
-        } else {
-          rigidbody.velocity = new Vector2(0.0f, -1.0f);
-        }
+        System.Random random = new System.Random();
+        float speed = Mathf.Sqrt(2);
+        float angle = random.Next(0, 360);
+        float _x = Mathf.Sin(Mathf.Deg2Rad * angle) * speed;
+        float _y = Mathf.Cos(Mathf.Deg2Rad * angle) * speed;
         rigidbody.isKinematic = false;
+
+        if (x == Single.MaxValue && y == Single.MaxValue) {
+            rigidbody.velocity = new Vector2(_x, _y);
+        } else {
+            rigidbody.velocity = new Vector2(x, y);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
