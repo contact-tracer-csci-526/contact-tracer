@@ -18,6 +18,6 @@ public class Tutorial1 : MonoBehaviour
     IEnumerator ToTutorialOne()
     {
         yield return new WaitForSeconds(9); // Timer is for 9 seconds because the story timeline rolls for 9 seconds
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene(8);
     }
 }

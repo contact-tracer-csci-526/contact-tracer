@@ -44,6 +44,10 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene((int)GameSceneId.TUTORIAL3_STORY_LINE);
                 break;
 
+            case GameLevel.NORMAL_1:
+                SceneManager.LoadScene((int)GameSceneId.SCORE_BREAKDOWN);
+                break;
+
             default:
                 SceneManager.LoadScene((int)GameSceneId.GAME_SCENE);
                 break;
