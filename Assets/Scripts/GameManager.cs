@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     public Text scoreLose;
     public GameObject linePrefab;
     public Sprite handSprite;
-    public Image loading;
     public Text timeText;
     public int sec;
     public int totalSeconds = 0;
@@ -41,7 +40,6 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
-    private Loading Loading;
     private int infectionLimit = 100;
     private const int INFECTION_RATIO_LIMIT = 100;
     private int frameCount = 0;
