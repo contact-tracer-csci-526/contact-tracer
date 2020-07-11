@@ -177,7 +177,8 @@ public class GameManager : MonoBehaviour
                 y = random.Next(minY, maxY);
             }
             GameObject ball = Instantiate(ballPrefab, new Vector3(x, y, 0), Quaternion.identity);
-
+            //added collider to normal balls being rendered at the beginning: prevents balls to escape the screen
+            CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
             ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
