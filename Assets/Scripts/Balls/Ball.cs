@@ -45,6 +45,16 @@ public class Ball : MonoBehaviour
     {
         if (ballBehavior != null) {
             ballBehavior.HandleOnCollisionEnter2D(other);
+            Vector2 normal = other.contacts[0].normal;
+            Vector2 vel = rigidbody.velocity;
+            float angle = Vector2.Angle(vel, -normal);
+            if (angle == 0 || angle == 90 || angle == 180)
+            {
+                Debug.Log("Enter Vertical: " + angle + ',' + normal.x + ',' + normal.y);
+                Vector2 desiredDirection = new Vector2(normal.x - .5f, normal.y + .5f);
+                rigidbody.velocity = desiredDirection;
+                rigidbody.rotation *= .5f;
+            }
         }
     }
 

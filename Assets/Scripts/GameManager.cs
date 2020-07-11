@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
     {
         InitializeGameScene();
         CurrentGameState = GameState.Start;
+        Screen.SetResolution(Screen.width, Screen.width * 2560 / 1440, true);
+        Camera.main.orthographicSize = Screen.height / (100.0f * 4.2f);
     }
 
     void Update()
