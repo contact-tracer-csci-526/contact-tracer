@@ -176,9 +176,10 @@ public class GameManager : MonoBehaviour
                 x = random.Next(minX, maxX);
                 y = random.Next(minY, maxY);
             }
-            GameObject ball = Instantiate(ballPrefab, new Vector3(x, y, 0), Quaternion.identity);
-            //added collider to normal balls being rendered at the beginning: prevents balls to escape the screen
-            CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
+            GameObject ball = Instantiate(ballPrefab, new Vector3(x, y, 0),
+                                                      Quaternion.identity);
+            CircleCollider2D ballCollider = ball
+                                              .GetComponent<CircleCollider2D>();
             ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
@@ -186,25 +187,32 @@ public class GameManager : MonoBehaviour
 
     private void SetSceneForTutorial1()
     {
-        tutorialLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        tutorialLine = Instantiate(linePrefab, Vector3.zero,
+                                               Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
-        GameObject ball = Instantiate(ballPrefab, new Vector3(-2, 2, 0), Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(-2, 2, 0),
+                                                  Quaternion.identity);
         ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         ball.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
-        handObject.transform.position = new Vector3(transform.position.x, -0.58f);
+        handObject.transform.position = new Vector3(transform.position.x,
+                                                    -0.58f);
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
         renderer.sprite = handSprite;
     }
 
     private void SetSceneForTutorial2()
     {
-        tutorialLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        tutorialLine = Instantiate(linePrefab, Vector3.zero,
+                                               Quaternion.identity);
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
         CreateCircularPoints();
-        GameObject ball1 = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2, 2, 0), Quaternion.identity);
-        GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
+        GameObject ball1 = Instantiate(ballPrefab, new Vector3(0, 0, 0),
+                                                   Quaternion.identity);
+        GameObject ball2 = Instantiate(ballPrefab, new Vector3(-2, 2, 0),
+                                                   Quaternion.identity);
+        GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
+                                                   Quaternion.identity);
 
         ball1.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         ball1.transform.gameObject.tag = "NORMAL_BALL";

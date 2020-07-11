@@ -191,8 +191,7 @@ public class DrawLine : MonoBehaviour
             if (angle_sum >= MIN_ANGLE) {
                 isCircle = true;
                 Ball enclosedBall = null;
-                Cells= GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-              //  Cells = GameManager.Cells;
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 float ballRadius = 0;
 
                 if (Cells.Length > 0) {
