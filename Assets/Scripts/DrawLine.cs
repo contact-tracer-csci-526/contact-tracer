@@ -123,10 +123,9 @@ public class DrawLine : MonoBehaviour
 
             switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
-            case GameLevel.TUTORIAL_2:
                 Destroy(GameManager.tutorialLine);
                 Destroy(GameManager.handObject);
-                Cells = GameManager.Cells;
+                Cells =  GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 for (int i = 0; i < Cells.Length; i++) {
                     Cells[i].GetComponent<Ball>().StartBall();
                 }
@@ -137,7 +136,7 @@ public class DrawLine : MonoBehaviour
             case GameLevel.TUTORIAL_3:
                 Destroy(GameManager.tutorialLine);
                 Destroy(GameManager.handObject);
-                Cells = GameManager.Cells;
+                Cells =  GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 for (int i = 0; i < Cells.Length; i++) {
                     Cells[i].GetComponent<Ball>().StartBall(0, -1);
                 }
@@ -230,7 +229,7 @@ public class DrawLine : MonoBehaviour
                                            GameManager.CurrentGameState) == 0) {
                             Destroy(GameManager.tutorialLine);
                             Destroy(GameManager.handObject);
-                            Cells = GameManager.Cells;
+                            Cells =  GameObject.FindGameObjectsWithTag("NORMAL_BALL");
 
                             for (int i = 0; i < Cells.Length; i++) {
                                 Cells[i].GetComponent<Ball>().StartBall();

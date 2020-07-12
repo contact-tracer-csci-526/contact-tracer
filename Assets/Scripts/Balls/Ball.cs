@@ -5,6 +5,7 @@ using System;
 public class Ball : MonoBehaviour
 {
     private static float SPEED_RATE = 2.25f;
+    private static float ORIGINAL_VIRUS_SPEED_RATE = 1.5f;
 
     public BallBehavior ballBehavior;
     public BallType ballType;
@@ -24,7 +25,12 @@ public class Ball : MonoBehaviour
     {
         if (GameManager.CurrentGameState == GameState.Playing) {
             Vector2 v = rigidbody.velocity.normalized;
-            rigidbody.velocity = v * SPEED_RATE;
+            if (this.isOriginalVirus){
+                rigidbody.velocity = v * ORIGINAL_VIRUS_SPEED_RATE;    
+            }
+            else{
+                rigidbody.velocity = v * SPEED_RATE;
+            }
         }
     }
 

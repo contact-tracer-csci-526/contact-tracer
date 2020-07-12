@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
                                                       Quaternion.identity);
             CircleCollider2D ballCollider = ball
                                               .GetComponent<CircleCollider2D>();
-            ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            ball.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
         GameObject ball = Instantiate(ballPrefab, new Vector3(-2, 2, 0),
                                                   Quaternion.identity);
-        ball.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         handObject.transform.position = new Vector3(transform.position.x,
@@ -214,11 +214,11 @@ public class GameManager : MonoBehaviour
         GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
                                                    Quaternion.identity);
 
-        ball1.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball1.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball1.transform.gameObject.tag = "NORMAL_BALL";
-        ball2.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball2.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball2.transform.gameObject.tag = "NORMAL_BALL";
-        ball3.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball3.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball3.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
@@ -239,11 +239,11 @@ public class GameManager : MonoBehaviour
         GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
                                                    Quaternion.identity);
 
-        ball1.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball1.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball1.transform.gameObject.tag = "NORMAL_BALL";
-        ball2.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball2.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball2.transform.gameObject.tag = "NORMAL_BALL";
-        ball3.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        ball3.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         ball3.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         handObject.transform.position = new Vector3(-0.1f, -0.58f);
@@ -385,7 +385,7 @@ public class GameManager : MonoBehaviour
         switch (gameLevel) {
             case GameLevel.TUTORIAL_1:
                 SetSceneForTutorial1();
-                sec = 05;
+                sec = 15;
                 timeText = GameObject.Find("TimeText").GetComponent<Text>();
                 timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
@@ -393,7 +393,7 @@ public class GameManager : MonoBehaviour
 
             case GameLevel.TUTORIAL_2:
                 SetSceneForTutorial2();
-                sec = 10;
+                sec = 15;
                 timeText = GameObject.Find("TimeText").GetComponent<Text>();
                 timeText.text = makePrintableTime(sec);
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
