@@ -60,6 +60,8 @@ public class DrawLine : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 if (CurrentLine) {
                         drawLineRenderer.positionCount = 0;
+                        fingerPositions.Clear();
+                        edgeCollider2D.points = new Vector2[0];
                         StopCoroutine(HideLine(lineId));
                         lineLength = 0.0f;
                         angle = 0;
@@ -229,7 +231,8 @@ public class DrawLine : MonoBehaviour
                                            GameManager.CurrentGameState) == 0) {
                             Destroy(GameManager.tutorialLine);
                             Destroy(GameManager.handObject);
-                            Cells =  GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                            Cells = GameObject
+                                        .FindGameObjectsWithTag("NORMAL_BALL");
 
                             for (int i = 0; i < Cells.Length; i++) {
                                 Cells[i].GetComponent<Ball>().StartBall();
@@ -259,6 +262,8 @@ public class DrawLine : MonoBehaviour
         yield return new WaitForSeconds(LINE_DURATION);
 
         if (transform.gameObject.tag == "Line" && lineId == _lineId) {
+            fingerPositions.Clear();
+            edgeCollider2D.points = new Vector2[0];
             drawLineRenderer.positionCount = 0;
         }
     }
