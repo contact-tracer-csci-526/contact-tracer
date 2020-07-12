@@ -39,7 +39,7 @@ public class NormalBallBehavior : BallBehavior
         Sprite safeSprite = Resources.Load<Sprite>("Sprites/safe");
         transform.gameObject.tag = SafeBallBehavior.TAG;
 
-        ballCollider.radius = 0.6f;
+        ballCollider.radius = Ball.BALL_SIZE;
 
         currentSprite.sprite = safeSprite;
         ball.ballBehavior = BallBehaviorFactory.Get(BallType.SAFE, ball);
@@ -55,7 +55,7 @@ public class NormalBallBehavior : BallBehavior
 
         Sprite virusSprite = Resources.Load<Sprite>("Sprites/coronavirus");
         transform.gameObject.tag = VirusBallBehavior.TAG;
-        ballCollider.radius = 0.6f;
+        ballCollider.radius = Ball.BALL_SIZE;
         currentSprite.sprite = virusSprite;
         ball.ballBehavior = BallBehaviorFactory.Get(BallType.VIRUS, ball);
         ball.ballType = BallType.VIRUS;
