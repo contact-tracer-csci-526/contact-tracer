@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void StartBall(float x = Single.MaxValue, float y = Single.MaxValue)
+    public void StartBall(float x = 0, float y = 0)
     {
         System.Random random = new System.Random();
         float speed = Mathf.Sqrt(2);
@@ -37,7 +37,7 @@ public class Ball : MonoBehaviour
         float _y = Mathf.Cos(Mathf.Deg2Rad * angle) * speed;
         rigidbody.isKinematic = false;
 
-        if (x == Single.MaxValue && y == Single.MaxValue) {
+        if (x == 0 && y == 0) {
             rigidbody.velocity = new Vector2(_x, _y);
         } else {
             rigidbody.velocity = new Vector2(x, y);
@@ -58,7 +58,7 @@ public class Ball : MonoBehaviour
                 squareBounceRandomVector *= -1;
             } else if (-threshold < vel.y && vel.y < threshold) {
                 Vector2 desiredDirection = new Vector2(vel.x,
-                                                       squareBounceRandomVector);
+                                                      squareBounceRandomVector);
                 rigidbody.velocity = desiredDirection;
                 squareBounceRandomVector *= -1;
             }
