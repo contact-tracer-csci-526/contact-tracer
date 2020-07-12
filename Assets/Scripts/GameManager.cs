@@ -130,7 +130,6 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 1;
                     Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
                     statusText.text = "Score:" + Uninfected.Length;
-                    //SceneManager.LoadScene(1);
                 }
                 break;
 
@@ -180,7 +179,7 @@ public class GameManager : MonoBehaviour
                                                       Quaternion.identity);
             CircleCollider2D ballCollider = ball
                                               .GetComponent<CircleCollider2D>();
-            ball.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            ball.transform.localScale = Ball.GetBallSizeVector3();
             ball.transform.gameObject.tag = "NORMAL_BALL";
         }
     }
@@ -192,7 +191,7 @@ public class GameManager : MonoBehaviour
         lineRenderer = tutorialLine.GetComponent<LineRenderer>();
         GameObject ball = Instantiate(ballPrefab, new Vector3(-2, 2, 0),
                                                   Quaternion.identity);
-        ball.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball.transform.localScale = Ball.GetBallSizeVector3();
         ball.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         handObject.transform.position = new Vector3(transform.position.x,
@@ -214,11 +213,11 @@ public class GameManager : MonoBehaviour
         GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
                                                    Quaternion.identity);
 
-        ball1.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball1.transform.localScale = Ball.GetBallSizeVector3();
         ball1.transform.gameObject.tag = "NORMAL_BALL";
-        ball2.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball2.transform.localScale = Ball.GetBallSizeVector3();
         ball2.transform.gameObject.tag = "NORMAL_BALL";
-        ball3.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball3.transform.localScale = Ball.GetBallSizeVector3();
         ball3.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         SpriteRenderer renderer = handObject.AddComponent<SpriteRenderer>();
@@ -239,11 +238,11 @@ public class GameManager : MonoBehaviour
         GameObject ball3 = Instantiate(ballPrefab, new Vector3(-2, -2, 0),
                                                    Quaternion.identity);
 
-        ball1.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball1.transform.localScale = Ball.GetBallSizeVector3();
         ball1.transform.gameObject.tag = "NORMAL_BALL";
-        ball2.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball2.transform.localScale = Ball.GetBallSizeVector3();
         ball2.transform.gameObject.tag = "NORMAL_BALL";
-        ball3.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        ball3.transform.localScale = Ball.GetBallSizeVector3();
         ball3.transform.gameObject.tag = "NORMAL_BALL";
         handObject = new GameObject("Hand");
         handObject.transform.position = new Vector3(-0.1f, -0.58f);
@@ -340,7 +339,7 @@ public class GameManager : MonoBehaviour
                                             .GetComponent<SpriteRenderer>();
         Sprite sprite = Resources.Load<Sprite>("Sprites/cureball");
         currentSprite.sprite = sprite;
-        CureBallGameObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        CureBallGameObject.transform.localScale = Ball.GetBallSizeVector3();
         CureBallGameObject.transform.gameObject.tag = "Cure";
         cureball.WARN__Initialize(BallType.CURE);
         DYNAMIC__cureBall = CureBallGameObject;
@@ -364,7 +363,7 @@ public class GameManager : MonoBehaviour
         expectedScore = level > 100 ? (level % 100) * 10 : level * 10;
 
         Virus = GameObject.Find("Virus");
-        Virus.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        Virus.transform.localScale = Ball.GetBallSizeVector3();
         GameObject CurrentLine = DrawLine.CurrentLine;
         Physics2D.IgnoreCollision(CurrentLine.GetComponent<Collider2D>(),
                                   Virus.GetComponent<Collider2D>());

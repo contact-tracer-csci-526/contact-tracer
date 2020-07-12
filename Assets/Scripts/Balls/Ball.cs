@@ -4,6 +4,7 @@ using System;
 
 public class Ball : MonoBehaviour
 {
+    public static float BALL_SIZE = 0.6f;
     private static float SPEED_RATE = 2.25f;
     private static float ORIGINAL_VIRUS_SPEED_RATE = 1.5f;
 
@@ -13,6 +14,10 @@ public class Ball : MonoBehaviour
 
     private float squareBounceRandomVector = 0.2f;
     private Rigidbody2D rigidbody;
+
+    public static Vector3 GetBallSizeVector3() {
+        return new Vector3(BALL_SIZE, BALL_SIZE, BALL_SIZE);
+    }
 
     void Start()
     {
@@ -25,12 +30,9 @@ public class Ball : MonoBehaviour
     {
         if (GameManager.CurrentGameState == GameState.Playing) {
             Vector2 v = rigidbody.velocity.normalized;
-            if (this.isOriginalVirus){
-                rigidbody.velocity = v * ORIGINAL_VIRUS_SPEED_RATE;    
-            }
-            else{
-                rigidbody.velocity = v * SPEED_RATE;
-            }
+            float speed = isOriginalVirus ? ORIGINAL_VIRUS_SPEED_RATE
+                                          : SPEED_RATE;
+            rigidbody.velocity = v * speed;
         }
     }
 
