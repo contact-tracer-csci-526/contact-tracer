@@ -4,10 +4,13 @@ using System;
 
 public class Ball : MonoBehaviour
 {
-    public static float SPEED_RATE = 2.25f;
+    private static float SPEED_RATE = 2.25f;
+
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
+
+    private float squareBounceRandomVector = 0.2f;
     private Rigidbody2D rigidbody;
 
     void Start()
@@ -45,6 +48,20 @@ public class Ball : MonoBehaviour
     {
         if (ballBehavior != null) {
             ballBehavior.HandleOnCollisionEnter2D(other);
+
+            float threshold = 0.01f;
+            Vector2 vel = other.relativeVelocity;
+            if (-threshold < vel.x && vel.x < threshold) {
+                Vector2 desiredDirection = new Vector2(squareBounceRandomVector,
+                                                       vel.y);
+                rigidbody.velocity = desiredDirection;
+                squareBounceRandomVector *= -1;
+            } else if (-threshold < vel.y && vel.y < threshold) {
+                Vector2 desiredDirection = new Vector2(vel.x,
+                                                       squareBounceRandomVector);
+                rigidbody.velocity = desiredDirection;
+                squareBounceRandomVector *= -1;
+            }
         }
     }
 
