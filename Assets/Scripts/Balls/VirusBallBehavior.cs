@@ -5,6 +5,10 @@ public class VirusBallBehavior : BallBehavior
 {
     public static string TAG = "Virus";
 
+    private AudioSource source;
+
+    public GameObject AudioSource;
+
     public VirusBallBehavior(Ball ball)
     {
         this.ball = ball;
@@ -14,10 +18,13 @@ public class VirusBallBehavior : BallBehavior
     {
         Ball otherBall = other.gameObject.GetComponent<Ball>();
         LineScript line = other.gameObject.GetComponent<LineScript>();
+        AudioSource = GameObject.Find("VirusNormal");
+        source = AudioSource.GetComponent<AudioSource>();
         if (otherBall != null) {
             bool isCureBallHit = otherBall.ballType == BallType.CURE;
             if (isCureBallHit && !ball.isOriginalVirus) {
                 TransformsToNormalBall();
+                source.Play();
             }
         }
     }
