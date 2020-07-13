@@ -263,7 +263,7 @@ public class DrawLine : MonoBehaviour
 
         if (transform.gameObject.tag == "Line" && lineId == _lineId) {
             fingerPositions.Clear();
-            edgeCollider2D.points = new Vector2[0];
+            edgeCollider2D.points = new []{ new Vector2(), new Vector2() };
             drawLineRenderer.positionCount = 0;
         }
     }
