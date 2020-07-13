@@ -17,7 +17,7 @@ public class NormalBallBehavior : BallBehavior
         if (otherBall != null) {
             BallType ballType = otherBall.ballType;
             if (otherBall.ballType == BallType.VIRUS) {
-                TransformsToVirusBall();
+                TransformsToVirusBall(otherBall.isAsymptomatic);
             }
         }
     }
@@ -32,8 +32,9 @@ public class NormalBallBehavior : BallBehavior
 
     private void TransformsToSafeBall() {
         Transform transform = ball.transform;
-        SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
-        currentSprite.color = new Color(1f,1f,1f,.5f);
+        SpriteRenderer currentSprite = ball.gameObject
+                                           .GetComponent<SpriteRenderer>();
+        currentSprite.color = new Color(1f, 1f, 1f, .5f);
         CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
 
         Sprite safeSprite = Resources.Load<Sprite>("Sprites/safe");
@@ -47,18 +48,23 @@ public class NormalBallBehavior : BallBehavior
         ball.StopBall();
     }
 
-    private void TransformsToVirusBall()
+    private void TransformsToVirusBall(bool isOtherAsymptomatic = false)
     {
         Transform transform = ball.transform;
-        SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer currentSprite = ball.gameObject
+                                           .GetComponent<SpriteRenderer>();
         CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
 
         Sprite virusSprite = Resources.Load<Sprite>("Sprites/coronavirus");
         transform.gameObject.tag = VirusBallBehavior.TAG;
         ballCollider.radius = Ball.BALL_SIZE;
-        currentSprite.sprite = virusSprite;
         ball.ballBehavior = BallBehaviorFactory.Get(BallType.VIRUS, ball);
         ball.ballType = BallType.VIRUS;
+        ball.isAsymptomatic = isOtherAsymptomatic;
         changeMaxThreshold();
+
+        if (!isOtherAsymptomatic) {
+            currentSprite.sprite = virusSprite;
+        }
     }
 }

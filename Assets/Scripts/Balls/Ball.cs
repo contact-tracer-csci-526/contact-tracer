@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour
     public BallBehavior ballBehavior;
     public BallType ballType;
     public bool isOriginalVirus;
+    public bool isAsymptomatic = false;
 
     private float squareBounceRandomVector = 0.2f;
     private Rigidbody2D rigidbody;
@@ -24,6 +25,11 @@ public class Ball : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = Vector2.zero;
         ballBehavior = BallBehaviorFactory.Get(ballType, this);
+
+        if (isAsymptomatic && isOriginalVirus) {
+            StartCoroutine((ballBehavior as VirusBallBehavior)
+                                .TurnsIntoNormalLooking());
+        }
     }
 
     void Update()
@@ -79,7 +85,8 @@ public class Ball : MonoBehaviour
         rigidbody.isKinematic = true;
     }
 
-    public void WARN__Initialize(BallType bt) {
+    public void WARN__Initialize(BallType bt)
+    {
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = Vector2.zero;
         ballType = bt;

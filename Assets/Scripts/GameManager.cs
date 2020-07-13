@@ -164,14 +164,14 @@ public class GameManager : MonoBehaviour
         int level = MainMenu.level;
         int naivelyCalculatedBallCount = 3 * (level % 100);
 
-        for (int i = 0; i < naivelyCalculatedBallCount; i++)
-        {
+        for (int i = 0; i < naivelyCalculatedBallCount; i++) {
             float x = Virus.transform.position.x;
             float y = Virus.transform.position.y;
             while (Vector2.Distance(new Vector2(x, y),
                                     new Vector2(Virus.transform.position.x,
                                                 Virus.transform.position.y))
-                   < this.minDistance) {
+                   < minDistance)
+            {
                 x = random.Next(minX, maxX);
                 y = random.Next(minY, maxY);
             }
@@ -345,7 +345,8 @@ public class GameManager : MonoBehaviour
         DYNAMIC__cureBall = CureBallGameObject;
     }
 
-    private void InitializeGameScene() {
+    private void InitializeGameScene()
+    {
         Debug.LogFormat(
             "GameManager.InitializeGameScene(): MainMenu.level: {0}",
             MainMenu.level);
@@ -421,12 +422,19 @@ public class GameManager : MonoBehaviour
                 Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
                 break;
 
+            case GameLevel.YEAR_2020:
+                CreateBallsRandomly();
+                TurnVirusIntoAsymtomatic();
+                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                break;
+
         default:
             break;
         }
     }
 
-    private void StartGame() {
+    private void StartGame()
+    {
         GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         if (CDS.counterDownDone == true) {
@@ -446,6 +454,7 @@ public class GameManager : MonoBehaviour
                 case GameLevel.NORMAL_1:
                 case GameLevel.NORMAL_2:
                 case GameLevel.NORMAL_3:
+                case GameLevel.YEAR_2020:
                 default:
                     for (int i = 0; i < Cells.Length; i++)
                     {
@@ -460,7 +469,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndGame(int infectionRatio) {
+    private void EndGame(int infectionRatio)
+    {
         GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         switch (gameLevel) {
@@ -489,42 +499,50 @@ public class GameManager : MonoBehaviour
         case GameLevel.NORMAL_1:
         case GameLevel.NORMAL_2:
         case GameLevel.NORMAL_3:
+        case GameLevel.YEAR_2020:
         default:
             if (infectionRatio >= INFECTION_RATIO_LIMIT) {
                 StopCoroutine(second());
                 Time.timeScale = 0;
-                int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL")
-                                        .Length
-                            + GameObject.FindGameObjectsWithTag("SAFE_BALL")
-                                        .Length;
+
+                int score = GetScore();
                 GameOverLose.gameObject.SetActive(true);
                 scoreLose = GameObject.Find("ScoreLose")
                                         .GetComponent<Text>();
-                scoreLose.text = "SCORE: " + Score * 10;
+                scoreLose.text = "SCORE: " + score * 10;
             } else if (sec == 0) {
+                StopCoroutine(second());
                 CurrentGameState = GameState.Over;
                 timeText.text = "Time's Up!";
-                StopCoroutine(second());
                 Time.timeScale = 0;
-                int Score = GameObject.FindGameObjectsWithTag("NORMAL_BALL")
-                                        .Length
-                            + GameObject.FindGameObjectsWithTag("SAFE_BALL")
-                                        .Length;
+                int score = GetScore();
 
-                if (Score * 10 >= expectedScore) {
+                if (score * 10 >= expectedScore) {
                     GameOverWin.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreWin")
-                                            .GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + Score * 10;
+                                          .GetComponent<Text>();
+                    scoreLose.text = "SCORE: " + score * 10;
                 } else {
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
-                                            .GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + Score * 10;
+                                          .GetComponent<Text>();
+                    scoreLose.text = "SCORE: " + score * 10;
                 }
                 statusText.enabled = true;
             }
             break;
         }
+    }
+
+    private void TurnVirusIntoAsymtomatic()
+    {
+        Ball ball = Virus.GetComponent<Ball>();
+        ball.isAsymptomatic = true;
+    }
+
+    private int GetScore()
+    {
+        return GameObject.FindGameObjectsWithTag("NORMAL_BALL").Length
+                + GameObject.FindGameObjectsWithTag("SAFE_BALL").Length;
     }
 }
