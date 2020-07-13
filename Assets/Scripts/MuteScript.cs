@@ -6,29 +6,23 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MuteScript : MonoBehaviour
 {
-  
-     bool isMute;
     public Sprite musicOnImage;
     public Sprite musicOffImage;
-    GameObject MuteButton;
- 
+    public GameObject MuteButton;
+    public bool isMute;
+
     void Start() {
-             MuteButton = GameObject.Find("MuteButton"); 
-        }
+        MuteButton = GameObject.Find("MuteButton");
+    }
 
     public void Mute (){
-         isMute = ! isMute;
-        AudioListener.volume =  isMute ? 0 : 1;
-    
-            if(isMute)
-            {
-             MuteButton.GetComponent<Image>().sprite = musicOffImage;
+        isMute = !isMute;
+        AudioListener.volume = isMute ? 0 : 1;
 
-            }
-
-            else
-            {
+        if (isMute) {
+            MuteButton.GetComponent<Image>().sprite = musicOffImage;
+        } else {
             MuteButton.GetComponent<Image>().sprite = musicOnImage;
-             }
         }
+    }
 }
