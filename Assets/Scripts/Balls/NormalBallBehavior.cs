@@ -6,11 +6,9 @@ public class NormalBallBehavior : BallBehavior
 {
     public static string TAG = "NORMAL_BALL";
 
-    private AudioSource source;
-
     public GameObject AudioSource;
 
-    
+    private AudioSource source;
 
     public NormalBallBehavior(Ball ball)
     {
@@ -30,7 +28,6 @@ public class NormalBallBehavior : BallBehavior
                 source.Play();
             }
         }
-        
     }
 
     public override void TransformsTo(BallType ballType)
