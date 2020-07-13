@@ -29,14 +29,18 @@ public class VirusBallBehavior : BallBehavior
         }
     }
 
-    public IEnumerator TurnsIntoNormalLooking(int sec = 5)
+    public IEnumerator TurnsIntoNormalLooking(int ticks = 5)
     {
-        yield return new WaitForSeconds(sec);
-
-        SpriteRenderer currentSprite = ball.gameObject
-                                           .GetComponent<SpriteRenderer>();
         Sprite ballSprite = Resources.Load<Sprite>("Sprites/ball");
-        currentSprite.sprite = ballSprite;
+        Sprite virusSprite = Resources.Load<Sprite>("Sprites/original-virus");
+
+        for (int i = 0; i < ticks; i += 1) {
+            yield return new WaitForSeconds(0.5f);
+
+            SpriteRenderer currentSprite = ball.gameObject
+                                            .GetComponent<SpriteRenderer>();
+            currentSprite.sprite = i % 2 == 0 ? ballSprite : virusSprite;
+        }
     }
 
     private void TransformsToNormalBall()
