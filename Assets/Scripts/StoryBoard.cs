@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StoryBoard : MonoBehaviour
 {
-    private const int DURATION = 6;
+    private const int DURATION = 7;
     void Start()
     {
 

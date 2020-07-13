@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScoreBreakdown : MonoBehaviour
 {
-    private const int DURATION = 3;
+    private const int DURATION = 4;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class ScoreBreakdown : MonoBehaviour
 
     IEnumerator ToLevelOne()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(DURATION);
         SceneManager.LoadScene(7);
     }
 }
