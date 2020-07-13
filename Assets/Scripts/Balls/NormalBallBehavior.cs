@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class NormalBallBehavior : BallBehavior
 {
     public static string TAG = "NORMAL_BALL";
+
+    private AudioSource source;
+
+    public GameObject AudioSource;
+
+    
 
     public NormalBallBehavior(Ball ball)
     {
@@ -13,13 +20,17 @@ public class NormalBallBehavior : BallBehavior
     public override void HandleOnCollisionEnter2D(Collision2D other)
     {
         Ball otherBall = other.gameObject.GetComponent<Ball>();
+        AudioSource = GameObject.Find("Audio Source");
+        source = AudioSource.GetComponent<AudioSource>();
 
         if (otherBall != null) {
             BallType ballType = otherBall.ballType;
             if (otherBall.ballType == BallType.VIRUS) {
                 TransformsToVirusBall(otherBall.isAsymptomatic);
+                source.Play();
             }
         }
+        
     }
 
     public override void TransformsTo(BallType ballType)
