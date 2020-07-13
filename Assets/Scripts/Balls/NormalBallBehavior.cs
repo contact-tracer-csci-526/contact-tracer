@@ -22,7 +22,8 @@ public class NormalBallBehavior : BallBehavior
         }
     }
 
-    public override void TransformsTo(BallType ballType) {
+    public override void TransformsTo(BallType ballType)
+    {
         if (ballType == BallType.SAFE) {
             TransformsToSafeBall();
         } else if (ballType == BallType.VIRUS) {
@@ -30,7 +31,8 @@ public class NormalBallBehavior : BallBehavior
         }
     }
 
-    private void TransformsToSafeBall() {
+    private void TransformsToSafeBall()
+    {
         Transform transform = ball.transform;
         SpriteRenderer currentSprite = ball.gameObject
                                            .GetComponent<SpriteRenderer>();

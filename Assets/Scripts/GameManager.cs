@@ -64,82 +64,81 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        switch (CurrentGameState)
-        {
-            case GameState.TUTORIAL1_PRELIMINARY:
-                lineRenderer.SetPosition(0, lineStart);
-                lineRenderer.SetPosition(1, lineEnd);
-                MoveHandInStraightLine();
-                break;
+        switch (CurrentGameState) {
+        case GameState.TUTORIAL1_PRELIMINARY:
+            lineRenderer.SetPosition(0, lineStart);
+            lineRenderer.SetPosition(1, lineEnd);
+            MoveHandInStraightLine();
+            break;
 
-            case GameState.TUTORIAL2_PRELIMINARY:
-                MoveHandInCircularMotion();
-                break;
+        case GameState.TUTORIAL2_PRELIMINARY:
+            MoveHandInCircularMotion();
+            break;
 
-            case GameState.TUTORIAL3_PRELIMINARY:
-                MoveHandVertically();
-                break;
+        case GameState.TUTORIAL3_PRELIMINARY:
+            MoveHandVertically();
+            break;
 
-            case GameState.Start:
-                StartGame();
-                break;
+        case GameState.Start:
+            StartGame();
+            break;
 
-            case GameState.Playing:
-                GameObject[] Uninfected = GameObject
-                                         .FindGameObjectsWithTag("NORMAL_BALL");
-                GameObject[] Frozen = GameObject
-                                         .FindGameObjectsWithTag("SAFE_BALL");
-                GameObject[] Infected = GameObject
-                                         .FindGameObjectsWithTag("Virus");
-                int infectionRatio = (100 * Infected.Length)
-                        / (Uninfected.Length + Infected.Length + Frozen.Length);
+        case GameState.Playing:
+            GameObject[] Uninfected = GameObject
+                                        .FindGameObjectsWithTag("NORMAL_BALL");
+            GameObject[] Frozen = GameObject
+                                        .FindGameObjectsWithTag("SAFE_BALL");
+            GameObject[] Infected = GameObject
+                                        .FindGameObjectsWithTag("Virus");
+            int infectionRatio = (100 * Infected.Length)
+                    / (Uninfected.Length + Infected.Length + Frozen.Length);
 
-                if (previousTime - currentTime >= cureBallLifeTime) {
-                    if (CureBallGameObject != null) {
-                        Destroy(CureBallGameObject, 0);
-                        CureBallGameObject = null;
-                    }
-                    currentTime = sec;
-                    previousTime = sec;
+            if (previousTime - currentTime >= cureBallLifeTime) {
+                if (CureBallGameObject != null) {
+                    Destroy(CureBallGameObject, 0);
+                    CureBallGameObject = null;
                 }
+                currentTime = sec;
+                previousTime = sec;
+            }
 
-                if ((sec) % (cureBallRegenerateInterval) == 0
-                    && shouldCureballRender
-                    && CureBallGameObject == null
-                ) {
-                    shouldCureballRender = false;
-                    RenderCureBall();
-                    StartCoroutine(StartBallLate());
+            if ((sec) % (cureBallRegenerateInterval) == 0
+                && shouldCureballRender
+                && CureBallGameObject == null
+            ) {
+                shouldCureballRender = false;
+                RenderCureBall();
+                StartCoroutine(StartBallLate());
 
-                    currentTime = sec;
-                    previousTime = sec;
-                } else if ((sec) % (cureBallRegenerateInterval) != 0) {
-                    shouldCureballRender = true;
-                    currentTime = sec;
-                }
+                currentTime = sec;
+                previousTime = sec;
+            } else if ((sec) % (cureBallRegenerateInterval) != 0) {
+                shouldCureballRender = true;
+                currentTime = sec;
+            }
 
-                EndGame(infectionRatio);
-                break;
+            EndGame(infectionRatio);
+            break;
 
-            case GameState.Over:
-                frameCount++;
+        case GameState.Over:
+            frameCount++;
 
-                if (frameCount > 300)
-                {
-                    CurrentGameState = GameState.Start;
-                    Time.timeScale = 1;
-                    Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                    statusText.text = "Score:" + Uninfected.Length;
-                }
-                break;
-
-            case GameState.Restart:
+            if (frameCount > 300)
+            {
                 CurrentGameState = GameState.Start;
                 Time.timeScale = 1;
-                break;
+                Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
+                statusText.text = "Score:" + Uninfected.Length;
+            }
+            break;
 
-            default:
-                break;
+        case GameState.Restart:
+            CurrentGameState = GameState.Start;
+            Time.timeScale = 1;
+            break;
+
+        default:
+            break;
       }
     }
 
@@ -279,8 +278,7 @@ public class GameManager : MonoBehaviour
         int segments = 50;
         lineRenderer.positionCount = 0;
 
-        for (int i = 0; i < (segments + 1); i++)
-        {
+        for (int i = 0; i < (segments + 1); i++) {
             x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
             y = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
             lineRenderer.positionCount++;
@@ -294,8 +292,7 @@ public class GameManager : MonoBehaviour
         handObject.transform.position = new Vector3(
                                        handObject.transform.position.x + 0.01f,
                                        handObject.transform.position.y);
-        if (handObject.transform.position.x > 2.0f)
-        {
+        if (handObject.transform.position.x > 2.0f) {
             handObject.transform.position = new Vector3(-2.0f,
                                                handObject.transform.position.y);
         }
@@ -307,8 +304,7 @@ public class GameManager : MonoBehaviour
                                                 handObject.transform.position.x,
                                                 handObject.transform.position.y
                                                 + 0.01f);
-        if (handObject.transform.position.y > 2.0f)
-        {
+        if (handObject.transform.position.y > 2.0f) {
             handObject.transform.position = new Vector3(
                                        handObject.transform.position.x, -2.0f);
         }
@@ -324,7 +320,6 @@ public class GameManager : MonoBehaviour
 
     private void CollideCureBallWithInfectedBall()
     {
-
     }
 
     private void RenderCureBall()
@@ -383,50 +378,50 @@ public class GameManager : MonoBehaviour
 
         GameLevel gameLevel = (GameLevel) level;
         switch (gameLevel) {
-            case GameLevel.TUTORIAL_1:
-                SetSceneForTutorial1();
-                sec = 15;
-                timeText = GameObject.Find("TimeText").GetComponent<Text>();
-                timeText.text = makePrintableTime(sec);
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.TUTORIAL_1:
+            SetSceneForTutorial1();
+            sec = 15;
+            timeText = GameObject.Find("TimeText").GetComponent<Text>();
+            timeText.text = makePrintableTime(sec);
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.TUTORIAL_2:
-                SetSceneForTutorial2();
-                sec = 15;
-                timeText = GameObject.Find("TimeText").GetComponent<Text>();
-                timeText.text = makePrintableTime(sec);
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.TUTORIAL_2:
+            SetSceneForTutorial2();
+            sec = 15;
+            timeText = GameObject.Find("TimeText").GetComponent<Text>();
+            timeText.text = makePrintableTime(sec);
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.TUTORIAL_3:
-                SetSceneForTutorial3();
-                sec = 20;
-                timeText = GameObject.Find("TimeText").GetComponent<Text>();
-                timeText.text = makePrintableTime(sec);
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.TUTORIAL_3:
+            SetSceneForTutorial3();
+            sec = 20;
+            timeText = GameObject.Find("TimeText").GetComponent<Text>();
+            timeText.text = makePrintableTime(sec);
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.NORMAL_1:
-                CreateBallsRandomly();
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.NORMAL_1:
+            CreateBallsRandomly();
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.NORMAL_2:
-                CreateBallsRandomly();
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.NORMAL_2:
+            CreateBallsRandomly();
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.NORMAL_3:
-                CreateBallsRandomly();
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.NORMAL_3:
+            CreateBallsRandomly();
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
-            case GameLevel.YEAR_2020:
-                CreateBallsRandomly();
-                TurnVirusIntoAsymtomatic();
-                Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
-                break;
+        case GameLevel.YEAR_2020:
+            CreateBallsRandomly();
+            TurnVirusIntoAsymtomatic();
+            Cells = GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+            break;
 
         default:
             break;
@@ -439,30 +434,30 @@ public class GameManager : MonoBehaviour
 
         if (CDS.counterDownDone == true) {
             switch (gameLevel) {
-                case GameLevel.TUTORIAL_1:
-                    CurrentGameState = GameState.TUTORIAL1_PRELIMINARY;
-                    break;
+            case GameLevel.TUTORIAL_1:
+                CurrentGameState = GameState.TUTORIAL1_PRELIMINARY;
+                break;
 
-                case GameLevel.TUTORIAL_2:
-                    CurrentGameState = GameState.TUTORIAL2_PRELIMINARY;
-                    break;
+            case GameLevel.TUTORIAL_2:
+                CurrentGameState = GameState.TUTORIAL2_PRELIMINARY;
+                break;
 
-                case GameLevel.TUTORIAL_3:
-                    CurrentGameState = GameState.TUTORIAL3_PRELIMINARY;
-                    break;
+            case GameLevel.TUTORIAL_3:
+                CurrentGameState = GameState.TUTORIAL3_PRELIMINARY;
+                break;
 
-                case GameLevel.NORMAL_1:
-                case GameLevel.NORMAL_2:
-                case GameLevel.NORMAL_3:
-                case GameLevel.YEAR_2020:
-                default:
-                    for (int i = 0; i < Cells.Length; i++)
-                    {
-                        Cells[i].GetComponent<Ball>().StartBall();
-                    }
-                    Virus.GetComponent<Ball>().StartBall();
-                    CurrentGameState = GameState.Playing;
-                    break;
+            case GameLevel.NORMAL_1:
+            case GameLevel.NORMAL_2:
+            case GameLevel.NORMAL_3:
+            case GameLevel.YEAR_2020:
+            default:
+                for (int i = 0; i < Cells.Length; i++)
+                {
+                    Cells[i].GetComponent<Ball>().StartBall();
+                }
+                Virus.GetComponent<Ball>().StartBall();
+                CurrentGameState = GameState.Playing;
+                break;
             }
 
             StartCoroutine(second());

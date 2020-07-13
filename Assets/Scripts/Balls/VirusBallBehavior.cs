@@ -29,7 +29,8 @@ public class VirusBallBehavior : BallBehavior
         }
     }
 
-    public IEnumerator TurnsIntoNormalLooking(int sec = 5) {
+    public IEnumerator TurnsIntoNormalLooking(int sec = 5)
+    {
         yield return new WaitForSeconds(sec);
 
         SpriteRenderer currentSprite = ball.gameObject

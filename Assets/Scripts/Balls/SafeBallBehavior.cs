@@ -15,15 +15,18 @@ public class SafeBallBehavior : BallBehavior
     {
     }
 
-    public override void TransformsTo(BallType ballType) {
+    public override void TransformsTo(BallType ballType)
+    {
         if (ballType == BallType.NORMAL) {
             TransformsToNormalBall();
         }
     }
 
-    private void TransformsToNormalBall() {
+    private void TransformsToNormalBall()
+    {
         Transform transform = ball.transform;
-        SpriteRenderer currentSprite = ball.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer currentSprite = ball.gameObject
+                                           .GetComponent<SpriteRenderer>();
         currentSprite.color = new Color(1f,1f,1f,1f);
         ball.gameObject.AddComponent<CircleCollider2D>();
         CircleCollider2D ballCollider = ball.GetComponent<CircleCollider2D>();
