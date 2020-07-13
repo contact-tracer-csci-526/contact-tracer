@@ -25,4 +25,4 @@ public class MuteScript : MonoBehaviour
             MuteButton.GetComponent<Image>().sprite = musicOnImage;
         }
     }
-}
+}1
