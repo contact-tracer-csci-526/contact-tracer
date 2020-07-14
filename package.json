@@ -5,6 +5,12 @@
   "license": "MIT",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "gulp": "^4.0.2"
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "jege": "^0.5.1",
+    "showdown": "^1.9.1"
+  },
+  "scripts": {
+    "build": "node ./doc-generator/build.js"
   }
 }

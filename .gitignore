@@ -58,4 +58,6 @@ ProjectSettings/ProjectVersion.txt
 .idea/
 *.apk
 
-node_modules
+node_modules/
+webgl/
+yarn-error.log

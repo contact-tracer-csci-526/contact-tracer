@@ -47,12 +47,12 @@ At the end of each level,
   - Lose condition: Player fails to score the expected score within the given time limit
 
 ## Contributors
-- Patrick Assaf https://www.linkedin.com/in/patrick-assaf-964029161
-- Joseph Beavans https://www.linkedin.com/in/joseph-beavans
-- Venkata Sai Himabindu Kandukuri https://www.linkedin.com/in/himabindu-kandukuri-a2690356/
-- Gustavo Moncada https://www.linkedin.com/in/gustavo-moncada-12591463
-- Elden Park https://www.linkedin.com/in/eldenpark/
-- Priya Patel https://www.linkedin.com/in/priya-patel-usc/
-- Bhagyashree Rawal https://www.linkedin.com/in/bhagyashreerawal/
-- Rucha Tambe https://www.linkedin.com/in/rucha-tambe/
-- Jungwon Yoon https://www.linkedin.com/in/foggyoon/
+- Patrick Assaf [https://www.linkedin.com/in/patrick-assaf-964029161](https://www.linkedin.com/in/patrick-assaf-964029161)
+- Joseph Beavans [https://www.linkedin.com/in/joseph-beavans](https://www.linkedin.com/in/joseph-beavans)
+- Venkata Sai Himabindu Kandukuri [https://www.linkedin.com/in/himabindu-kandukuri-a2690356/](https://www.linkedin.com/in/himabindu-kandukuri-a2690356/)
+- Gustavo Moncada [https://www.linkedin.com/in/gustavo-moncada-12591463](https://www.linkedin.com/in/gustavo-moncada-12591463)
+- Elden Park [https://www.linkedin.com/in/eldenpark/](https://www.linkedin.com/in/eldenpark/
+- Priya Patel [https://www.linkedin.com/in/priya-patel-usc/](https://www.linkedin.com/in/priya-patel-usc/)
+- Bhagyashree Rawal [https://www.linkedin.com/in/bhagyashreerawal/](https://www.linkedin.com/in/bhagyashreerawal/)
+- Rucha Tambe [https://www.linkedin.com/in/rucha-tambe/](https://www.linkedin.com/in/rucha-tambe/)
+- Jungwon Yoon [https://www.linkedin.com/in/foggyoon/](https://www.linkedin.com/in/foggyoon/)
