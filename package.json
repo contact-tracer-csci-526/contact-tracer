@@ -1,0 +1,10 @@
+{
+  "name": "contact-tracer",
+  "version": "0.0.1",
+  "repository": "git@github.com:contact-tracer-csci-526/contact-tracer.git",
+  "license": "MIT",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "gulp": "^4.0.2"
+  }
+}
