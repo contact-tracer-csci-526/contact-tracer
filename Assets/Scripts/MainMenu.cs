@@ -48,6 +48,17 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene((int)GameSceneId.SCORE_BREAKDOWN);
                 break;
 
+             case GameLevel.NORMAL_2:
+                SceneManager.LoadScene((int)GameSceneId.SCORE_BREAKDOWN);
+                break;
+
+            
+            
+
+              case GameLevel.YEAR_2020:
+                SceneManager.LoadScene((int)GameSceneId.GAME_SCENE);
+                break;
+
             default:
                 SceneManager.LoadScene((int)GameSceneId.GAME_SCENE);
                 break;
