@@ -9,6 +9,7 @@ public class DrawLine : MonoBehaviour
     public static int MAX_SAFE_BALLS = 2;
     public static int MAX_SAFE_BALLS_FIXED = 2;
     public static GameObject CurrentLine;
+    private static float RADIUS_COEFICIENT = 1.3f;
 
     public const float MAX_LENGTH = 6.0f;
     public const string LINE = "Line";
@@ -59,11 +60,14 @@ public class DrawLine : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) {
                 if (CurrentLine) {
-                        drawLineRenderer.positionCount = 0;
-                        StopCoroutine(HideLine(lineId));
-                        lineLength = 0.0f;
-                        angle = 0;
-                        isCircle = false;
+                    drawLineRenderer.positionCount = 0;
+                    fingerPositions.Clear();
+                    edgeCollider2D.points = new []{ new Vector2(),
+                                                    new Vector2() };
+                    StopCoroutine(HideLine(lineId));
+                    lineLength = 0.0f;
+                    angle = 0;
+                    isCircle = false;
                 }
                 CreateLine();
             }
@@ -204,7 +208,7 @@ public class DrawLine : MonoBehaviour
                                               * (ball_x - centroid_x)
                                               + (ball_y - centroid_y)
                                               * (ball_y - centroid_y));
-                    if (distance + ballRadius <= 1.3 * radius) {
+                    if (distance + ballRadius <= RADIUS_COEFICIENT * radius) {
                         enclosedBall = Cells[i].GetComponent<Ball>();
                         break;
                     }
@@ -226,7 +230,8 @@ public class DrawLine : MonoBehaviour
                                            GameManager.CurrentGameState) == 0) {
                             Destroy(GameManager.tutorialLine);
                             Destroy(GameManager.handObject);
-                            Cells =  GameObject.FindGameObjectsWithTag("NORMAL_BALL");
+                            Cells =  GameObject
+                                        .FindGameObjectsWithTag("NORMAL_BALL");
 
                             for (int i = 0; i < Cells.Length; i++) {
                                 Cells[i].GetComponent<Ball>().StartBall();
@@ -257,6 +262,8 @@ public class DrawLine : MonoBehaviour
 
         if (transform.gameObject.tag == "Line" && lineId == _lineId) {
             drawLineRenderer.positionCount = 0;
+            fingerPositions.Clear();
+            edgeCollider2D.points = new []{ new Vector2(), new Vector2() };
         }
     }
 }
