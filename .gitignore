@@ -24,7 +24,8 @@
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -56,3 +57,5 @@ $RECYCLE.BIN/
 ProjectSettings/ProjectVersion.txt
 .idea/
 *.apk
+
+node_modules

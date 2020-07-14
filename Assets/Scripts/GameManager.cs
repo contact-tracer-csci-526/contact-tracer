@@ -472,9 +472,9 @@ public class GameManager : MonoBehaviour
         switch (gameLevel) {
         case GameLevel.TUTORIAL_1:
             if (sec == 0) {
-                    timeText.text = "Time's Up!";
-                    StopCoroutine(second());
-                    NextTutorial.gameObject.SetActive(true);
+                timeText.text = "Time's Up!";
+                StopCoroutine(second());
+                NextTutorial.gameObject.SetActive(true);
             }
             break;
 

@@ -1,15 +1,50 @@
 # Contact Tracers
-Contact Tracers is a survival game. It involves two sets of balls that bounce randomly around the screen. The gameplay involves pushing uninfected balls out of the way of infected ones and the virus.
+Ball bouncing survival game built on top of Unity written in C#
 
-**WebGL Release**
+This project is initiated as a class assignment of CSCI 526 - Advanced Mobile Devices and Game Consoles at the University of Southern California in the summer of 2020.
 
-https://contact-tracer-csci-526.github.io/contact-tracer
+[**WebGL Release**](https://contact-tracer-csci-526.github.io/contact-tracer)
 
-## Motivation
-To be described later...
+[**Game Design Document**](https://docs.google.com/document/d/16KfgnSeWCqYLeWXISbLL8AeyP_CU4sXrAhU_9TFUKLw/edit?usp=sharing)
 
-## Game Mechanics
-To be described later...
+## Game
+**Contact Tracers** is a survival game. It involves different kinds of healthy balls that bounce in random directions within the screen. A deadly virus is capable of infecting healthy balls upon collision. Players should make sure that the healthy ball doesn’t get in contact with the deadly virus by either moving away from it or protect it by freezing a healthy ball to a safe ball. An infected ball can be cured using a cure ball, which moves in random directions and appears for every 10 seconds throughout the game. Your goal is to score enough to move to the next level.
+
+### Genre
+Arcade / Strategy
+
+### Goal
+Survive each level by keeping the number of infected balls below the threshold until the time runs out
+
+### Similar games
+- Bloody Virus
+- Fruit Ninja
+- Harbor King
+
+## Inspiration
+COVID-19 pandemic has swept through nations across the world in 2020, and has posed an unprecedented crisis. The virus is primarily transmitted through close contact amongst people. Various preventive measures and containment methodologies have been proposed. A multitude of governments, most notably, have encouraged wearing face masks, social distancing and in some cases conducted contact tracing.
+
+Contact Tracers was designed in this time of intense difficulty. Players are expected to isolate one or more entities from the rest, and keep track of who is infected. As demonstrated in the game play, battling an infectious disease does involve a collaborative effort of all the members. Raising awareness, in this sense, can be one of the crucial components of limiting the number of cases.
+
+## Mechanics
+Draw a line between the virus and a healthy ball to move away from the virus
+Draw a circle around a healthy ball to freeze it and protect from viruses.
+
+### Cure mechanism
+A Cure ball moves in random directions and appears for every 10 seconds during the game. Upon collision with an infected ball, it transforms the infected ball to a healthy one.
+
+### Safe ball mechanism
+Players can draw a circle around any healthy ball to freeze it and keep it safe from viruses. Note that only, only two balls can be frozen at a time.
+
+### Score mechanism
+At the end of each level,
+
+- The player gets 10 points for every healthy ball and every safe ball.
+- The player loses 10 points for every infected ball.
+
+### End Condition
+  - Win condition: Player scores the minimum number of points required to pass the level within the given time limit
+  - Lose condition: Player fails to score the expected score within the given time limit
 
 ## Contributors
 - Patrick Assaf https://www.linkedin.com/in/patrick-assaf-964029161
