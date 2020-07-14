@@ -36,7 +36,7 @@ public class VirusBallBehavior : BallBehavior
         }
     }
 
-    public IEnumerator TurnsIntoNormalLooking(int ticks = 5)
+    public IEnumerator TurnsIntoNormalLooking(int ticks = 9)
     {
         Sprite ballSprite = Resources.Load<Sprite>("Sprites/ball");
         Sprite virusSprite = Resources.Load<Sprite>("Sprites/original-virus");
