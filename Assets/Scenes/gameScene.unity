@@ -5458,7 +5458,7 @@ MonoBehaviour:
   CureBallGameObject: {fileID: 0}
   fillamount: 0
   degrees: 0
-  cureBallLifeTime: 5
+  cureBallLifeTime: 7
   cureBallRegenerateInterval: 10
   currentTime: 0
   previousTime: 0

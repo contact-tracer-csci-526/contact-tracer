@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     public GameObject CureBallGameObject;
     public float fillamount;
     public int degrees = 0;
-    public int cureBallLifeTime = 7;
+    public int cureBallLifeTime;
     public int cureBallRegenerateInterval = 10;
     public int currentTime = 0;
     public int previousTime = 0;
@@ -351,6 +351,7 @@ public class GameManager : MonoBehaviour
         minY = -5;
         maxX = 2;
         maxY = 5;
+        cureBallLifeTime = 7;
         minDistance = 0.4f;
         sec = 30;
         expectedScore = level > 100 ? (level % 100) * 20 : level * 20;
