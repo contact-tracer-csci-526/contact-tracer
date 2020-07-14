@@ -13,21 +13,21 @@ public class GameOverScript : MonoBehaviour
         GameLevel gameLevel = (GameLevel) MainMenu.level;
 
         switch (gameLevel) {
-            case GameLevel.NORMAL_1:
-             GameManager.CurrentGameState = GameState.Restart;
-                MainMenu.level = 102;
-                Time.timeScale = 1f;
-                SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
-                break;
-            case GameLevel.NORMAL_2:
+        case GameLevel.NORMAL_1:
             GameManager.CurrentGameState = GameState.Restart;
-                MainMenu.level = 202;
-                Time.timeScale = 1f;
-                SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
-                break;
-            case GameLevel.YEAR_2020:
-            default:
-                break;
+            MainMenu.level = 102;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+            break;
+        case GameLevel.NORMAL_2:
+        GameManager.CurrentGameState = GameState.Restart;
+            MainMenu.level = 202;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+            break;
+        case GameLevel.YEAR_2020:
+        default:
+            break;
         }
     }
 
@@ -35,15 +35,12 @@ public class GameOverScript : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (MainMenu.level == (int) GameLevel.TUTORIAL_1)
-        {
+        if (MainMenu.level == (int) GameLevel.TUTORIAL_1) {
             GameManager.CurrentGameState = GameState.Restart;
             MainMenu.level = 2;
             Time.timeScale = 1f;
             SceneManager.LoadScene((int) GameSceneId.TUTORIAL2_STORY_LINE);
-        }
-        else if (MainMenu.level == (int) GameLevel.TUTORIAL_2)
-        {
+        } else if (MainMenu.level == (int) GameLevel.TUTORIAL_2) {
             GameManager.CurrentGameState = GameState.Restart;
             MainMenu.level = 3;
             Time.timeScale = 1f;

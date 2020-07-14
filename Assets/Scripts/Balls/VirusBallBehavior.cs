@@ -5,9 +5,9 @@ public class VirusBallBehavior : BallBehavior
 {
     public static string TAG = "Virus";
 
-    private AudioSource source;
-
     public GameObject AudioSource;
+
+    private AudioSource source;
 
     public VirusBallBehavior(Ball ball)
     {

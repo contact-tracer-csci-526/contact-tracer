@@ -8,8 +8,8 @@ public class SetCountDownScript : MonoBehaviour
 
     public void SetCountDownNow()
     {
-        CDS = GameObject.Find("DelayedStart").GetComponent<DelayedStartScript>();
+        CDS = GameObject.Find("DelayedStart")
+                        .GetComponent<DelayedStartScript>();
         CDS.counterDownDone = true;
     }
-
 }

@@ -15,7 +15,7 @@ public class MuteScript : MonoBehaviour
         MuteButton = GameObject.Find("MuteButton");
     }
 
-    public void Mute (){
+    public void Mute () {
         isMute = !isMute;
         AudioListener.volume = isMute ? 0 : 1;
 

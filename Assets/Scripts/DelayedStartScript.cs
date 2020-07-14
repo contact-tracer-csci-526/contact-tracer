@@ -8,11 +8,9 @@ public class DelayedStartScript : MonoBehaviour
 
     void Start()
     {
-
     }
 
     void Update()
     {
-
     }
 }
