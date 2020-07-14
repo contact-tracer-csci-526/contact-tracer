@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverWin;
     public GameObject GameOverLose;
     public Text scoreLose;
+    public Text scoreWin;
     public GameObject linePrefab;
     public Sprite handSprite;
     public Text timeText;
@@ -123,14 +124,9 @@ public class GameManager : MonoBehaviour
             break;
 
         case GameState.Over:
-            frameCount++;
-
-            if (frameCount > 300)
-            {
-                CurrentGameState = GameState.Start;
-                Time.timeScale = 1;
-                Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-            }
+            
+          StartCoroutine(second());
+          Time.timeScale=0;
             break;
 
         case GameState.Restart:
@@ -496,29 +492,36 @@ public class GameManager : MonoBehaviour
          if (infectionRatio >= INFECTION_RATIO_LIMIT) {
                 StopCoroutine(second());
                 Time.timeScale = 0;
+                // CurrentGameState.GameState.Over;
 
                 int score = GetScore();
                 GameOverLose.gameObject.SetActive(true);
                 scoreLose = GameObject.Find("ScoreLose")
                                         .GetComponent<Text>();
                 scoreLose.text = "SCORE: " + score * 10;
+                
+                
             } else if (sec == 0) {
                 StopCoroutine(second());
-                CurrentGameState = GameState.Over;
+                //CurrentGameState = GameState.Over;
                 timeText.text = "Time's Up!";
                 Time.timeScale = 0;
                 int score = GetScore();
 
                 if (score * 10 >= expectedScore) {
+                
                     GameOverWin.gameObject.SetActive(true);
-                    scoreLose = GameObject.Find("ScoreWin")
+                    scoreWin = GameObject.Find("ScoreWin")
                                           .GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + score * 10;
+                    scoreWin.text = "SCORE: " + score * 10;
+                    
                 } else {
+
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
+                  
                 }
             }
             break;
@@ -526,6 +529,8 @@ public class GameManager : MonoBehaviour
           if (infectionRatio >= INFECTION_RATIO_LIMIT) {
                 StopCoroutine(second());
                 Time.timeScale = 0;
+                //CurrentGameState.GameState.Over;
+
 
                 int score = GetScore();
                 GameOverLose.gameObject.SetActive(true);
@@ -534,16 +539,16 @@ public class GameManager : MonoBehaviour
                 scoreLose.text = "SCORE: " + score * 10;
             } else if (sec == 0) {
                 StopCoroutine(second());
-                CurrentGameState = GameState.Over;
+               // CurrentGameState = GameState.Over;
                 timeText.text = "Time's Up!";
                 Time.timeScale = 0;
                 int score = GetScore();
 
                 if (score * 10 >= expectedScore) {
                     GameOverWin.gameObject.SetActive(true);
-                    scoreLose = GameObject.Find("ScoreWin")
+                    scoreWin = GameObject.Find("ScoreWin")
                                           .GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + score * 10;
+                    scoreWin.text = "SCORE: " + score * 10;
                 } else {
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
@@ -565,16 +570,16 @@ public class GameManager : MonoBehaviour
                 scoreLose.text = "SCORE: " + score * 10;
             } else if (sec == 0) {
                 StopCoroutine(second());
-                CurrentGameState = GameState.Over;
+                //CurrentGameState = GameState.Over;
                 timeText.text = "Time's Up!";
                 Time.timeScale = 0;
                 int score = GetScore();
 
                 if (score * 10 >= expectedScore) {
                     GameOverWinLevel2020.gameObject.SetActive(true);
-                    scoreLose = GameObject.Find("ScoreWin")
+                    scoreWin = GameObject.Find("ScoreWin")
                                           .GetComponent<Text>();
-                    scoreLose.text = "SCORE: " + score * 10;
+                    scoreWin.text = "SCORE: " + score * 10;
                 } else {
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
