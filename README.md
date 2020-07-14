@@ -5,6 +5,8 @@ This project is initiated as a class assignment of CSCI 526 - Advanced Mobile De
 
 [**WebGL Release**](https://contact-tracer-csci-526.github.io/contact-tracer)
 
+[**Github Repo**](https://github.com/contact-tracer-csci-526/contact-tracer/)
+
 [**Game Design Document**](https://docs.google.com/document/d/16KfgnSeWCqYLeWXISbLL8AeyP_CU4sXrAhU_9TFUKLw/edit?usp=sharing)
 
 ## Game
