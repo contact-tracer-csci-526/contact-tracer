@@ -8,7 +8,7 @@ This project is initiated as a class assignment of CSCI 526 - Advanced Mobile De
 [**Game Design Document**](https://docs.google.com/document/d/16KfgnSeWCqYLeWXISbLL8AeyP_CU4sXrAhU_9TFUKLw/edit?usp=sharing)
 
 ## Game
-![Game play](/contact-tracer/g2.gif)
+![](/contact-tracer/g2.gif)
 
 **Contact Tracers** is a survival game. It involves different kinds of healthy balls that bounce in random directions within the screen. A deadly virus is capable of infecting healthy balls upon collision. Players should make sure that the healthy ball doesn’t get in contact with the deadly virus by either moving away from it or protect it by freezing a healthy ball to a safe ball. An infected ball can be cured using a cure ball, which moves in random directions and appears for every 10 seconds throughout the game. Your goal is to score enough to move to the next level.
 
@@ -51,9 +51,9 @@ At the end of each level,
 ## Contributors
 - Patrick Assaf [https://www.linkedin.com/in/patrick-assaf-964029161](https://www.linkedin.com/in/patrick-assaf-964029161)
 - Joseph Beavans [https://www.linkedin.com/in/joseph-beavans](https://www.linkedin.com/in/joseph-beavans)
-- Venkata Sai Himabindu Kandukuri [https://www.linkedin.com/in/himabindu-kandukuri-a2690356/](https://www.linkedin.com/in/himabindu-kandukuri-a2690356/)
+- Himabindu Kandukuri [https://www.linkedin.com/in/himabindu-kandukuri-a2690356/](https://www.linkedin.com/in/himabindu-kandukuri-a2690356/)
 - Gustavo Moncada [https://www.linkedin.com/in/gustavo-moncada-12591463](https://www.linkedin.com/in/gustavo-moncada-12591463)
-- Elden Park [https://www.linkedin.com/in/eldenpark/](https://www.linkedin.com/in/eldenpark/
+- Elden Park [https://www.linkedin.com/in/eldenpark/](https://www.linkedin.com/in/eldenpark/)
 - Priya Patel [https://www.linkedin.com/in/priya-patel-usc/](https://www.linkedin.com/in/priya-patel-usc/)
 - Bhagyashree Rawal [https://www.linkedin.com/in/bhagyashreerawal/](https://www.linkedin.com/in/bhagyashreerawal/)
 - Rucha Tambe [https://www.linkedin.com/in/rucha-tambe/](https://www.linkedin.com/in/rucha-tambe/)
