@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
             break;
 
         case GameState.Over:
-            
+
           StartCoroutine(second());
           Time.timeScale=0;
             break;
@@ -499,10 +499,6 @@ public class GameManager : MonoBehaviour
                                         .GetComponent<Text>();
                 scoreLose.text = "SCORE: " + score * 10;
                 CurrentGameState= GameState.Over;
-
-                Debug.Log("infectionLimit");
-                
-                
             } else if (sec == 0) {
                 StopCoroutine(second());
                 timeText.text = "Time's Up!";
@@ -510,23 +506,18 @@ public class GameManager : MonoBehaviour
                 int score = GetScore();
 
                 if (score * 10 >= expectedScore) {
-                
                     GameOverWin.gameObject.SetActive(true);
                     scoreWin = GameObject.Find("ScoreWin")
                                           .GetComponent<Text>();
                     scoreWin.text = "SCORE: " + score * 10;
                     CurrentGameState = GameState.Over;
-                    Debug.Log("Time's Up and Win");
-                    
                 } else {
 
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
-                    Debug.Log("Time's Up and Lose");
                     CurrentGameState = GameState.Over;
-                  
                 }
             }
             break;
@@ -534,17 +525,13 @@ public class GameManager : MonoBehaviour
           if (infectionRatio >= INFECTION_RATIO_LIMIT) {
                 StopCoroutine(second());
                 Time.timeScale = 0;
-             
+
                 int score = GetScore();
                 GameOverLose.gameObject.SetActive(true);
                 scoreLose = GameObject.Find("ScoreLose")
                                         .GetComponent<Text>();
                 scoreLose.text = "SCORE: " + score * 10;
                 CurrentGameState=GameState.Over;
-
-                Debug.Log("infectionLimit");
-                
-                
             } else if (sec == 0) {
                 StopCoroutine(second());
                 timeText.text = "Time's Up!";
@@ -552,23 +539,18 @@ public class GameManager : MonoBehaviour
                 int score = GetScore();
 
                 if (score * 10 >= expectedScore) {
-                
+
                     GameOverWin.gameObject.SetActive(true);
                     scoreWin = GameObject.Find("ScoreWin")
                                           .GetComponent<Text>();
                     scoreWin.text = "SCORE: " + score * 10;
                     CurrentGameState = GameState.Over;
-                    Debug.Log("Time's Up and Win");
-                    
                 } else {
-
                     GameOverLose.gameObject.SetActive(true);
                     scoreLose = GameObject.Find("ScoreLose")
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
-                    Debug.Log("Time's Up and Lose");
                     CurrentGameState = GameState.Over;
-                  
                 }
             }
             break;
