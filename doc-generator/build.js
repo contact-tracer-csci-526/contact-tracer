@@ -10,6 +10,7 @@ const buildLog = buildLogger('[contact-tracers]');
 
 const paths = {
   docs: path.resolve(__dirname, '../docs'),
+  public: path.resolve(__dirname, '../doc-generator/public'),
   root: path.resolve(__dirname, '..'),
   webgl: path.resolve(__dirname, '../webgl'),
 };
@@ -30,6 +31,15 @@ gulp.task('copy-webgl', () => {
   const srcPath = `${paths.webgl}/**/*`;
   const destPath = `${paths.docs}`;
   buildLog('copy-webgl', 'srcPath: %s, destPath: %s', srcPath, destPath);
+
+  return gulp.src(srcPath)
+    .pipe(gulp.dest(destPath));
+});
+
+gulp.task('copy-public', () => {
+  const srcPath = `${paths.public}/**/*`;
+  const destPath = `${paths.docs}`;
+  buildLog('copy-public', 'srcPath: %s, destPath: %s', srcPath, destPath);
 
   return gulp.src(srcPath)
     .pipe(gulp.dest(destPath));
@@ -171,17 +181,6 @@ gulp.task('modify-html', () => {
     max-width: 650px;
     padding: 12px;
   }
-  .media-container {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-  .media {
-    height: 47vw;
-    max-height: 267px;
-    max-width: 480px;
-    width: 85vw;
-  }
 </style>
 `;
 
@@ -222,7 +221,8 @@ ${readmeHtml}
   return Promise.resolve();
 });
 
-gulp.task('build', gulp.series('clean', 'copy-webgl', 'copy-index-html', 'modify-html'));
+gulp.task('build', gulp.series('clean', 'copy-webgl', 'copy-public',
+                               'copy-index-html', 'modify-html'));
 
 if (require.main === module) {
   const buildTask = gulp.task('build');
