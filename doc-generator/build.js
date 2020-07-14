@@ -181,6 +181,11 @@ gulp.task('modify-html', () => {
     max-width: 650px;
     padding: 12px;
   }
+  .media-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+  }
 </style>
 `;
 
@@ -213,6 +218,7 @@ ${readmeHtml}
   $('#wrap').prepend(warnHtml);
   $('#wrap').append(webglContent);
   $('#wrap').append(descHtml);
+  $('img').parent().addClass('media-container');
   const nextHtml = $.html();
 
   fs.writeFileSync(srcPath, nextHtml, {
