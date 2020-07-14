@@ -26,12 +26,7 @@ public class GameOverScript : MonoBehaviour
                 SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
                 break;
             case GameLevel.YEAR_2020:
-
             default:
-                // GameManager.CurrentGameState = GameState.Restart;
-                // MainMenu.level = 102;
-                // Time.timeScale = 1f;
-                // SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
                 break;
         }
     }

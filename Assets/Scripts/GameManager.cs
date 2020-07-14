@@ -130,7 +130,6 @@ public class GameManager : MonoBehaviour
                 CurrentGameState = GameState.Start;
                 Time.timeScale = 1;
                 Uninfected = GameObject.FindGameObjectsWithTag("SAFE_BALL");
-                //statusText.text = "Score:" + Uninfected.Length;
             }
             break;
 
@@ -521,8 +520,6 @@ public class GameManager : MonoBehaviour
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
                 }
-                //statusText.enabled = true;
-                Debug.Log("Level 1 Score");
             }
             break;
         case GameLevel.NORMAL_2:
@@ -553,13 +550,10 @@ public class GameManager : MonoBehaviour
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
                 }
-                //statusText.enabled = true;
-                Debug.Log("Level 2 Score");
             }
             break;
 
         case GameLevel.YEAR_2020:
-
         if (infectionRatio >= INFECTION_RATIO_LIMIT) {
                 StopCoroutine(second());
                 Time.timeScale = 0;
@@ -587,43 +581,10 @@ public class GameManager : MonoBehaviour
                                           .GetComponent<Text>();
                     scoreLose.text = "SCORE: " + score * 10;
                 }
-                //statusText.enabled = true;
-                Debug.Log("Level 2020 Score");
             }
             break;
-        
-
 
         default:
-            // if (infectionRatio >= INFECTION_RATIO_LIMIT) {
-            //     StopCoroutine(second());
-            //     Time.timeScale = 0;
-
-            //     int score = GetScore();
-            //     GameOverLose.gameObject.SetActive(true);
-            //     scoreLose = GameObject.Find("ScoreLose")
-            //                             .GetComponent<Text>();
-            //     scoreLose.text = "SCORE: " + score * 10;
-            // } else if (sec == 0) {
-            //     StopCoroutine(second());
-            //     CurrentGameState = GameState.Over;
-            //     timeText.text = "Time's Up!";
-            //     Time.timeScale = 0;
-            //     int score = GetScore();
-
-            //     if (score * 10 >= expectedScore) {
-            //         GameOverWin.gameObject.SetActive(true);
-            //         scoreLose = GameObject.Find("ScoreWin")
-            //                               .GetComponent<Text>();
-            //         scoreLose.text = "SCORE: " + score * 10;
-            //     } else {
-            //         GameOverLose.gameObject.SetActive(true);
-            //         scoreLose = GameObject.Find("ScoreLose")
-            //                               .GetComponent<Text>();
-            //         scoreLose.text = "SCORE: " + score * 10;
-            //     }
-            //     //statusText.enabled = true;
-            // }
             break;
         }
     }
