@@ -65,13 +65,6 @@ gulp.task('modify-html', () => {
   const readme = fs.readFileSync(readmePath).toString();
   const readmeHtml = md.makeHtml(readme);
 
-  const GameContainer = {
-    width: '90vw',
-    height: '56.25vw',
-    maxWidth: '585px',
-    maxHeight: '406.25px',
-  };
-
   const headHtml = `
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
