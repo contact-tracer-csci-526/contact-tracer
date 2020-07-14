@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
                 break;
 
              case GameLevel.NORMAL_2:
-                SceneManager.LoadScene((int)GameSceneId.SCORE_BREAKDOWN);
+                SceneManager.LoadScene((int)GameSceneId.GAME_SCENE);
                 break;
 
             
