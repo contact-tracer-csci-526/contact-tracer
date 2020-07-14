@@ -14,12 +14,19 @@ public class GameOverScript : MonoBehaviour
 
         switch (gameLevel) {
             case GameLevel.NORMAL_1:
-            case GameLevel.NORMAL_2:
-            default:
-                GameManager.CurrentGameState = GameState.Restart;
+             GameManager.CurrentGameState = GameState.Restart;
                 MainMenu.level = 102;
                 Time.timeScale = 1f;
                 SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+                break;
+            case GameLevel.NORMAL_2:
+            GameManager.CurrentGameState = GameState.Restart;
+                MainMenu.level = 202;
+                Time.timeScale = 1f;
+                SceneManager.LoadScene((int) GameSceneId.GAME_SCENE);
+                break;
+            case GameLevel.YEAR_2020:
+            default:
                 break;
         }
     }
