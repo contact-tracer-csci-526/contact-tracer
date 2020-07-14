@@ -1,23 +1,30 @@
 # Contact Tracers
 Ball bouncing survival game built on top of Unity written in C#
 
-This project is initiated as a class assignment of **CSCI 526 - Advanced Mobile Devices and Game Consoles** at the University of Southern California in the summer of 2020.
+This project is initiated as a class assignment of CSCI 526 - Advanced Mobile Devices and Game Consoles at the University of Southern California in the summer of 2020.
 
 [**WebGL Release**](https://contact-tracer-csci-526.github.io/contact-tracer)
 
 [**Game Design Document**](https://docs.google.com/document/d/16KfgnSeWCqYLeWXISbLL8AeyP_CU4sXrAhU_9TFUKLw/edit?usp=sharing)
 
-## Elevator pitch
-Contact Tracers is a survival game. It involves different kinds of healthy balls that bounce in random directions within the screen. A deadly virus is capable of infecting healthy balls upon collision. Players should make sure that the healthy ball doesn’t get in contact with the deadly virus by either moving away from it or protect it by freezing a healthy ball to a safe ball. An infected ball can be cured using a cure ball, which moves in random directions and appears for every 10 seconds throughout the game. Your goal is to score enough to move to the next level.
+## Game
+**Contact Tracers** is a survival game. It involves different kinds of healthy balls that bounce in random directions within the screen. A deadly virus is capable of infecting healthy balls upon collision. Players should make sure that the healthy ball doesn’t get in contact with the deadly virus by either moving away from it or protect it by freezing a healthy ball to a safe ball. An infected ball can be cured using a cure ball, which moves in random directions and appears for every 10 seconds throughout the game. Your goal is to score enough to move to the next level.
 
-## Game genre
+### Genre
 Arcade / Strategy
 
-## Goal
+### Goal
 Survive each level by keeping the number of infected balls below the threshold until the time runs out
 
+### Similar games
+- Bloody Virus
+- Fruit Ninja
+- Harbor King
+
 ## Inspiration
-Year 2020
+COVID-19 pandemic has swept through nations across the world in 2020, and has posed an unprecedented crisis. The virus is primarily transmitted through close contact amongst people. Various preventive measures and containment methodologies have been proposed. A multitude of governments, most notably, have encouraged wearing face masks, social distancing and in some cases conducted contact tracing.
+
+Contact Tracers was designed in this time of intense difficulty. Players are expected to isolate one or more entities from the rest, and keep track of who is infected. As demonstrated in the game play, battling an infectious disease does involve a collaborative effort of all the members. Raising awareness, in this sense, can be one of the crucial components of limiting the number of cases.
 
 ## Mechanics
 Draw a line between the virus and a healthy ball to move away from the virus
@@ -38,11 +45,6 @@ At the end of each level,
 ### End Condition
   - Win condition: Player scores the minimum number of points required to pass the level within the given time limit
   - Lose condition: Player fails to score the expected score within the given time limit
-
-### Similar games
-- Bloody Virus
-- Fruit Ninja
-- Harbor King
 
 ## Contributors
 - Patrick Assaf https://www.linkedin.com/in/patrick-assaf-964029161
