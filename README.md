@@ -12,7 +12,7 @@ This project is initiated as a class assignment of CSCI 526 - Advanced Mobile De
 [**Version 0.0.7 (Prototype)**](https://contact-tracer-csci-526.github.io/contact-tracer/webgl-0.0.7)
 
 ## Game
-![Game play](https://contact-tracer-csci-526.github.io/contact-tracer/g2.gif)
+<img src="https://contact-tracer-csci-526.github.io/contact-tracer/g2.gif?raw=true">
 
 **Contact Tracers** is a survival game. It involves different kinds of healthy balls that bounce in random directions within the screen. A deadly virus is capable of infecting healthy balls upon collision. Players should make sure that the healthy ball doesn’t get in contact with the deadly virus by either moving away from it or protect it by freezing a healthy ball to a safe ball. An infected ball can be cured using a cure ball, which moves in random directions and appears for every 10 seconds throughout the game. Your goal is to score enough to move to the next level.
 
