@@ -17,8 +17,7 @@ public class GameManager : MonoBehaviour
     public static DelayedStartScript CDS;
 
     public GameObject NextTutorial;
-
-     public GameObject GameOverWinLevel2020;
+    public GameObject GameOverWinLevel2020;
     public Text statusText;
     public Text scoreToPass;
     public int score = 0;
@@ -43,8 +42,8 @@ public class GameManager : MonoBehaviour
     public int previousTime = 0;
     public bool shouldCureballRender = true;
 
-    private int infectionLimit = 100;
     private const int INFECTION_RATIO_LIMIT = 100;
+    private int infectionLimit = 100;
     private int frameCount = 0;
     private int expectedScore;
     private GameObject tutorialCircle;
